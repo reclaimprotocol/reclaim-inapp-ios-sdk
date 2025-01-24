@@ -4,7 +4,15 @@ import SwiftUI
 /// Represents session information for a verification attempt.
 /// This struct contains the necessary data to identify and validate a verification session.
 public struct ReclaimSessionInformation {
-    /// ISO 8601 formatted timestamp when the session was created
+    /// The timestamp of the session creation.
+    ///
+    /// Represented as a string from number of milliseconds since
+    /// the "Unix epoch" 1970-01-01T00:00:00Z (UTC).
+    ///
+    /// This value is independent of the time zone.
+    ///
+    /// This value is at most
+    /// 8,640,000,000,000,000ms (100,000,000 days) from the Unix epoch.
     let timestamp: String
     
     /// Unique identifier for the verification session
@@ -109,7 +117,7 @@ public extension ReclaimApiVerificationRequest {
     ///   - hideLanding: When false, shows an introductory page with claims to be proven
     ///   - autoSubmit: If true, automatically submits proof after generation
     ///   - acceptAiProviders: Whether to accept AI-powered data providers
-    ///   - webhookUrl: Optional URL to receive verification status updates
+    ///   - webhookUrl: Optional URL to receive manual verification status updates
     /// - Throws: ReclaimVerificationError if required credentials are missing from Info.plist
     public init(
         /// The Reclaim data provider Id that should be used in the Reclaim Verification Process.
@@ -195,6 +203,8 @@ public class ReclaimVerification {
     /// - Parameter request: The verification request configuration
     /// - Returns: A ClaimCreationProof containing the verification result
     /// - Throws: ReclaimVerificationError if verification fails or is cancelled
+    /// 
+    /// - Note: This method will fail to open the verification UI if the user's screen is getting shared.
     @MainActor
     public static func startVerification(_ request: Request) async throws -> ClaimCreationProof {
         // Initialize logger for debugging and tracking
@@ -216,7 +226,8 @@ public class ReclaimVerification {
             // Get the current window to present the verification UI
             guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                   let window = windowScene.windows.first else {
-                continuation.resume(throwing: ReclaimVerificationError.failed(reason: "Could not open claim creation window"))
+                    // TODO: A known issue where this fails is when the user's screen is getting shared. Find a way to fix this.
+                continuation.resume(throwing: ReclaimVerificationError.failed(reason: "Could not start verification UI"))
                 return
             }
             
