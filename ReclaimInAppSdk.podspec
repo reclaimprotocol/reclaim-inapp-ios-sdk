@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
     s.name              = 'ReclaimInAppSdk'
     s.module_name       = 'ReclaimInAppSdk'
-    s.version           = '0.1.0'
+    s.version           = '1.0.0'
 
     s.summary           = 'The official Reclaim InApp SDK for iOS.'
 

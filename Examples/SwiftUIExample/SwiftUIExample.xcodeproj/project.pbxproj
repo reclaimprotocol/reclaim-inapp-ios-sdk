@@ -45,6 +45,7 @@
 		79CD6C212D4447E900161772 /* 18.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BDB2D44445B00161772 /* 18.xcframework */; };
 		79CD6C222D4447E900161772 /* 18.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BDB2D44445B00161772 /* 18.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		79CD6C2B2D4453AE00161772 /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 79CD6C2A2D4453AE00161772 /* ReclaimInAppSdk */; };
+		79CD6C332D445C2400161772 /* BaseConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 79CD6C322D445C2400161772 /* BaseConfig.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,11 +119,25 @@
 		79CD6BE82D44445B00161772 /* 03.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 03.xcframework; path = ReclaimXCFrameworks/03.xcframework; sourceTree = "<group>"; };
 		79CD6BE92D44445B00161772 /* 16.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 16.xcframework; path = ReclaimXCFrameworks/16.xcframework; sourceTree = "<group>"; };
 		79CD6BEA2D44445B00161772 /* 02.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 02.xcframework; path = ReclaimXCFrameworks/02.xcframework; sourceTree = "<group>"; };
+		79CD6C322D445C2400161772 /* BaseConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = BaseConfig.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		79CD6C2D2D4456C600161772 /* Exceptions for "SwiftUIExample" folder in "SwiftUIExample" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 79CD6BA32D443CB500161772 /* SwiftUIExample */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		79CD6BA62D443CB500161772 /* SwiftUIExample */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				79CD6C2D2D4456C600161772 /* Exceptions for "SwiftUIExample" folder in "SwiftUIExample" target */,
+			);
 			path = SwiftUIExample;
 			sourceTree = "<group>";
 		};
@@ -186,6 +201,7 @@
 		79CD6B9B2D443CB500161772 = {
 			isa = PBXGroup;
 			children = (
+				79CD6C322D445C2400161772 /* BaseConfig.xcconfig */,
 				79CD6BA62D443CB500161772 /* SwiftUIExample */,
 				79CD6BB72D443CB600161772 /* SwiftUIExampleTests */,
 				79CD6BC12D443CB600161772 /* SwiftUIExampleUITests */,
@@ -355,6 +371,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79CD6C332D445C2400161772 /* BaseConfig.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,6 +431,7 @@
 /* Begin XCBuildConfiguration section */
 		79CD6BC62D443CB600161772 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 79CD6C322D445C2400161772 /* BaseConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -477,6 +495,7 @@
 		};
 		79CD6BC72D443CB600161772 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 79CD6C322D445C2400161772 /* BaseConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -533,6 +552,7 @@
 		};
 		79CD6BC92D443CB600161772 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 79CD6C322D445C2400161772 /* BaseConfig.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -546,6 +566,7 @@
 					"$(PROJECT_DIR)/ReclaimXCFrameworks/",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwiftUIExample/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -566,6 +587,7 @@
 		};
 		79CD6BCA2D443CB600161772 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 79CD6C322D445C2400161772 /* BaseConfig.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -579,6 +601,7 @@
 					"$(PROJECT_DIR)/ReclaimXCFrameworks/",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwiftUIExample/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -599,6 +622,7 @@
 		};
 		79CD6BCC2D443CB600161772 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 79CD6C322D445C2400161772 /* BaseConfig.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -618,6 +642,7 @@
 		};
 		79CD6BCD2D443CB600161772 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 79CD6C322D445C2400161772 /* BaseConfig.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -637,6 +662,7 @@
 		};
 		79CD6BCF2D443CB600161772 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 79CD6C322D445C2400161772 /* BaseConfig.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -654,6 +680,7 @@
 		};
 		79CD6BD02D443CB600161772 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 79CD6C322D445C2400161772 /* BaseConfig.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
