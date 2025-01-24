@@ -24,9 +24,9 @@ class ClaimCreationViewModel: ObservableObject {
     
     @Published var initializationState: InitializationState = .uninitialized
     
-    var onCompletion: ((Result<ReclaimVerification.ClaimCreationProof, ReclaimVerificationError>) -> Void)?
+    var onCompletion: ((Result<ReclaimVerification.Result, ReclaimVerificationError>) -> Void)?
     
-    func complete(with result: Result<ReclaimVerification.ClaimCreationProof, ReclaimVerificationError>) {
+    func complete(with result: Result<ReclaimVerification.Result, ReclaimVerificationError>) {
         onCompletion?(result)
     }
     

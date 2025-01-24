@@ -10,14 +10,13 @@ fi
 
 echo "✅ Valid Xcode Project Directory"
 
-# URL of the zip file - replace with your actual URL
-DOWNLOAD_URL="https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/v0.1.0/ReclaimXCFrameworks.zip"
-TEMP_ZIP="ReclaimXCFrameworks.zip"
+DOWNLOAD_URL="https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/v1.0.0/ReclaimXCFrameworks.tar.gz"
+TEMP_ARCHIVE="ReclaimXCFrameworks.tar.gz"
 TARGET_DIR="ReclaimXCFrameworks"
 
 # Create a temporary directory for downloading
 echo "📦 Downloading ReclaimXCFrameworks..."
-curl -L "$DOWNLOAD_URL" -o "$TEMP_ZIP"
+curl -L "$DOWNLOAD_URL" -o "$TEMP_ARCHIVE"
 
 if [ $? -ne 0 ]; then
     echo "❌ Failed to download frameworks"
@@ -29,16 +28,19 @@ rm -rf $TARGET_DIR
 
 # Unzip the file
 echo "📂 Extracting frameworks..."
-unzip -o "$TEMP_ZIP"
+
+tar -xvzf "$TEMP_ARCHIVE"
 
 if [ $? -ne 0 ]; then
     echo "❌ Failed to extract frameworks"
-    rm -f "$TEMP_ZIP"
+    rm -f "$TEMP_ARCHIVE"
     exit 1
 fi
 
+echo "Extracted frameworks"
+
 # Clean up the zip file
-rm -f "$TEMP_ZIP"
+rm -f "$TEMP_ARCHIVE"
 
 RECLAIM_INVALID_FILE_NAME="$(ls | grep reclaim_inapp_sdk)"
 

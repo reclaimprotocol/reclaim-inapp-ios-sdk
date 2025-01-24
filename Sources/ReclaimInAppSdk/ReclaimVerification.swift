@@ -174,11 +174,13 @@ public class ReclaimVerification {
         case url(_ url: String)
     }
     
-    /// Contains the proof and response data after successful verification
-    public struct ClaimCreationProof {
+    /// Contains the proof and response data after verification
+    public struct Result {
         /// The API response containing verification results and proof details
+        /// Proofs are the data that is returned after verification.
+        /// If proofs are empty, it means that the verification failed.
+        /// You should check the exception field to see if the verification failed due to an error.
         public let response: ReclaimApiVerificationResponse
-        // Add any other relevant properties here
     }
     
     /// Initiates the verification process by presenting a full-screen interface.
@@ -201,12 +203,12 @@ public class ReclaimVerification {
     /// ```
     ///
     /// - Parameter request: The verification request configuration
-    /// - Returns: A ClaimCreationProof containing the verification result
+    /// - Returns: A Result containing the verification result
     /// - Throws: ReclaimVerificationError if verification fails or is cancelled
     /// 
     /// - Note: This method will fail to open the verification UI if the user's screen is getting shared.
     @MainActor
-    public static func startVerification(_ request: Request) async throws -> ClaimCreationProof {
+    public static func startVerification(_ request: Request) async throws -> Result {
         // Initialize logger for debugging and tracking
         let logger = Logging.get("ReclaimVerification.startVerification")
         
