@@ -111,7 +111,23 @@ To embed your dynamic frameworks, complete the following procedure.
     1. If you have a `*.xcworkspace` then open `YourApp.xcworkspace` in Xcode. Verify that you're opening MyApp.xcworkspace and not opening MyApp.xcodeproj. The .xcworkspace file has the CocoaPod dependencies, the .xcodeproj doesn't. If you don't have a `*.xcworkspace` then open `YourApp.xcodeproj` in Xcode.
     2. Select **Product** > **Build** or press `Cmd + B`.
 
-### 3. Use ReclaimInAppSdk in your project
+### 3. Fixing performance issues
+
+Your app performance will be severely impacted when you run debug executable on a physical device. Fixing this requires a simple change in your Xcode project xcscheme.
+
+#### Method 1: Enable (Recommended) 
+
+#### Method 2: Enable "Debug executable"
+1. Open your project in Xcode.
+2. Click on the project target.
+3. Click on the **Scheme** dropdown.
+<img src="Screenshots/Install/10.png" alt="Edit current xcscheme in Xcode" width="500">
+4. Click on the **Edit Scheme** button.
+5. Click on the **Run** tab.
+6. Uncheck the **Debug executable** checkbox.
+<img src="Screenshots/Install/11.png" alt="Enable Debug executable in Xcode" width="500">
+
+### 4. Use ReclaimInAppSdk in your project
 
 To use ReclaimInAppSdk in your project, follow these steps:
 
