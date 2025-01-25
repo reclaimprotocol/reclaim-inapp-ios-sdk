@@ -3,6 +3,7 @@ import Combine
 
 private let defaultLevel = if isDebugMode() { Logging.Level.ALL } else { Logging.Level.INFO } ;
 
+/// The logger that is used by the sdk for logging. Loggers are named using a hierarchical dot-separated name convention.
 public class Logging {
     public let publisher = LoggingPublisher()
     public let levelChangePublisher = LevelChangePublisher()

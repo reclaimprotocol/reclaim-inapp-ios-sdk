@@ -3,7 +3,7 @@ import SwiftUI
 // The following library connects plugins with iOS platform code to this app.
 import FlutterPluginRegistrant
 
-public func createFlutterEngine() -> FlutterEngine {
+func createFlutterEngine() -> FlutterEngine {
     let flutterEngine = FlutterEngine(name: "reclaim_flutter_engine")
     // Runs the default Dart entrypoint with a default Flutter route.
     flutterEngine.run()
@@ -12,12 +12,12 @@ public func createFlutterEngine() -> FlutterEngine {
     return flutterEngine
 }
 
-public struct FlutterViewControllerRepresentable: UIViewControllerRepresentable {
-    public init() {}
+struct FlutterViewControllerRepresentable: UIViewControllerRepresentable {
+    init() {}
 
-    public static let flutterEngine = createFlutterEngine()
+    static let flutterEngine = createFlutterEngine()
     
-    public func makeUIViewController(context: Context) -> some UIViewController {
+    func makeUIViewController(context: Context) -> some UIViewController {
         return FlutterViewController(
             engine: FlutterViewControllerRepresentable.flutterEngine,
             nibName: nil,
@@ -25,5 +25,5 @@ public struct FlutterViewControllerRepresentable: UIViewControllerRepresentable 
         )
     }
     
-    public func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
 }
