@@ -71,16 +71,19 @@ bash <(curl -s https://raw.githubusercontent.com/reclaimprotocol/reclaim-inapp-i
 
 To link the necessary frameworks, follow this procedure.
 
+<img src="Screenshots/Install/4.png" alt="Expand the Link Binary With Libraries build phase in Xcode" width="500">
+
 1. Choose the frameworks to link.
     1. In the **Project Navigator**, click on your project target.
     2. Click the **Build Phases** tab.
     3. Expand **Link Binary With Libraries**.
-<img src="Screenshots/Install/4.png" alt="Expand the Link Binary With Libraries build phase in Xcode" width="500">
     4. Click **+** (plus sign).
     5. Click **Add Other...** then **Add Files...**.
     6. From the **Choose frameworks and libraries to add**: dialog box, navigate to the `ReclaimXCFrameworks` directory in your Xcode Project directory's root and **select all the frameworks**.
     7. Command-click the frameworks in that directory then click Open.
+
 <img src="Screenshots/Install/5.png" alt="Choose frameworks to link from the Choose frameworks and libraries to add: dialog box in Xcode" width="500">
+
 2. Update search paths.
     1. Again, in the **Project Navigator**, click on your project target.
     2. Click the **Build Settings** tab.
@@ -89,6 +92,7 @@ To link the necessary frameworks, follow this procedure.
     5. Type `$(inherited)`. and press `Enter`.
     6. Click **+** (plus sign).
     7. Type `$(PROJECT_DIR)/ReclaimXCFrameworks/` and press `Enter`.
+
 <img src="Screenshots/Install/6.png" alt="Update Framework Search Paths in Xcode" width="500">
 
 After linking the frameworks, they should display in the **Frameworks, Libraries, and Embedded Content** section of your target's **General** settings.
@@ -100,11 +104,16 @@ To embed your dynamic frameworks, complete the following procedure.
     2. Click the **General** tab.
     3. Scroll down to the **Frameworks, Libraries, and Embedded Content** section.
     4. Click on each dynamic framework and set the **Embed** option to **Embed & Sign**.
+
 <img src="Screenshots/Install/7.png" alt="Embed dynamic frameworks in Xcode" width="500">
+
     5. Don't include any static frameworks, including `PluginRegistrant.xcframework`. Do not embed them. Your embedded frameworks should only be dynamic frameworks and will look like the below screenshot.
+
 <img src="Screenshots/Install/8.png" alt="Embed dynamic frameworks in Xcode" width="500">
+
     6. Click the **Build Phases** tab.
     7. Expand **Embed Frameworks**. Your dynamic frameworks should display in that section.
+
 <img src="Screenshots/Install/9.png" alt="Embedded dynamic frameworks in Xcode" width="500">
 
 4. Build the project.
@@ -119,11 +128,15 @@ Your app performance will be severely impacted when you run debug executable on 
 1. Open your project in Xcode.
 2. Click on the project target.
 3. Click on the **Scheme** dropdown.
+
 <img src="Screenshots/Install/10.png" alt="Edit current xcscheme in Xcode" width="500">
+
 4. Click on the **Edit Scheme** button.
 5. Click on the **Run** tab.
 6. Click on the **Arguments** tab and check the **Environment Variables** section.
+
 <img src="Screenshots/Install/12.png" alt="Enable Debug executable in Xcode" width="500">
+
 7. Add the following environment variable:
     - Key: `GODEBUG`
     - Value: `asyncpreemptoff=1`
@@ -134,10 +147,13 @@ Your app performance will be severely impacted when you run debug executable on 
 1. Open your project in Xcode.
 2. Click on the project target.
 3. Click on the **Scheme** dropdown.
+
 <img src="Screenshots/Install/10.png" alt="Edit current xcscheme in Xcode" width="500">
+
 4. Click on the **Edit Scheme** button.
 5. Click on the **Run** tab.
 6. Uncheck the **Debug executable** checkbox.
+
 <img src="Screenshots/Install/11.png" alt="Enable Debug executable in Xcode" width="500">
 
 ### 4. Use ReclaimInAppSdk in your project
