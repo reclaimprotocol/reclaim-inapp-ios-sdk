@@ -100,6 +100,7 @@ After linking the frameworks, they should display in the **Frameworks, Libraries
 3. Embed the dynamic frameworks
 
 To embed your dynamic frameworks, complete the following procedure.
+
     1. In the **Project Navigator**, click on your project target.
     2. Click the **General** tab.
     3. Scroll down to the **Frameworks, Libraries, and Embedded Content** section.
