@@ -115,7 +115,20 @@ To embed your dynamic frameworks, complete the following procedure.
 
 Your app performance will be severely impacted when you run debug executable on a physical device. Fixing this requires a simple change in your Xcode project xcscheme.
 
-#### Method 1: Enable (Recommended) 
+#### Method 1: Update Environment Variables for XCScheme (Recommended) 
+1. Open your project in Xcode.
+2. Click on the project target.
+3. Click on the **Scheme** dropdown.
+<img src="Screenshots/Install/10.png" alt="Edit current xcscheme in Xcode" width="500">
+4. Click on the **Edit Scheme** button.
+5. Click on the **Run** tab.
+6. Click on the **Arguments** tab and check the **Environment Variables** section.
+<img src="Screenshots/Install/12.png" alt="Enable Debug executable in Xcode" width="500">
+7. Add the following environment variable:
+    - Key: `GODEBUG`
+    - Value: `asyncpreemptoff=1`
+8. Click on the **Close** button in the dialog and build the project.
+9. Run the app on a physical device.
 
 #### Method 2: Enable "Debug executable"
 1. Open your project in Xcode.
