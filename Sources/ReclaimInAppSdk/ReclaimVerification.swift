@@ -242,7 +242,9 @@ public class ReclaimVerification {
             logger.log("Building Reclaim UIView Controller")
             // Create and configure the hosting controller for the Reclaim view
             let hostingController = ReclaimFlutterViewService.uiViewController
+            // Setting up the presentation style and background color
             hostingController.modalPresentationStyle = .fullScreen
+            hostingController.view.backgroundColor = .white
             logger.log("Reclaim UIView controller built")
             
             // Set up completion handler to dismiss UI and return result
@@ -257,7 +259,6 @@ public class ReclaimVerification {
             }
 
             // Present the verification UI
-            hostingController.view.backgroundColor = .white
             logger.log("presenting reclaim view")
             window.rootViewController?.present(hostingController, animated: true)
             logger.log("presented reclaim view")
