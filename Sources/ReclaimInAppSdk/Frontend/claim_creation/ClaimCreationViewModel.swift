@@ -48,7 +48,7 @@ class ClaimCreationViewModel: ObservableObject {
             DispatchQueue.main.async {
                 print("starting main async")
             }
-            let binaryMessenger = FlutterViewControllerRepresentable.flutterEngine.binaryMessenger
+            let binaryMessenger = ReclaimFlutterViewService.flutterEngine.binaryMessenger
             let api = ReclaimModuleApi.init(binaryMessenger: binaryMessenger)
             moduleApi = api
             initializationState = .ready

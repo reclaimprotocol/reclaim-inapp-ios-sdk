@@ -214,13 +214,15 @@ public class ReclaimVerification {
         
         // Create the view model and UI screen for verification
         let viewModel = ClaimCreationViewModel(request)
-        let claimCreationScreen = ClaimCreationScreen(viewModel: viewModel)
-        
+
         logger.log("started initialization")
+        print("started initialization")
         
         // Initialize the view model asynchronously
         Task { @MainActor in
+            print("started viewModel.initialization")
             await viewModel.initialize()
+            print("started viewModel.initializated")
         }
         
         // Use continuation to handle the asynchronous UI flow
@@ -233,21 +235,38 @@ public class ReclaimVerification {
                 return
             }
             
-            // Create and configure the hosting controller for the SwiftUI view
-            let hostingController = UIHostingController(rootView: claimCreationScreen)
+            print("Building Reclaim UIView Controller")
+            // Create and configure the hosting controller for the Reclaim view
+            let hostingController = ReclaimFlutterViewService.uiViewController
             hostingController.modalPresentationStyle = .fullScreen
+            print("Reclaim UIView controller built")
             
             // Set up completion handler to dismiss UI and return result
             viewModel.onCompletion = { [weak hostingController] result in
                 Task { @MainActor in
+                    print("ViewModel notifies completion")
                     hostingController?.dismiss(animated: true)
+                    hostingController = nil
                     continuation.resume(with: result)
                 }
             }
-            
+
             // Present the verification UI
+            hostingController.view.backgroundColor = .white
+            print("presenting reclaim view")
             window.rootViewController?.present(hostingController, animated: true)
+            print("presented reclaim view")
             logger.log("started client webview")
+            
+            Task { @MainActor in
+                do {
+                    print("sending view model request")
+                    await viewModel.sendRequest()
+                } catch {
+                    let logger = Logging.get("ReclaimVerification.startVerification.Task")
+                    logger.log("Failed to send request", error: error)
+                }
+            }
         }
     }
 }

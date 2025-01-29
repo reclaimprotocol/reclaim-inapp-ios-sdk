@@ -17,7 +17,7 @@ struct ClaimCreationScreen: View {
     
     var body: some View {
         NavigationView {
-            FlutterViewControllerRepresentable()
+            ReclaimFlutterViewControllerRepresentable()
         }
         .preferredColorScheme(.light)
         .navigationViewStyle(StackNavigationViewStyle())
