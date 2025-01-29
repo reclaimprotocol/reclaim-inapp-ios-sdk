@@ -209,20 +209,23 @@ public class ReclaimVerification {
     /// - Note: This method will fail to open the verification UI if the user's screen is getting shared.
     @MainActor
     public static func startVerification(_ request: Request) async throws -> Result {
+        // Set up consumer identity for this verification session
+        ConsumerIdentity.setCurrentFromRequest(request)
+
         // Initialize logger for debugging and tracking
         let logger = Logging.get("ReclaimVerification.startVerification")
-        
+
         // Create the view model and UI screen for verification
         let viewModel = ClaimCreationViewModel(request)
 
         logger.log("started initialization")
-        print("started initialization")
         
         // Initialize the view model asynchronously
         Task { @MainActor in
-            print("started viewModel.initialization")
+            let logger = Logging.get("ReclaimVerification.startVerification.Task")
+            logger.log("started viewModel.initialization")
             await viewModel.initialize()
-            print("started viewModel.initializated")
+            logger.log("started viewModel.initializated")
         }
         
         // Use continuation to handle the asynchronous UI flow
@@ -235,16 +238,18 @@ public class ReclaimVerification {
                 return
             }
             
-            print("Building Reclaim UIView Controller")
+            let logger = Logging.get("ReclaimVerification.startVerification.BuildingReclaimUIViewController")
+            logger.log("Building Reclaim UIView Controller")
             // Create and configure the hosting controller for the Reclaim view
             let hostingController = ReclaimFlutterViewService.uiViewController
             hostingController.modalPresentationStyle = .fullScreen
-            print("Reclaim UIView controller built")
+            logger.log("Reclaim UIView controller built")
             
             // Set up completion handler to dismiss UI and return result
             viewModel.onCompletion = { [weak hostingController] result in
                 Task { @MainActor in
-                    print("ViewModel notifies completion")
+                    let logger = Logging.get("ReclaimVerification.startVerification.call.viewModel.onCompletion")
+                    logger.log("ViewModel notifies completion")
                     hostingController?.dismiss(animated: true)
                     hostingController = nil
                     continuation.resume(with: result)
@@ -253,14 +258,15 @@ public class ReclaimVerification {
 
             // Present the verification UI
             hostingController.view.backgroundColor = .white
-            print("presenting reclaim view")
+            logger.log("presenting reclaim view")
             window.rootViewController?.present(hostingController, animated: true)
-            print("presented reclaim view")
+            logger.log("presented reclaim view")
             logger.log("started client webview")
             
             Task { @MainActor in
+                let logger = Logging.get("ReclaimVerification.startVerification.Task")
                 do {
-                    print("sending view model request")
+                    logger.log("sending view model request")
                     await viewModel.sendRequest()
                 } catch {
                     let logger = Logging.get("ReclaimVerification.startVerification.Task")

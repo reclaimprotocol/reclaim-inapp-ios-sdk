@@ -15,6 +15,7 @@ public class Logging {
     @MainActor static var _loggers = [String: Logging]()
     
     @MainActor public static func get(_ name: String = "") -> Logging {
+        ConsumerLogging.setup()
         if let entry = _loggers[name] {
             return entry
         } else {
@@ -179,6 +180,26 @@ public class Logging {
         }
         
         @MainActor private static var _nextNumber = 0
+
+        func toJsonMap(identity: ConsumerIdentity) -> [String: Any] {
+            let msSinceEpoch = Date().timeIntervalSince1970 * 1000
+            var logLine = message
+            if let error = error {
+                logLine += "\n[Error] \(error)"
+                if let stackTrace = stackTrace {
+                    logLine += "\n\(stackTrace.joined(separator: "\n"))"
+                }
+            }
+            
+            return [
+                "logLine": logLine,
+                "ts": "\(String(Int(msSinceEpoch * 1000000)))",
+                "type": loggerName,
+                "sessionId": identity.sessionId,
+                "providerId": identity.providerId,
+                "appId": identity.appId
+            ]
+        }
     }
     
     public struct LoggingPublisher: Publisher {

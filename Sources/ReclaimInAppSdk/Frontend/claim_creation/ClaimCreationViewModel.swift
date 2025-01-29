@@ -40,30 +40,32 @@ class ClaimCreationViewModel: ObservableObject {
             return
         }
         initializationState = .loading
+        let logger = Logging.get("ReclaimVerification.startVerification.Task")
         do {
-            print("starting")
+            logger.log("starting")
             Task { @MainActor in
-                print("starting main actor")
+                logger.log("starting main actor")
             }
             DispatchQueue.main.async {
-                print("starting main async")
+                logger.log("starting main async")
             }
             let binaryMessenger = ReclaimFlutterViewService.flutterEngine.binaryMessenger
             let api = ReclaimModuleApi.init(binaryMessenger: binaryMessenger)
             moduleApi = api
             initializationState = .ready
         } catch (let error) {
-            print("Failed to fetch provider \(error)")
+            logger.log("Failed to fetch provider \(error)")
             initializationState = .failed(error)
             complete(with: .failure(.failed(reason: "Failed to fetch provider")))
         }
     }
     
-    func onResponse(result: Result<ReclaimApiVerificationResponse, PigeonError>) {
+    @MainActor func onResponse(result: Result<ReclaimApiVerificationResponse, PigeonError>) {
+        let logger = Logging.get("ReclaimVerification.startVerification.Task")
         switch (result) {
         case .success(let response) :
             if let exception = response.exception {
-                print("Exception: \(exception.type)\n\(exception.message)\n\(exception.stackTraceAsString)")
+                logger.log("Exception: \(exception.type)\n\(exception.message)\n\(exception.stackTraceAsString)")
                 
                 switch (exception.type) {
                 case .verificationCancelled:
@@ -80,7 +82,8 @@ class ClaimCreationViewModel: ObservableObject {
                 self.complete(with: .success(.init(response: response)))
             }
         case .failure(let error):
-            print("Failure: \(error)")
+            let logger = Logging.get("ReclaimVerification.startVerification.Task")
+            logger.log("Failure: \(error)")
             self.complete(with: .failure(.failed(reason: error.message ?? "Unknown error")))
         }
     }

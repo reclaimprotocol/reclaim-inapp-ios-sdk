@@ -7,10 +7,19 @@ struct JSONUtility {
                 let messageBodyJSON = try JSONSerialization.jsonObject(with: messageBodyBytes!)
                 return messageBodyJSON
             } catch {
-                print("[JSONUtility.fromString] Failed json serialization \(error)")
+                Task { @MainActor in
+                    let logger = Logging.get("JSONUtility.fromString")
+                    logger.log("[JSONUtility.fromString] Failed json serialization \(error)")
+                }
             }
         } else {
-            print("[JSONUtility.fromString] message \(messageBody) of type \(type(of: messageBody)) is not a String");
+            let msg = "\(messageBody)"
+            let msgType = "\(type(of: messageBody))"
+            Task { @MainActor in
+                let logger = Logging.get("JSONUtility.fromString")
+                logger.log("[JSONUtility.fromString] message \(msg) of type \(msgType) is not a String");
+            }
+            
         }
         return nil
     }
