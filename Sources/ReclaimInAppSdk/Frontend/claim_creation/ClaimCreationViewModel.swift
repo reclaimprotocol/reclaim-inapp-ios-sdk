@@ -56,35 +56,60 @@ class ClaimCreationViewModel: ObservableObject {
         } catch (let error) {
             logger.log("Failed to fetch provider \(error)")
             initializationState = .failed(error)
-            complete(with: .failure(.failed(reason: "Failed to fetch provider")))
+            complete(with: .failure(.failed(
+                sessionId: request.maybeSessionId ?? "",
+                didSubmitManualVerification: false,
+                reason: "Failed to fetch provider"
+            )))
         }
     }
     
     @MainActor func onResponse(result: Result<ReclaimApiVerificationResponse, PigeonError>) {
         let logger = Logging.get("ReclaimVerification.startVerification.Task")
         switch (result) {
-        case .success(let response) :
+        case .success(let response):
             if let exception = response.exception {
                 logger.log("Exception: \(exception.type)\n\(exception.message)\n\(exception.stackTraceAsString)")
-                
-                switch (exception.type) {
-                case .verificationCancelled:
-                    self.complete(with: .failure(.cancelled))
-                case .verificationDismissed:
-                    self.complete(with: .failure(.dismissed))
-                case .sessionExpired:
-                    self.complete(with: .failure(.sessionExpired))
-                default:
-                    self.complete(with: .failure(.failed(reason: exception.message)))
+
+                let returnedError: ReclaimVerificationError = switch (exception.type) {
+                    case .verificationCancelled: .cancelled(
+                        sessionId: response.sessionId,
+                        didSubmitManualVerification: response.didSubmitManualVerification
+                    )
+                    case .verificationDismissed: .dismissed(
+                        sessionId: response.sessionId,
+                        didSubmitManualVerification: response.didSubmitManualVerification
+                    )
+                    case .sessionExpired: .sessionExpired(
+                        sessionId: response.sessionId,
+                        didSubmitManualVerification: response.didSubmitManualVerification
+                    )
+                    default: .failed(
+                        sessionId: response.sessionId,
+                        didSubmitManualVerification: response.didSubmitManualVerification,
+                        reason: exception.message
+                    )
                 }
-                
+                self.complete(with: .failure(returnedError))
             } else {
-                self.complete(with: .success(.init(response: response)))
+                self.complete(
+                    with: .success(
+                        .init(
+                            sessionId: response.sessionId,
+                            didSubmitManualVerification: response.didSubmitManualVerification,
+                            proofs: response.proofs
+                        )
+                    )
+                )
             }
         case .failure(let error):
             let logger = Logging.get("ReclaimVerification.startVerification.Task")
             logger.log("Failure: \(error)")
-            self.complete(with: .failure(.failed(reason: error.message ?? "Unknown error")))
+            self.complete(with: .failure(.failed(
+                sessionId: request.maybeSessionId ?? "",
+                didSubmitManualVerification: false,
+                reason: error.message ?? "Unknown error"
+            )))
         }
     }
     

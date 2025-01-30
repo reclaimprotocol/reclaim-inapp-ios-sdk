@@ -136,7 +136,11 @@ public extension ReclaimApiVerificationRequest {
     ) throws {
         let sdkParam = Bundle.main.infoDictionary?["ReclaimInAppSDKParam"] as? [String : Any]
         if (sdkParam == nil || sdkParam?["ReclaimAppId"] == nil || sdkParam?["ReclaimAppSecret"] == nil) {
-            throw ReclaimVerificationError.failed(reason: "ReclaimInAppSDKParam.ReclaimAppId or ReclaimInAppSDKParam.ReclaimAppSecret are missing in Info.plist. Either provide appId and secret in Info.plist or use ReclaimVerification(appId:secret:) initializer")
+            throw ReclaimVerificationError.failed(
+                sessionId: session?.sessionId ?? "",
+                didSubmitManualVerification: false,
+                reason: "ReclaimInAppSDKParam.ReclaimAppId or ReclaimInAppSDKParam.ReclaimAppSecret are missing in Info.plist. Either provide appId and secret in Info.plist or use ReclaimVerification(appId:secret:) initializer"
+            )
         }
         let appId = sdkParam?["ReclaimAppId"] as! String
         let secret = sdkParam?["ReclaimAppSecret"] as! String
@@ -172,6 +176,15 @@ public class ReclaimVerification {
         case params(_ request: ReclaimApiVerificationRequest)
         /// Start verification using a pre-configured URL
         case url(_ url: String)
+        
+        var maybeSessionId: String? {
+            get {
+                return switch (self) {
+                    case .params(let request): request.sessionId
+                    case .url(let url): ""
+                }
+            }
+        }
     }
     
     /// Contains the proof and response data after verification
@@ -180,7 +193,9 @@ public class ReclaimVerification {
         /// Proofs are the data that is returned after verification.
         /// If proofs are empty, it means that the verification failed.
         /// You should check the exception field to see if the verification failed due to an error.
-        public let response: ReclaimApiVerificationResponse
+        public var sessionId: String
+        public var didSubmitManualVerification: Bool
+        public var proofs: [[String: Any?]]
     }
     
     /// Initiates the verification process by presenting a full-screen interface.
@@ -211,6 +226,7 @@ public class ReclaimVerification {
     public static func startVerification(_ request: Request) async throws -> Result {
         // Set up consumer identity for this verification session
         ConsumerIdentity.setCurrentFromRequest(request)
+        ConsumerLogging.setup()
 
         // Initialize logger for debugging and tracking
         let logger = Logging.get("ReclaimVerification.startVerification")
@@ -234,7 +250,11 @@ public class ReclaimVerification {
             guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                   let window = windowScene.windows.first else {
                     // TODO: A known issue where this fails is when the user's screen is getting shared. Find a way to fix this.
-                continuation.resume(throwing: ReclaimVerificationError.failed(reason: "Could not start verification UI"))
+                continuation.resume(throwing: ReclaimVerificationError.failed(
+                    sessionId: request.maybeSessionId ?? "",
+                    didSubmitManualVerification: false,
+                    reason: "Could not start verification UI"
+                ))
                 return
             }
             
@@ -281,15 +301,15 @@ public class ReclaimVerification {
 /// Errors that can occur during the Reclaim verification process
 public enum ReclaimVerificationError: Error {
     /// User explicitly cancelled the verification process
-    case cancelled
+    case cancelled(sessionId: String, didSubmitManualVerification: Bool)
     
     /// Verification UI was dismissed without completion
-    case dismissed
+    case dismissed(sessionId: String, didSubmitManualVerification: Bool)
     
     /// The verification session has expired
-    case sessionExpired
+    case sessionExpired(sessionId: String, didSubmitManualVerification: Bool)
     
     /// Verification failed with a specific reason
     /// - Parameter reason: Description of why the verification failed
-    case failed(reason: String)
+    case failed(sessionId: String, didSubmitManualVerification: Bool, reason: String)
 }

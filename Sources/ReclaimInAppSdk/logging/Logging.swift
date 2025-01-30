@@ -15,7 +15,6 @@ public class Logging {
     @MainActor static var _loggers = [String: Logging]()
     
     @MainActor public static func get(_ name: String = "") -> Logging {
-        ConsumerLogging.setup()
         if let entry = _loggers[name] {
             return entry
         } else {
