@@ -69,12 +69,12 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
   return value as! T?
 }
 
-enum ReclaimApiVerificationExceptionType: Int {
-  case unknown = 0
-  case sessionExpired = 1
-  case verificationDismissed = 2
-  case verificationFailed = 3
-  case verificationCancelled = 4
+public enum ReclaimApiVerificationExceptionType: Int {
+  public case unknown = 0
+  public case sessionExpired = 1
+  public case verificationDismissed = 2
+  public case verificationFailed = 3
+  public case verificationCancelled = 4
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
@@ -142,10 +142,10 @@ public struct ReclaimApiVerificationRequest {
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
-struct ReclaimApiVerificationException {
-  var message: String
-  var stackTraceAsString: String
-  var type: ReclaimApiVerificationExceptionType
+public struct ReclaimApiVerificationException {
+  public var message: String
+  public var stackTraceAsString: String
+  public var type: ReclaimApiVerificationExceptionType
 
 
   // swift-format-ignore: AlwaysUseLowerCamelCase
@@ -171,10 +171,10 @@ struct ReclaimApiVerificationException {
 
 /// Generated class from Pigeon that represents data sent in messages.
 public struct ReclaimApiVerificationResponse {
-  var sessionId: String
-  var didSubmitManualVerification: Bool
-  var proofs: [[String: Any?]]
-  var exception: ReclaimApiVerificationException? = nil
+  public var sessionId: String
+  public var didSubmitManualVerification: Bool
+  public var proofs: [[String: Any?]]
+  public var exception: ReclaimApiVerificationException? = nil
 
 
   // swift-format-ignore: AlwaysUseLowerCamelCase

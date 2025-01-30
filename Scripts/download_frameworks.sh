@@ -10,7 +10,8 @@ fi
 
 echo "✅ Valid Xcode Project Directory"
 
-DOWNLOAD_URL="https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/v1.0.0/ReclaimXCFrameworks.tar.gz"
+# DOWNLOAD_URL="https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/v1.0.0/ReclaimXCFrameworks.tar.gz"
+DOWNLOAD_URL="http://localhost:8000/ReclaimXCFrameworks.tar.gz"
 TEMP_ARCHIVE="ReclaimXCFrameworks.tar.gz"
 TARGET_DIR="ReclaimXCFrameworks"
 

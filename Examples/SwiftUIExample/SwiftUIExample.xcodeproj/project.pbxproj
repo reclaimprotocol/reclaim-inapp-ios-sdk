@@ -44,8 +44,8 @@
 		79CD6C202D4447E700161772 /* 17.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BE12D44445B00161772 /* 17.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		79CD6C212D4447E900161772 /* 18.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BDB2D44445B00161772 /* 18.xcframework */; };
 		79CD6C222D4447E900161772 /* 18.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BDB2D44445B00161772 /* 18.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		79CD6C2B2D4453AE00161772 /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 79CD6C2A2D4453AE00161772 /* ReclaimInAppSdk */; };
 		79CD6C332D445C2400161772 /* BaseConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 79CD6C322D445C2400161772 /* BaseConfig.xcconfig */; };
+		79F2E0232D4A779F006D658B /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 79F2E0222D4A779F006D658B /* ReclaimInAppSdk */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -168,7 +168,7 @@
 				79CD6C172D4447E100161772 /* 13.xcframework in Frameworks */,
 				79CD6C052D4447D400161772 /* 04.xcframework in Frameworks */,
 				79CD6C112D4447DC00161772 /* 10.xcframework in Frameworks */,
-				79CD6C2B2D4453AE00161772 /* ReclaimInAppSdk in Frameworks */,
+				79F2E0232D4A779F006D658B /* ReclaimInAppSdk in Frameworks */,
 				79CD6C0B2D4447D800161772 /* 07.xcframework in Frameworks */,
 				79CD6C1D2D4447E600161772 /* 16.xcframework in Frameworks */,
 				79CD6BF92D44445B00161772 /* PluginRegistrant.xcframework in Frameworks */,
@@ -267,7 +267,7 @@
 			);
 			name = SwiftUIExample;
 			packageProductDependencies = (
-				79CD6C2A2D4453AE00161772 /* ReclaimInAppSdk */,
+				79F2E0222D4A779F006D658B /* ReclaimInAppSdk */,
 			);
 			productName = SwiftUIExample;
 			productReference = 79CD6BA42D443CB500161772 /* SwiftUIExample.app */;
@@ -352,7 +352,7 @@
 			mainGroup = 79CD6B9B2D443CB500161772;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				79CD6C292D4453AE00161772 /* XCRemoteSwiftPackageReference "reclaim-inapp-ios-sdk" */,
+				79F2E0212D4A779F006D658B /* XCLocalSwiftPackageReference "../../../reclaim_inapp_sdk_ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 79CD6BA52D443CB500161772 /* Products */;
@@ -572,6 +572,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -607,6 +608,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -737,21 +739,16 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		79CD6C292D4453AE00161772 /* XCRemoteSwiftPackageReference "reclaim-inapp-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git";
-			requirement = {
-				kind = revision;
-				revision = 62f73ea2c28a5f8b8be097587488319c3158737f;
-			};
+/* Begin XCLocalSwiftPackageReference section */
+		79F2E0212D4A779F006D658B /* XCLocalSwiftPackageReference "../../../reclaim_inapp_sdk_ios" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../../reclaim_inapp_sdk_ios;
 		};
-/* End XCRemoteSwiftPackageReference section */
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		79CD6C2A2D4453AE00161772 /* ReclaimInAppSdk */ = {
+		79F2E0222D4A779F006D658B /* ReclaimInAppSdk */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 79CD6C292D4453AE00161772 /* XCRemoteSwiftPackageReference "reclaim-inapp-ios-sdk" */;
 			productName = ReclaimInAppSdk;
 		};
 /* End XCSwiftPackageProductDependency section */
