@@ -22,143 +22,6 @@ public struct ReclaimSessionInformation {
     let signature: String
 }
 
-/// Request parameters for initiating a Reclaim verification process.
-public extension ReclaimApiVerificationRequest {
-    /// Creates a Reclaim Verification Request with explicit app credentials.
-    ///
-    /// Use this initializer when you want to provide the app credentials programmatically
-    /// rather than through Info.plist.
-    ///
-    /// Example:
-    /// ```swift
-    /// let request = ReclaimApiVerificationRequest(
-    ///     appId: "your-app-id",
-    ///     secret: "your-secret",
-    ///     providerId: "some-provider-id"
-    /// )
-    /// ```
-    ///
-    /// - Parameters:
-    ///   - appId: Your Reclaim application ID. If not provided, SDK will look for ReclaimInAppSDKParam.ReclaimAppId in Info.plist
-    ///   - secret: Your Reclaim application secret. If not provided, SDK will look for ReclaimInAppSDKParam.ReclaimAppSecret in Info.plist
-    ///   - providerId: The identifier for the Reclaim data provider to use in verification
-    ///   - session: Optional session information. If nil, SDK generates new session details
-    ///   - context: Additional data to associate with the verification attempt
-    ///   - parameters: Key-value pairs for prefilling claim creation variables
-    ///   - hideLanding: When false, shows an introductory page with claims to be proven
-    ///   - autoSubmit: If true, automatically submits proof after generation
-    ///   - acceptAiProviders: Whether to accept AI-powered data providers
-    ///   - webhookUrl: Optional URL to receive verification status updates
-    public init(
-        /// If not provided, sdk will look for an appId from ReclaimInAppSDKParam.ReclaimAppId in Info.plist
-        appId: String,
-        /// Your Reclaim application's secret. If null, sdk will look for the secret from ReclaimInAppSDKParam.ReclaimAppSecret in Info.plist
-        secret: String,
-        /// The Reclaim data provider Id that should be used in the Reclaim Verification Process.
-        providerId: String,
-        /// The session that sdk will use for a verification attempt. If nil, sdk will generate a new session information internally.
-        session: ReclaimSessionInformation? = nil,
-        /// Additional data that can be associated with a verification attempt and returned in proofs. Defaults to an empty [String].
-        context: String = "",
-        /// Prefill variables that can be used during the claim creation process.
-        parameters: [String : String] = [String:String](),
-        /// When false, sdk shows a page with claims that'll be proven and waits for the user to press start before starting verification flow
-        hideLanding: Bool = true,
-        /// If true, automatically submits proof after proof is generated from the claim creation process. Otherwise, lets the user submit proof by pressing a submit button when proof is generated.
-        autoSubmit: Bool = false,
-        acceptAiProviders: Bool = false,
-        webhookUrl: String? = nil
-    ) {
-        self.appId = appId
-        self.secret = secret
-        self.providerId = providerId
-        self.signature = session?.signature ?? ""
-        self.timestamp = session?.timestamp ?? ""
-        self.context = context
-        self.sessionId = session?.sessionId ?? ""
-        self.parameters = parameters
-        self.hideLanding = hideLanding
-        self.autoSubmit = autoSubmit
-        self.acceptAiProviders = acceptAiProviders
-        self.webhookUrl = webhookUrl
-    }
-
-    /// Creates a Reclaim Verification Request using app credentials from Info.plist.
-    ///
-    /// This initializer retrieves the app credentials from your Info.plist file.
-    /// You must configure your Info.plist with the following structure:
-    ///
-    /// ```xml
-    /// <key>ReclaimInAppSDKParam</key>
-    /// <dict>
-    ///     <key>ReclaimAppId</key>
-    ///     <string>$(RECLAIM_APP_ID)</string>
-    ///     <key>ReclaimAppSecret</key>
-    ///     <string>$(RECLAIM_APP_SECRET)</string>
-    /// </dict>
-    /// ```
-    ///
-    /// Example usage:
-    /// ```swift
-    /// do {
-    ///     let request = try ReclaimApiVerificationRequest(
-    ///         providerId: "some-provider-id"
-    ///     )
-    /// } catch {
-    ///     print("Failed to create request: \(error)")
-    /// }
-    /// ```
-    ///
-    /// - Parameters:
-    ///   - providerId: The identifier for the Reclaim data provider to use in verification
-    ///   - session: Optional session information. If nil, SDK generates new session details
-    ///   - context: Additional data to associate with the verification attempt
-    ///   - parameters: Key-value pairs for prefilling claim creation variables
-    ///   - hideLanding: When false, shows an introductory page with claims to be proven
-    ///   - autoSubmit: If true, automatically submits proof after generation
-    ///   - acceptAiProviders: Whether to accept AI-powered data providers
-    ///   - webhookUrl: Optional URL to receive manual verification status updates
-    /// - Throws: ReclaimVerificationError if required credentials are missing from Info.plist
-    public init(
-        /// The Reclaim data provider Id that should be used in the Reclaim Verification Process.
-        providerId: String,
-        /// The session that sdk will use for a verification attempt. If nil, sdk will generate a new session information internally.
-        session: ReclaimSessionInformation? = nil,
-        /// Additional data that can be associated with a verification attempt and returned in proofs. Defaults to an empty [String].
-        context: String = "",
-        /// Prefill variables that can be used during the claim creation process.
-        parameters: [String : String] = [String:String](),
-        hideLanding: Bool = true,
-        /// If true, automatically submits proof after proof is generated from the claim creation process. Otherwise, lets the user submit proof by pressing a submit button when proof is generated.
-        autoSubmit: Bool = false,
-        acceptAiProviders: Bool = false,
-        webhookUrl: String? = nil
-    ) throws {
-        let sdkParam = Bundle.main.infoDictionary?["ReclaimInAppSDKParam"] as? [String : Any]
-        if (sdkParam == nil || sdkParam?["ReclaimAppId"] == nil || sdkParam?["ReclaimAppSecret"] == nil) {
-            throw ReclaimVerificationError.failed(
-                sessionId: session?.sessionId ?? "",
-                didSubmitManualVerification: false,
-                reason: "ReclaimInAppSDKParam.ReclaimAppId or ReclaimInAppSDKParam.ReclaimAppSecret are missing in Info.plist. Either provide appId and secret in Info.plist or use ReclaimVerification(appId:secret:) initializer"
-            )
-        }
-        let appId = sdkParam?["ReclaimAppId"] as! String
-        let secret = sdkParam?["ReclaimAppSecret"] as! String
-        self.init(
-            appId: appId,
-            secret: secret,
-            providerId: providerId,
-            session: session,
-            context: context,
-            parameters: parameters,
-            hideLanding: hideLanding,
-            autoSubmit: autoSubmit,
-            acceptAiProviders: acceptAiProviders,
-            webhookUrl: webhookUrl
-        )
-    }
-}
-
 /// The main entry point for the Reclaim SDK verification flow.
 /// This class provides functionality to initiate and manage the verification process
 /// for proving claims about user data through various providers.
@@ -172,8 +35,158 @@ public class ReclaimVerification {
     
     /// Represents different ways to initiate a verification request
     public enum Request {
+        /// A Reclaim verification request with explicit parameters
+        public struct Params {
+            var appId: String
+            var providerId: String
+            var secret: String
+            var signature: String = ""
+            var timestamp: String? = nil
+            var context: String
+            var sessionId: String = ""
+            var parameters: [String: String]
+            var hideLanding: Bool = true
+            var autoSubmit: Bool = false
+            var acceptAiProviders: Bool = false
+            var webhookUrl: String? = nil
+            
+            /// Creates a Reclaim Verification Request with explicit app credentials.
+            ///
+            /// Use this initializer when you want to provide the app credentials programmatically
+            /// rather than through Info.plist.
+            ///
+            /// Example:
+            /// ```swift
+            /// let request = ReclaimApiVerificationRequest(
+            ///     appId: "your-app-id",
+            ///     secret: "your-secret",
+            ///     providerId: "some-provider-id"
+            /// )
+            /// ```
+            ///
+            /// - Parameters:
+            ///   - appId: Your Reclaim application ID. If not provided, SDK will look for ReclaimInAppSDKParam.ReclaimAppId in Info.plist
+            ///   - secret: Your Reclaim application secret. If not provided, SDK will look for ReclaimInAppSDKParam.ReclaimAppSecret in Info.plist
+            ///   - providerId: The identifier for the Reclaim data provider to use in verification
+            ///   - session: Optional session information. If nil, SDK generates new session details
+            ///   - context: Additional data to associate with the verification attempt
+            ///   - parameters: Key-value pairs for prefilling claim creation variables
+            ///   - hideLanding: When false, shows an introductory page with claims to be proven
+            ///   - autoSubmit: If true, automatically submits proof after generation
+            ///   - acceptAiProviders: Whether to accept AI-powered data providers
+            ///   - webhookUrl: Optional URL to receive verification status updates
+            public init(
+                /// If not provided, sdk will look for an appId from ReclaimInAppSDKParam.ReclaimAppId in Info.plist
+                appId: String,
+                /// Your Reclaim application's secret. If null, sdk will look for the secret from ReclaimInAppSDKParam.ReclaimAppSecret in Info.plist
+                secret: String,
+                /// The Reclaim data provider Id that should be used in the Reclaim Verification Process.
+                providerId: String,
+                /// The session that sdk will use for a verification attempt. If nil, sdk will generate a new session information internally.
+                session: ReclaimSessionInformation? = nil,
+                /// Additional data that can be associated with a verification attempt and returned in proofs. Defaults to an empty [String].
+                context: String = "",
+                /// Prefill variables that can be used during the claim creation process.
+                parameters: [String : String] = [String:String](),
+                /// When false, sdk shows a page with claims that'll be proven and waits for the user to press start before starting verification flow
+                hideLanding: Bool = true,
+                /// If true, automatically submits proof after proof is generated from the claim creation process. Otherwise, lets the user submit proof by pressing a submit button when proof is generated.
+                autoSubmit: Bool = false,
+                acceptAiProviders: Bool = false,
+                webhookUrl: String? = nil
+            ) {
+                self.appId = appId
+                self.secret = secret
+                self.providerId = providerId
+                self.signature = session?.signature ?? ""
+                self.timestamp = session?.timestamp ?? ""
+                self.context = context
+                self.sessionId = session?.sessionId ?? ""
+                self.parameters = parameters
+                self.hideLanding = hideLanding
+                self.autoSubmit = autoSubmit
+                self.acceptAiProviders = acceptAiProviders
+                self.webhookUrl = webhookUrl
+            }
+            
+            /// Creates a Reclaim Verification Request using app credentials from Info.plist.
+            ///
+            /// This initializer retrieves the app credentials from your Info.plist file.
+            /// You must configure your Info.plist with the following structure:
+            ///
+            /// ```xml
+            /// <key>ReclaimInAppSDKParam</key>
+            /// <dict>
+            ///     <key>ReclaimAppId</key>
+            ///     <string>$(RECLAIM_APP_ID)</string>
+            ///     <key>ReclaimAppSecret</key>
+            ///     <string>$(RECLAIM_APP_SECRET)</string>
+            /// </dict>
+            /// ```
+            ///
+            /// Example usage:
+            /// ```swift
+            /// do {
+            ///     let request = try ReclaimApiVerificationRequest(
+            ///         providerId: "some-provider-id"
+            ///     )
+            /// } catch {
+            ///     print("Failed to create request: \(error)")
+            /// }
+            /// ```
+            ///
+            /// - Parameters:
+            ///   - providerId: The identifier for the Reclaim data provider to use in verification
+            ///   - session: Optional session information. If nil, SDK generates new session details
+            ///   - context: Additional data to associate with the verification attempt
+            ///   - parameters: Key-value pairs for prefilling claim creation variables
+            ///   - hideLanding: When false, shows an introductory page with claims to be proven
+            ///   - autoSubmit: If true, automatically submits proof after generation
+            ///   - acceptAiProviders: Whether to accept AI-powered data providers
+            ///   - webhookUrl: Optional URL to receive manual verification status updates
+            /// - Throws: ReclaimVerificationError if required credentials are missing from Info.plist
+            public init(
+                /// The Reclaim data provider Id that should be used in the Reclaim Verification Process.
+                providerId: String,
+                /// The session that sdk will use for a verification attempt. If nil, sdk will generate a new session information internally.
+                session: ReclaimSessionInformation? = nil,
+                /// Additional data that can be associated with a verification attempt and returned in proofs. Defaults to an empty [String].
+                context: String = "",
+                /// Prefill variables that can be used during the claim creation process.
+                parameters: [String : String] = [String:String](),
+                hideLanding: Bool = true,
+                /// If true, automatically submits proof after proof is generated from the claim creation process. Otherwise, lets the user submit proof by pressing a submit button when proof is generated.
+                autoSubmit: Bool = false,
+                acceptAiProviders: Bool = false,
+                webhookUrl: String? = nil
+            ) throws {
+                let sdkParam = Bundle.main.infoDictionary?["ReclaimInAppSDKParam"] as? [String : Any]
+                if (sdkParam == nil || sdkParam?["ReclaimAppId"] == nil || sdkParam?["ReclaimAppSecret"] == nil) {
+                    throw ReclaimVerificationError.failed(
+                        sessionId: session?.sessionId ?? "",
+                        didSubmitManualVerification: false,
+                        reason: "ReclaimInAppSDKParam.ReclaimAppId or ReclaimInAppSDKParam.ReclaimAppSecret are missing in Info.plist. Either provide appId and secret in Info.plist or use ReclaimVerification(appId:secret:) initializer"
+                    )
+                }
+                let appId = sdkParam?["ReclaimAppId"] as! String
+                let secret = sdkParam?["ReclaimAppSecret"] as! String
+                self.init(
+                    appId: appId,
+                    secret: secret,
+                    providerId: providerId,
+                    session: session,
+                    context: context,
+                    parameters: parameters,
+                    hideLanding: hideLanding,
+                    autoSubmit: autoSubmit,
+                    acceptAiProviders: acceptAiProviders,
+                    webhookUrl: webhookUrl
+                )
+            }
+        }
+
         /// Start verification using explicit parameters
-        case params(_ request: ReclaimApiVerificationRequest)
+        case params(_ params: Params)
         /// Start verification using a pre-configured URL
         case url(_ url: String)
         

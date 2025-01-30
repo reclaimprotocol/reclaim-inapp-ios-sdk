@@ -117,7 +117,23 @@ class ClaimCreationViewModel: ObservableObject {
     func sendRequest() async {
         switch (request) {
         case .params(let request):
-            moduleApi!.startVerification(request: request, completion: onResponse)
+            moduleApi!.startVerification(
+                request: .init(
+                    appId: request.appId,
+                    providerId: request.providerId,
+                    secret: request.secret,
+                    signature: request.signature,
+                    timestamp: request.timestamp,
+                    context: request.context,
+                    sessionId: request.sessionId,
+                    parameters: request.parameters,
+                    hideLanding: request.hideLanding,
+                    autoSubmit: request.autoSubmit,
+                    acceptAiProviders: request.acceptAiProviders,
+                    webhookUrl: request.webhookUrl
+                ),
+                completion: onResponse
+            )
         case .url(let url):
             moduleApi!.startVerificationFromUrl(url: url, completion: onResponse)
         }
