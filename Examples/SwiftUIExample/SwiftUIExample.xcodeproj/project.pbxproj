@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		799B939F2D4BA9D0006AFC47 /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 799B939E2D4BA9D0006AFC47 /* ReclaimInAppSdk */; };
-		799B93A22D4BAB7E006AFC47 /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 799B93A12D4BAB7E006AFC47 /* ReclaimInAppSdk */; };
+		799B93A52D4BABC7006AFC47 /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 799B93A42D4BABC7006AFC47 /* ReclaimInAppSdk */; };
+		799F223D2D4BBBC800EF8FB1 /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 799F223C2D4BBBC800EF8FB1 /* ReclaimInAppSdk */; };
 		79CD6BF92D44445B00161772 /* PluginRegistrant.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BE62D44445B00161772 /* PluginRegistrant.xcframework */; };
 		79CD6BFE2D4447AB00161772 /* 01.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BD92D44445B00161772 /* 01.xcframework */; };
 		79CD6BFF2D4447AB00161772 /* 01.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BD92D44445B00161772 /* 01.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -160,9 +161,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				799F223D2D4BBBC800EF8FB1 /* ReclaimInAppSdk in Frameworks */,
 				79CD6C092D4447D700161772 /* 06.xcframework in Frameworks */,
 				79CD6C032D4447D300161772 /* 03.xcframework in Frameworks */,
-				799B93A22D4BAB7E006AFC47 /* ReclaimInAppSdk in Frameworks */,
+				799B93A52D4BABC7006AFC47 /* ReclaimInAppSdk in Frameworks */,
 				79CD6C1B2D4447E400161772 /* 15.xcframework in Frameworks */,
 				79CD6C152D4447DF00161772 /* 12.xcframework in Frameworks */,
 				79CD6C0F2D4447DB00161772 /* 09.xcframework in Frameworks */,
@@ -273,7 +275,8 @@
 			packageProductDependencies = (
 				79F2E0222D4A779F006D658B /* ReclaimInAppSdk */,
 				799B939E2D4BA9D0006AFC47 /* ReclaimInAppSdk */,
-				799B93A12D4BAB7E006AFC47 /* ReclaimInAppSdk */,
+				799B93A42D4BABC7006AFC47 /* ReclaimInAppSdk */,
+				799F223C2D4BBBC800EF8FB1 /* ReclaimInAppSdk */,
 			);
 			productName = SwiftUIExample;
 			productReference = 79CD6BA42D443CB500161772 /* SwiftUIExample.app */;
@@ -358,7 +361,7 @@
 			mainGroup = 79CD6B9B2D443CB500161772;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				799B93A02D4BAB7E006AFC47 /* XCRemoteSwiftPackageReference "reclaim-inapp-ios-sdk" */,
+				799F223B2D4BBBC800EF8FB1 /* XCRemoteSwiftPackageReference "reclaim-inapp-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 79CD6BA52D443CB500161772 /* Products */;
@@ -746,7 +749,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		799B93A02D4BAB7E006AFC47 /* XCRemoteSwiftPackageReference "reclaim-inapp-ios-sdk" */ = {
+		799F223B2D4BBBC800EF8FB1 /* XCRemoteSwiftPackageReference "reclaim-inapp-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git";
 			requirement = {
@@ -761,9 +764,13 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = ReclaimInAppSdk;
 		};
-		799B93A12D4BAB7E006AFC47 /* ReclaimInAppSdk */ = {
+		799B93A42D4BABC7006AFC47 /* ReclaimInAppSdk */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 799B93A02D4BAB7E006AFC47 /* XCRemoteSwiftPackageReference "reclaim-inapp-ios-sdk" */;
+			productName = ReclaimInAppSdk;
+		};
+		799F223C2D4BBBC800EF8FB1 /* ReclaimInAppSdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 799F223B2D4BBBC800EF8FB1 /* XCRemoteSwiftPackageReference "reclaim-inapp-ios-sdk" */;
 			productName = ReclaimInAppSdk;
 		};
 		79F2E0222D4A779F006D658B /* ReclaimInAppSdk */ = {

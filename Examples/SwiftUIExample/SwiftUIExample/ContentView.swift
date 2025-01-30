@@ -38,7 +38,7 @@ struct ContentView: View {
             .buttonStyle(BorderedProminentButtonStyle())
             
             if let result = result {
-                Text("Result: \(result.response)")
+                Text("Result: \(result)")
                     .padding()
             }
             
@@ -77,8 +77,8 @@ struct ContentView: View {
             showAlert(message: "Cancelled")
         } catch ReclaimVerificationError.dismissed {
             showAlert(message: "Cancelled by user")
-        } catch ReclaimVerificationError.failed(let error) {
-            print("failure error details: \(error)")
+        } catch ReclaimVerificationError.failed(_, _, let message) {
+            print("failure error details: \(message)")
             Task { @MainActor in
                 showAlert(message: "Something went wrong")
             }
