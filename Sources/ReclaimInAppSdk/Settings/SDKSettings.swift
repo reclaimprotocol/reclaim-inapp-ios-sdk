@@ -13,10 +13,10 @@ class SDKSettings {
     func getClientSource(appId: String) -> String {
         let clientAppInfo = Util.getClientAppInfo()
         if Util.isReclaimApp() {
-            return "flutter-app:\(clientAppInfo)";
+            return "app:swift:\(clientAppInfo)";
         }
         let sdkVersion = Util.getReclaimSdkVersion()
-        return "flutter-sdk:v\(sdkVersion)_\(appId)_\(clientAppInfo)"
+        return "sdk:swift:v\(sdkVersion)_\(appId)_\(clientAppInfo)"
     }
     
     fileprivate class Util {

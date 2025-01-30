@@ -89,14 +89,15 @@ import Foundation
         // Cancel existing timer if any
         teardownFlushLogsTimer()
         
+        // TODO: Uncomment this when we could reliably identify sender of logs
         // Create new periodic task for flushing logs
-        flushLogsTimer = Task {
-            while !Task.isCancelled {
-                Task { @MainActor in
-                    await ConsumerLogging.sendAndFlushLogsToRemote()
-                }
-                try? await Task.sleep(nanoseconds: 5_000_000_000) // 5 seconds
-            }
-        }
+        // flushLogsTimer = Task {
+        //     while !Task.isCancelled {
+        //         Task { @MainActor in
+        //             await ConsumerLogging.sendAndFlushLogsToRemote()
+        //         }
+        //         try? await Task.sleep(nanoseconds: 5_000_000_000) // 5 seconds
+        //     }
+        // }
     }
 }
