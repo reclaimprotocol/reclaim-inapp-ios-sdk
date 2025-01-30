@@ -70,11 +70,11 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
 }
 
 public enum ReclaimApiVerificationExceptionType: Int {
-  public case unknown = 0
-  public case sessionExpired = 1
-  public case verificationDismissed = 2
-  public case verificationFailed = 3
-  public case verificationCancelled = 4
+  case unknown = 0
+  case sessionExpired = 1
+  case verificationDismissed = 2
+  case verificationFailed = 3
+  case verificationCancelled = 4
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
