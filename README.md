@@ -230,3 +230,18 @@ do {
 ```
 
 For a complete example, see the [Reclaim Example - SwiftUI](Examples/SwiftUIExample/SwiftUIExample/ContentView.swift).
+
+## Upgrading
+
+To upgrade to a new version of the Reclaim InApp SDK, follow these steps:
+
+1. Make sure you have the latest version of the Reclaim InApp SDK. Currently the latest version is `v1.0.0`.
+1. Run the following script to download Reclaim's XCFrameworks in your Xcode Project directory (The parent directory where your .xcodeproj is located).
+
+```sh
+bash <(curl -s https://raw.githubusercontent.com/reclaimprotocol/reclaim-inapp-ios-sdk/refs/heads/main/Scripts/download_frameworks.sh)
+```
+
+1. Verify that all the frameworks are linked and embedded in your Xcode project. If required, follow the steps in the [Link All Frameworks Section](#link-all-frameworks) to link and embed the frameworks.
+
+Migration guides will be available when a new version with API changes is released. 

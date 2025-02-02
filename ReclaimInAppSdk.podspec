@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
     s.author            = 'Reclaim Protocol'
 
     s.platform          = :ios, '13.0'
-    s.source            = { :git => 'https://gitlab.reclaimprotocol.org/integrations/offchain/reclaim-inapp-sdk-ios.git', :tag => s.version }
+    s.source            = { :git => 'https://github.com/reclaimprotocol/reclaim-ios-sdk.git', :tag => s.version }
 
     s.ios.frameworks    = 'Foundation', 'UIKit', 'WebKit', 'SafariServices'
     s.ios.vendored_frameworks = 'ReclaimInAppSdk.xcframework'
