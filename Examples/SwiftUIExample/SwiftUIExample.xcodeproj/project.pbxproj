@@ -46,8 +46,6 @@
 		79CD6C1E2D4447E600161772 /* 16.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BE92D44445B00161772 /* 16.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		79CD6C1F2D4447E700161772 /* 17.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BE12D44445B00161772 /* 17.xcframework */; };
 		79CD6C202D4447E700161772 /* 17.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BE12D44445B00161772 /* 17.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		79CD6C212D4447E900161772 /* 18.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BDB2D44445B00161772 /* 18.xcframework */; };
-		79CD6C222D4447E900161772 /* 18.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BDB2D44445B00161772 /* 18.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		79CD6C332D445C2400161772 /* BaseConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 79CD6C322D445C2400161772 /* BaseConfig.xcconfig */; };
 		79F2E0232D4A779F006D658B /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 79F2E0222D4A779F006D658B /* ReclaimInAppSdk */; };
 /* End PBXBuildFile section */
@@ -88,7 +86,6 @@
 				79CD6C0E2D4447DA00161772 /* 08.xcframework in Embed Frameworks */,
 				79CD6C142D4447DE00161772 /* 11.xcframework in Embed Frameworks */,
 				79CD6C082D4447D600161772 /* 05.xcframework in Embed Frameworks */,
-				79CD6C222D4447E900161772 /* 18.xcframework in Embed Frameworks */,
 				79CD6C1E2D4447E600161772 /* 16.xcframework in Embed Frameworks */,
 				79CD6C102D4447DB00161772 /* 09.xcframework in Embed Frameworks */,
 				79CD6C182D4447E100161772 /* 13.xcframework in Embed Frameworks */,
@@ -113,7 +110,7 @@
 		79CD6BDE2D44445B00161772 /* 04.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 04.xcframework; path = ReclaimXCFrameworks/04.xcframework; sourceTree = "<group>"; };
 		79CD6BDF2D44445B00161772 /* 15.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 15.xcframework; path = ReclaimXCFrameworks/15.xcframework; sourceTree = "<group>"; };
 		79CD6BE02D44445B00161772 /* 05.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 05.xcframework; path = ReclaimXCFrameworks/05.xcframework; sourceTree = "<group>"; };
-		79CD6BE12D44445B00161772 /* 17.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 17.xcframework; path = ReclaimXCFrameworks/17.xcframework; sourceTree = "<group>"; };
+		79CD6BE12D44445B00161772 /* 17.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:S8QB4VV633:FLUTTER.IO LLC"; lastKnownFileType = wrapper.xcframework; name = 17.xcframework; path = ReclaimXCFrameworks/17.xcframework; sourceTree = "<group>"; };
 		79CD6BE22D44445B00161772 /* 08.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 08.xcframework; path = ReclaimXCFrameworks/08.xcframework; sourceTree = "<group>"; };
 		79CD6BE32D44445B00161772 /* 11.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 11.xcframework; path = ReclaimXCFrameworks/11.xcframework; sourceTree = "<group>"; };
 		79CD6BE42D44445B00161772 /* 06.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 06.xcframework; path = ReclaimXCFrameworks/06.xcframework; sourceTree = "<group>"; };
@@ -170,7 +167,6 @@
 				79CD6C152D4447DF00161772 /* 12.xcframework in Frameworks */,
 				79CD6C0F2D4447DB00161772 /* 09.xcframework in Frameworks */,
 				79CD6BFE2D4447AB00161772 /* 01.xcframework in Frameworks */,
-				79CD6C212D4447E900161772 /* 18.xcframework in Frameworks */,
 				79CD6C172D4447E100161772 /* 13.xcframework in Frameworks */,
 				79CD6C052D4447D400161772 /* 04.xcframework in Frameworks */,
 				79CD6C112D4447DC00161772 /* 10.xcframework in Frameworks */,
