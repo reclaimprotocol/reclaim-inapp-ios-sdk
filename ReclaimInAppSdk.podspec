@@ -22,5 +22,5 @@ Pod::Spec.new do |s|
     s.ios.frameworks    = 'Foundation', 'UIKit', 'WebKit', 'SafariServices'
     s.ios.vendored_frameworks = 'ReclaimInAppSdk.xcframework'
 
-    s.exclude_files = [ 'Example/**' ]
+    s.exclude_files = [ 'Examples/**' ]
 end
