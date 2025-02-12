@@ -22,6 +22,7 @@ Pod::Spec.new do |s|
     s.ios.frameworks    = 'Foundation', 'UIKit', 'WebKit', 'SafariServices'
     s.ios.vendored_frameworks = 'ReclaimInAppSdk.xcframework'
 
-    s.source_files = "Sources/**/*.{h,m,mm,cpp,swift}"
-    s.exclude_files = [ 'Examples/**' ]
+    s.source            = { :path => '.' }
+    s.source_files      = [ 'Sources/**/*.{h,m,mm,cpp,swift}' ]
+    s.exclude_files     = [ 'Examples/**' ]
 end
