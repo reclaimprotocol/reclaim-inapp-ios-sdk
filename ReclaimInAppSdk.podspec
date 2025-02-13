@@ -25,4 +25,7 @@ Pod::Spec.new do |s|
     s.source            = { :path => '.' }
     s.source_files      = [ 'Sources/**/*.{h,m,mm,cpp,swift}' ]
     s.exclude_files     = [ 'Examples/**' ]
+
+    # Resources:  Use resource_bundle for better organization
+    s.resource_bundle = { 'ReclaimInAppSdk' => 'Sources/ReclaimInAppSdk/Resources/**/*' } # Path relative to repo root
 end
