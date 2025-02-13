@@ -20,12 +20,21 @@ Pod::Spec.new do |s|
     s.source            = { :git => 'https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git', :tag => s.version }
 
     s.ios.frameworks    = 'Foundation', 'UIKit', 'WebKit', 'SafariServices'
-    s.ios.vendored_frameworks = 'ReclaimInAppSdk.xcframework'
+    s.ios.vendored_frameworks = ['ReclaimInAppSdk.xcframework', 'ReclaimXCFrameworks/*.xcframework']
 
     s.source            = { :path => '.' }
-    s.source_files      = [ 'Sources/**/*.{h,m,mm,cpp,swift}' ]
+    s.source_files      = [ 'Sources/**/*.{h,m,mm,cpp,swift}', 'ReclaimXCFrameworks/*.xcframework/Headers/**/*.h' ]
     s.exclude_files     = [ 'Examples/**' ]
 
     # Resources:  Use resource_bundle for better organization
     s.resource_bundle = { 'ReclaimInAppSdk' => 'Sources/ReclaimInAppSdk/Resources/**/*' } # Path relative to repo root
+
+    s.pod_target_xcconfig   = {
+        'SWIFT_VERSION' => '5.0',
+        'VALID_ARCHS' => 'x86_64 arm64',
+        'DEFINES_MODULE' => 'YES',
+        # Flutter.framework does not contain a i386 slice.
+        'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386'
+    }
+    s.swift_version = '5.0'
 end

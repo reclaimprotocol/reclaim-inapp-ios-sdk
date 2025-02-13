@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 
-# has .xcodeproj file
-XCODE_PROJECT_FILE="$(ls | grep .xcodeproj)"
-if [ ! -d "$XCODE_PROJECT_FILE" ]; then
-    echo "❌ Not a valid Xcode Project Directory. No '*.xcodeproj' directory found. 
+# Can skip the Xcode Project check if the SKIP_XCODE_PROJECT environment variable is set to true
+if [ "$SKIP_XCODE_PROJECT" != "true" ]; then
+    # has .xcodeproj file
+    XCODE_PROJECT_FILE="$(ls | grep .xcodeproj)"
+    if [ ! -d "$XCODE_PROJECT_FILE" ]; then
+        echo "❌ Not a valid Xcode Project Directory. No '*.xcodeproj' directory found. 
 Make sure you are running this script in the correct Xcode Project directory. (The parent directory where your '.xcodeproj' is located)"
-    exit 1
+        exit 1
+    fi
 fi
 
 echo "✅ Valid Xcode Project Directory"
