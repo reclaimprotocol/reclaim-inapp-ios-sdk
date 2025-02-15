@@ -1,8 +1,8 @@
 //
-//  SwiftUIExampleTests.swift
-//  SwiftUIExampleTests
+//  exampleTests.swift
+//  exampleTests
 //
-//  Created by Mushaheed Syed on 25/01/25.
+//  Created by Mushaheed Syed on 15/02/25.
 //
 
 import Testing

@@ -15,7 +15,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "79CD6BA32D443CB500161772"
+               BlueprintIdentifier = "793EB2BF2D60C02B009AF5A8"
                BuildableName = "SwiftUIExample.app"
                BlueprintName = "SwiftUIExample"
                ReferencedContainer = "container:SwiftUIExample.xcodeproj">
@@ -35,7 +35,7 @@
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "79CD6BB32D443CB600161772"
+               BlueprintIdentifier = "793EB2CF2D60C02C009AF5A8"
                BuildableName = "SwiftUIExampleTests.xctest"
                BlueprintName = "SwiftUIExampleTests"
                ReferencedContainer = "container:SwiftUIExample.xcodeproj">
@@ -46,7 +46,7 @@
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "79CD6BBD2D443CB600161772"
+               BlueprintIdentifier = "793EB2D92D60C02C009AF5A8"
                BuildableName = "SwiftUIExampleUITests.xctest"
                BlueprintName = "SwiftUIExampleUITests"
                ReferencedContainer = "container:SwiftUIExample.xcodeproj">
@@ -68,7 +68,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "79CD6BA32D443CB500161772"
+            BlueprintIdentifier = "793EB2BF2D60C02B009AF5A8"
             BuildableName = "SwiftUIExample.app"
             BlueprintName = "SwiftUIExample"
             ReferencedContainer = "container:SwiftUIExample.xcodeproj">
@@ -92,7 +92,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "79CD6BA32D443CB500161772"
+            BlueprintIdentifier = "793EB2BF2D60C02B009AF5A8"
             BuildableName = "SwiftUIExample.app"
             BlueprintName = "SwiftUIExample"
             ReferencedContainer = "container:SwiftUIExample.xcodeproj">

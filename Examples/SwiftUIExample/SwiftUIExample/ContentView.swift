@@ -1,8 +1,8 @@
 //
 //  ContentView.swift
-//  app
+//  sample
 //
-//  Created by Mushaheed Syed on 17/10/24.
+//  Created by Mushaheed Syed on 14/02/25.
 //
 
 import SwiftUI
@@ -11,12 +11,28 @@ import Combine
 import WebKit
 
 struct ContentView: View {
-    @State private var result: ReclaimVerification.Result?
+    @State private var result: ReclaimVerification.Response?
     @State private var showingAlert = false
     @State private var alertMessage = ""
     // Provider id in this example is fetched from the app's Info.plist file.
     @State private var providerId: String = (Bundle.main.infoDictionary?["ReclaimProviderId"] as? String) ?? ""
     
+    func setOverrides() {
+        Task { @MainActor in
+            do {
+                try await ReclaimVerification.setOverrides(
+                    appInfo: ReclaimOverrides.ReclaimAppInfo(
+                        appName: "Overriden Example",
+                        appImageUrl: "https://placehold.co/400x400/png"
+                    )
+                )
+            } catch {
+                print("unexpected failure error details: \(error)")
+                showAlert(message: "Could not set overrides")
+            }
+        }
+    }
+ 
     var body: some View {
         VStack {
             Text("Reclaim SDK Example")
@@ -44,6 +60,9 @@ struct ContentView: View {
             
             Spacer()
         }
+        .onAppear {
+            setOverrides()
+        }
         .alert(isPresented: $showingAlert) {
             Alert(title: Text("Claim Creation"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
         }
@@ -54,7 +73,7 @@ struct ContentView: View {
             let request = ReclaimVerification.Request.params(
                 try .init(
                     /// You can use the appId and secret from Reclaim Devtools to create a request.
-                    /// Providing appId and secret here in this initializer is optional. 
+                    /// Providing appId and secret here in this initializer is optional.
                     /// If you don't provide it, the SDK will use the appId and secret from the Info.plist file.
                     /// This example uses the appId and secret from the Info.plist file.
                     // appId: "YOUR_APP_ID_FROM_RECLAIM_DEVTOOLS",

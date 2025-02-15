@@ -118,4 +118,4 @@ let package = Package(
 )
 
 $SDK_TARGET_FN_STRING
-" > Package.swift.local
+" > Devel/Package.swift.local

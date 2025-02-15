@@ -7,147 +7,58 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		790D37AB2D50008700A266FC /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 790D37AA2D50008700A266FC /* ReclaimInAppSdk */; };
-		799B939F2D4BA9D0006AFC47 /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 799B939E2D4BA9D0006AFC47 /* ReclaimInAppSdk */; };
-		799B93A52D4BABC7006AFC47 /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 799B93A42D4BABC7006AFC47 /* ReclaimInAppSdk */; };
-		799F22402D4BC04100EF8FB1 /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 799F223F2D4BC04100EF8FB1 /* ReclaimInAppSdk */; };
-		79CD6BF92D44445B00161772 /* PluginRegistrant.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BE62D44445B00161772 /* PluginRegistrant.xcframework */; };
-		79CD6BFE2D4447AB00161772 /* 01.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BD92D44445B00161772 /* 01.xcframework */; };
-		79CD6BFF2D4447AB00161772 /* 01.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BD92D44445B00161772 /* 01.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		79CD6C012D4447AD00161772 /* 02.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BEA2D44445B00161772 /* 02.xcframework */; };
-		79CD6C022D4447AD00161772 /* 02.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BEA2D44445B00161772 /* 02.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		79CD6C032D4447D300161772 /* 03.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BE82D44445B00161772 /* 03.xcframework */; };
-		79CD6C042D4447D300161772 /* 03.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BE82D44445B00161772 /* 03.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		79CD6C052D4447D400161772 /* 04.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BDE2D44445B00161772 /* 04.xcframework */; };
-		79CD6C062D4447D500161772 /* 04.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BDE2D44445B00161772 /* 04.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		79CD6C072D4447D600161772 /* 05.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BE02D44445B00161772 /* 05.xcframework */; };
-		79CD6C082D4447D600161772 /* 05.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BE02D44445B00161772 /* 05.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		79CD6C092D4447D700161772 /* 06.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BE42D44445B00161772 /* 06.xcframework */; };
-		79CD6C0A2D4447D700161772 /* 06.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BE42D44445B00161772 /* 06.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		79CD6C0B2D4447D800161772 /* 07.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BDA2D44445B00161772 /* 07.xcframework */; };
-		79CD6C0C2D4447D800161772 /* 07.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BDA2D44445B00161772 /* 07.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		79CD6C0D2D4447DA00161772 /* 08.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BE22D44445B00161772 /* 08.xcframework */; };
-		79CD6C0E2D4447DA00161772 /* 08.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BE22D44445B00161772 /* 08.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		79CD6C0F2D4447DB00161772 /* 09.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BDD2D44445B00161772 /* 09.xcframework */; };
-		79CD6C102D4447DB00161772 /* 09.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BDD2D44445B00161772 /* 09.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		79CD6C112D4447DC00161772 /* 10.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BDC2D44445B00161772 /* 10.xcframework */; };
-		79CD6C122D4447DC00161772 /* 10.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BDC2D44445B00161772 /* 10.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		79CD6C132D4447DE00161772 /* 11.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BE32D44445B00161772 /* 11.xcframework */; };
-		79CD6C142D4447DE00161772 /* 11.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BE32D44445B00161772 /* 11.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		79CD6C152D4447DF00161772 /* 12.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BE72D44445B00161772 /* 12.xcframework */; };
-		79CD6C162D4447DF00161772 /* 12.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BE72D44445B00161772 /* 12.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		79CD6C172D4447E100161772 /* 13.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BE52D44445B00161772 /* 13.xcframework */; };
-		79CD6C182D4447E100161772 /* 13.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BE52D44445B00161772 /* 13.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		79CD6C192D4447E300161772 /* 14.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BD82D44445B00161772 /* 14.xcframework */; };
-		79CD6C1A2D4447E300161772 /* 14.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BD82D44445B00161772 /* 14.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		79CD6C1B2D4447E400161772 /* 15.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BDF2D44445B00161772 /* 15.xcframework */; };
-		79CD6C1C2D4447E400161772 /* 15.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BDF2D44445B00161772 /* 15.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		79CD6C1D2D4447E600161772 /* 16.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BE92D44445B00161772 /* 16.xcframework */; };
-		79CD6C1E2D4447E600161772 /* 16.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BE92D44445B00161772 /* 16.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		79CD6C1F2D4447E700161772 /* 17.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BE12D44445B00161772 /* 17.xcframework */; };
-		79CD6C202D4447E700161772 /* 17.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79CD6BE12D44445B00161772 /* 17.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		79CD6C332D445C2400161772 /* BaseConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 79CD6C322D445C2400161772 /* BaseConfig.xcconfig */; };
-		79F2E0232D4A779F006D658B /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 79F2E0222D4A779F006D658B /* ReclaimInAppSdk */; };
+		793EB3082D60C713009AF5A8 /* BaseConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 793EB3072D60C713009AF5A8 /* BaseConfig.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		79CD6BB52D443CB600161772 /* PBXContainerItemProxy */ = {
+		793EB2D12D60C02C009AF5A8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 79CD6B9C2D443CB500161772 /* Project object */;
+			containerPortal = 793EB2B82D60C02B009AF5A8 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 79CD6BA32D443CB500161772;
-			remoteInfo = SwiftUIExample;
+			remoteGlobalIDString = 793EB2BF2D60C02B009AF5A8;
+			remoteInfo = example;
 		};
-		79CD6BBF2D443CB600161772 /* PBXContainerItemProxy */ = {
+		793EB2DB2D60C02C009AF5A8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 79CD6B9C2D443CB500161772 /* Project object */;
+			containerPortal = 793EB2B82D60C02B009AF5A8 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 79CD6BA32D443CB500161772;
-			remoteInfo = SwiftUIExample;
+			remoteGlobalIDString = 793EB2BF2D60C02B009AF5A8;
+			remoteInfo = example;
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		79CD6C002D4447AB00161772 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				79CD6C162D4447DF00161772 /* 12.xcframework in Embed Frameworks */,
-				79CD6C122D4447DC00161772 /* 10.xcframework in Embed Frameworks */,
-				79CD6BFF2D4447AB00161772 /* 01.xcframework in Embed Frameworks */,
-				79CD6C062D4447D500161772 /* 04.xcframework in Embed Frameworks */,
-				79CD6C042D4447D300161772 /* 03.xcframework in Embed Frameworks */,
-				79CD6C0C2D4447D800161772 /* 07.xcframework in Embed Frameworks */,
-				79CD6C1A2D4447E300161772 /* 14.xcframework in Embed Frameworks */,
-				79CD6C0A2D4447D700161772 /* 06.xcframework in Embed Frameworks */,
-				79CD6C1C2D4447E400161772 /* 15.xcframework in Embed Frameworks */,
-				79CD6C0E2D4447DA00161772 /* 08.xcframework in Embed Frameworks */,
-				79CD6C142D4447DE00161772 /* 11.xcframework in Embed Frameworks */,
-				79CD6C082D4447D600161772 /* 05.xcframework in Embed Frameworks */,
-				79CD6C1E2D4447E600161772 /* 16.xcframework in Embed Frameworks */,
-				79CD6C102D4447DB00161772 /* 09.xcframework in Embed Frameworks */,
-				79CD6C182D4447E100161772 /* 13.xcframework in Embed Frameworks */,
-				79CD6C202D4447E700161772 /* 17.xcframework in Embed Frameworks */,
-				79CD6C022D4447AD00161772 /* 02.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		79CD6BA42D443CB500161772 /* SwiftUIExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		79CD6BB42D443CB600161772 /* SwiftUIExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftUIExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		79CD6BBE2D443CB600161772 /* SwiftUIExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftUIExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		79CD6BD82D44445B00161772 /* 14.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 14.xcframework; path = ReclaimXCFrameworks/14.xcframework; sourceTree = "<group>"; };
-		79CD6BD92D44445B00161772 /* 01.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 01.xcframework; path = ReclaimXCFrameworks/01.xcframework; sourceTree = "<group>"; };
-		79CD6BDA2D44445B00161772 /* 07.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 07.xcframework; path = ReclaimXCFrameworks/07.xcframework; sourceTree = "<group>"; };
-		79CD6BDB2D44445B00161772 /* 18.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:S8QB4VV633:FLUTTER.IO LLC"; lastKnownFileType = wrapper.xcframework; name = 18.xcframework; path = ReclaimXCFrameworks/18.xcframework; sourceTree = "<group>"; };
-		79CD6BDC2D44445B00161772 /* 10.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 10.xcframework; path = ReclaimXCFrameworks/10.xcframework; sourceTree = "<group>"; };
-		79CD6BDD2D44445B00161772 /* 09.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 09.xcframework; path = ReclaimXCFrameworks/09.xcframework; sourceTree = "<group>"; };
-		79CD6BDE2D44445B00161772 /* 04.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 04.xcframework; path = ReclaimXCFrameworks/04.xcframework; sourceTree = "<group>"; };
-		79CD6BDF2D44445B00161772 /* 15.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 15.xcframework; path = ReclaimXCFrameworks/15.xcframework; sourceTree = "<group>"; };
-		79CD6BE02D44445B00161772 /* 05.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 05.xcframework; path = ReclaimXCFrameworks/05.xcframework; sourceTree = "<group>"; };
-		79CD6BE12D44445B00161772 /* 17.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:S8QB4VV633:FLUTTER.IO LLC"; lastKnownFileType = wrapper.xcframework; name = 17.xcframework; path = ReclaimXCFrameworks/17.xcframework; sourceTree = "<group>"; };
-		79CD6BE22D44445B00161772 /* 08.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 08.xcframework; path = ReclaimXCFrameworks/08.xcframework; sourceTree = "<group>"; };
-		79CD6BE32D44445B00161772 /* 11.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 11.xcframework; path = ReclaimXCFrameworks/11.xcframework; sourceTree = "<group>"; };
-		79CD6BE42D44445B00161772 /* 06.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 06.xcframework; path = ReclaimXCFrameworks/06.xcframework; sourceTree = "<group>"; };
-		79CD6BE52D44445B00161772 /* 13.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 13.xcframework; path = ReclaimXCFrameworks/13.xcframework; sourceTree = "<group>"; };
-		79CD6BE62D44445B00161772 /* PluginRegistrant.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = PluginRegistrant.xcframework; path = ReclaimXCFrameworks/PluginRegistrant.xcframework; sourceTree = "<group>"; };
-		79CD6BE72D44445B00161772 /* 12.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 12.xcframework; path = ReclaimXCFrameworks/12.xcframework; sourceTree = "<group>"; };
-		79CD6BE82D44445B00161772 /* 03.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 03.xcframework; path = ReclaimXCFrameworks/03.xcframework; sourceTree = "<group>"; };
-		79CD6BE92D44445B00161772 /* 16.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 16.xcframework; path = ReclaimXCFrameworks/16.xcframework; sourceTree = "<group>"; };
-		79CD6BEA2D44445B00161772 /* 02.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = 02.xcframework; path = ReclaimXCFrameworks/02.xcframework; sourceTree = "<group>"; };
-		79CD6C322D445C2400161772 /* BaseConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = BaseConfig.xcconfig; sourceTree = "<group>"; };
+		793EB2C02D60C02B009AF5A8 /* SwiftUIExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		793EB2D02D60C02C009AF5A8 /* SwiftUIExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftUIExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		793EB2DA2D60C02C009AF5A8 /* SwiftUIExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftUIExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		793EB3072D60C713009AF5A8 /* BaseConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = BaseConfig.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		79CD6C2D2D4456C600161772 /* Exceptions for "SwiftUIExample" folder in "SwiftUIExample" target */ = {
+		793EB2F42D60C118009AF5A8 /* Exceptions for "SwiftUIExample" folder in "SwiftUIExample" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 79CD6BA32D443CB500161772 /* SwiftUIExample */;
+			target = 793EB2BF2D60C02B009AF5A8 /* SwiftUIExample */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		79CD6BA62D443CB500161772 /* SwiftUIExample */ = {
+		793EB2C22D60C02B009AF5A8 /* SwiftUIExample */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				79CD6C2D2D4456C600161772 /* Exceptions for "SwiftUIExample" folder in "SwiftUIExample" target */,
+				793EB2F42D60C118009AF5A8 /* Exceptions for "SwiftUIExample" folder in "SwiftUIExample" target */,
 			);
 			path = SwiftUIExample;
 			sourceTree = "<group>";
 		};
-		79CD6BB72D443CB600161772 /* SwiftUIExampleTests */ = {
+		793EB2D32D60C02C009AF5A8 /* SwiftUIExampleTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = SwiftUIExampleTests;
 			sourceTree = "<group>";
 		};
-		79CD6BC12D443CB600161772 /* SwiftUIExampleUITests */ = {
+		793EB2DD2D60C02C009AF5A8 /* SwiftUIExampleUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = SwiftUIExampleUITests;
 			sourceTree = "<group>";
@@ -155,44 +66,21 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		79CD6BA12D443CB500161772 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				799F22402D4BC04100EF8FB1 /* ReclaimInAppSdk in Frameworks */,
-				79CD6C092D4447D700161772 /* 06.xcframework in Frameworks */,
-				79CD6C032D4447D300161772 /* 03.xcframework in Frameworks */,
-				799B93A52D4BABC7006AFC47 /* ReclaimInAppSdk in Frameworks */,
-				79CD6C1B2D4447E400161772 /* 15.xcframework in Frameworks */,
-				79CD6C152D4447DF00161772 /* 12.xcframework in Frameworks */,
-				79CD6C0F2D4447DB00161772 /* 09.xcframework in Frameworks */,
-				79CD6BFE2D4447AB00161772 /* 01.xcframework in Frameworks */,
-				79CD6C172D4447E100161772 /* 13.xcframework in Frameworks */,
-				79CD6C052D4447D400161772 /* 04.xcframework in Frameworks */,
-				79CD6C112D4447DC00161772 /* 10.xcframework in Frameworks */,
-				79F2E0232D4A779F006D658B /* ReclaimInAppSdk in Frameworks */,
-				79CD6C0B2D4447D800161772 /* 07.xcframework in Frameworks */,
-				790D37AB2D50008700A266FC /* ReclaimInAppSdk in Frameworks */,
-				79CD6C1D2D4447E600161772 /* 16.xcframework in Frameworks */,
-				79CD6BF92D44445B00161772 /* PluginRegistrant.xcframework in Frameworks */,
-				799B939F2D4BA9D0006AFC47 /* ReclaimInAppSdk in Frameworks */,
-				79CD6C0D2D4447DA00161772 /* 08.xcframework in Frameworks */,
-				79CD6C072D4447D600161772 /* 05.xcframework in Frameworks */,
-				79CD6C012D4447AD00161772 /* 02.xcframework in Frameworks */,
-				79CD6C1F2D4447E700161772 /* 17.xcframework in Frameworks */,
-				79CD6C192D4447E300161772 /* 14.xcframework in Frameworks */,
-				79CD6C132D4447DE00161772 /* 11.xcframework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		79CD6BB12D443CB600161772 /* Frameworks */ = {
+		793EB2BD2D60C02B009AF5A8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		79CD6BBB2D443CB600161772 /* Frameworks */ = {
+		793EB2CD2D60C02C009AF5A8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		793EB2D72D60C02C009AF5A8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -202,195 +90,162 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		79CD6B9B2D443CB500161772 = {
+		793EB2B72D60C02B009AF5A8 = {
 			isa = PBXGroup;
 			children = (
-				79CD6C322D445C2400161772 /* BaseConfig.xcconfig */,
-				79CD6BA62D443CB500161772 /* SwiftUIExample */,
-				79CD6BB72D443CB600161772 /* SwiftUIExampleTests */,
-				79CD6BC12D443CB600161772 /* SwiftUIExampleUITests */,
-				79CD6BD72D44445A00161772 /* Frameworks */,
-				79CD6BA52D443CB500161772 /* Products */,
+				793EB3072D60C713009AF5A8 /* BaseConfig.xcconfig */,
+				793EB2C22D60C02B009AF5A8 /* SwiftUIExample */,
+				793EB2D32D60C02C009AF5A8 /* SwiftUIExampleTests */,
+				793EB2DD2D60C02C009AF5A8 /* SwiftUIExampleUITests */,
+				793EB2C12D60C02B009AF5A8 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		79CD6BA52D443CB500161772 /* Products */ = {
+		793EB2C12D60C02B009AF5A8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				79CD6BA42D443CB500161772 /* SwiftUIExample.app */,
-				79CD6BB42D443CB600161772 /* SwiftUIExampleTests.xctest */,
-				79CD6BBE2D443CB600161772 /* SwiftUIExampleUITests.xctest */,
+				793EB2C02D60C02B009AF5A8 /* SwiftUIExample.app */,
+				793EB2D02D60C02C009AF5A8 /* SwiftUIExampleTests.xctest */,
+				793EB2DA2D60C02C009AF5A8 /* SwiftUIExampleUITests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		79CD6BD72D44445A00161772 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				79CD6BD92D44445B00161772 /* 01.xcframework */,
-				79CD6BEA2D44445B00161772 /* 02.xcframework */,
-				79CD6BE82D44445B00161772 /* 03.xcframework */,
-				79CD6BDE2D44445B00161772 /* 04.xcframework */,
-				79CD6BE02D44445B00161772 /* 05.xcframework */,
-				79CD6BE42D44445B00161772 /* 06.xcframework */,
-				79CD6BDA2D44445B00161772 /* 07.xcframework */,
-				79CD6BE22D44445B00161772 /* 08.xcframework */,
-				79CD6BDD2D44445B00161772 /* 09.xcframework */,
-				79CD6BDC2D44445B00161772 /* 10.xcframework */,
-				79CD6BE32D44445B00161772 /* 11.xcframework */,
-				79CD6BE72D44445B00161772 /* 12.xcframework */,
-				79CD6BE52D44445B00161772 /* 13.xcframework */,
-				79CD6BD82D44445B00161772 /* 14.xcframework */,
-				79CD6BDF2D44445B00161772 /* 15.xcframework */,
-				79CD6BE92D44445B00161772 /* 16.xcframework */,
-				79CD6BE12D44445B00161772 /* 17.xcframework */,
-				79CD6BDB2D44445B00161772 /* 18.xcframework */,
-				79CD6BE62D44445B00161772 /* PluginRegistrant.xcframework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		79CD6BA32D443CB500161772 /* SwiftUIExample */ = {
+		793EB2BF2D60C02B009AF5A8 /* SwiftUIExample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 79CD6BC82D443CB600161772 /* Build configuration list for PBXNativeTarget "SwiftUIExample" */;
+			buildConfigurationList = 793EB2E42D60C02C009AF5A8 /* Build configuration list for PBXNativeTarget "SwiftUIExample" */;
 			buildPhases = (
-				79CD6BA02D443CB500161772 /* Sources */,
-				79CD6BA12D443CB500161772 /* Frameworks */,
-				79CD6BA22D443CB500161772 /* Resources */,
-				79CD6C002D4447AB00161772 /* Embed Frameworks */,
+				793EB2BC2D60C02B009AF5A8 /* Sources */,
+				793EB2BD2D60C02B009AF5A8 /* Frameworks */,
+				793EB2BE2D60C02B009AF5A8 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				79CD6BA62D443CB500161772 /* SwiftUIExample */,
+				793EB2C22D60C02B009AF5A8 /* SwiftUIExample */,
 			);
 			name = SwiftUIExample;
 			packageProductDependencies = (
-				79F2E0222D4A779F006D658B /* ReclaimInAppSdk */,
-				799B939E2D4BA9D0006AFC47 /* ReclaimInAppSdk */,
-				799B93A42D4BABC7006AFC47 /* ReclaimInAppSdk */,
-				799F223F2D4BC04100EF8FB1 /* ReclaimInAppSdk */,
-				790D37AA2D50008700A266FC /* ReclaimInAppSdk */,
+				
 			);
-			productName = SwiftUIExample;
-			productReference = 79CD6BA42D443CB500161772 /* SwiftUIExample.app */;
+			productName = example;
+			productReference = 793EB2C02D60C02B009AF5A8 /* SwiftUIExample.app */;
 			productType = "com.apple.product-type.application";
 		};
-		79CD6BB32D443CB600161772 /* SwiftUIExampleTests */ = {
+		793EB2CF2D60C02C009AF5A8 /* SwiftUIExampleTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 79CD6BCB2D443CB600161772 /* Build configuration list for PBXNativeTarget "SwiftUIExampleTests" */;
+			buildConfigurationList = 793EB2E72D60C02C009AF5A8 /* Build configuration list for PBXNativeTarget "SwiftUIExampleTests" */;
 			buildPhases = (
-				79CD6BB02D443CB600161772 /* Sources */,
-				79CD6BB12D443CB600161772 /* Frameworks */,
-				79CD6BB22D443CB600161772 /* Resources */,
+				793EB2CC2D60C02C009AF5A8 /* Sources */,
+				793EB2CD2D60C02C009AF5A8 /* Frameworks */,
+				793EB2CE2D60C02C009AF5A8 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				79CD6BB62D443CB600161772 /* PBXTargetDependency */,
+				793EB2D22D60C02C009AF5A8 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				79CD6BB72D443CB600161772 /* SwiftUIExampleTests */,
+				793EB2D32D60C02C009AF5A8 /* SwiftUIExampleTests */,
 			);
 			name = SwiftUIExampleTests;
 			packageProductDependencies = (
 			);
-			productName = SwiftUIExampleTests;
-			productReference = 79CD6BB42D443CB600161772 /* SwiftUIExampleTests.xctest */;
+			productName = exampleTests;
+			productReference = 793EB2D02D60C02C009AF5A8 /* SwiftUIExampleTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		79CD6BBD2D443CB600161772 /* SwiftUIExampleUITests */ = {
+		793EB2D92D60C02C009AF5A8 /* SwiftUIExampleUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 79CD6BCE2D443CB600161772 /* Build configuration list for PBXNativeTarget "SwiftUIExampleUITests" */;
+			buildConfigurationList = 793EB2EA2D60C02C009AF5A8 /* Build configuration list for PBXNativeTarget "SwiftUIExampleUITests" */;
 			buildPhases = (
-				79CD6BBA2D443CB600161772 /* Sources */,
-				79CD6BBB2D443CB600161772 /* Frameworks */,
-				79CD6BBC2D443CB600161772 /* Resources */,
+				793EB2D62D60C02C009AF5A8 /* Sources */,
+				793EB2D72D60C02C009AF5A8 /* Frameworks */,
+				793EB2D82D60C02C009AF5A8 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				79CD6BC02D443CB600161772 /* PBXTargetDependency */,
+				793EB2DC2D60C02C009AF5A8 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				79CD6BC12D443CB600161772 /* SwiftUIExampleUITests */,
+				793EB2DD2D60C02C009AF5A8 /* SwiftUIExampleUITests */,
 			);
 			name = SwiftUIExampleUITests;
 			packageProductDependencies = (
 			);
-			productName = SwiftUIExampleUITests;
-			productReference = 79CD6BBE2D443CB600161772 /* SwiftUIExampleUITests.xctest */;
+			productName = exampleUITests;
+			productReference = 793EB2DA2D60C02C009AF5A8 /* SwiftUIExampleUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		79CD6B9C2D443CB500161772 /* Project object */ = {
+		793EB2B82D60C02B009AF5A8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
-					79CD6BA32D443CB500161772 = {
+					793EB2BF2D60C02B009AF5A8 = {
 						CreatedOnToolsVersion = 16.2;
 					};
-					79CD6BB32D443CB600161772 = {
+					793EB2CF2D60C02C009AF5A8 = {
 						CreatedOnToolsVersion = 16.2;
-						TestTargetID = 79CD6BA32D443CB500161772;
+						TestTargetID = 793EB2BF2D60C02B009AF5A8;
 					};
-					79CD6BBD2D443CB600161772 = {
+					793EB2D92D60C02C009AF5A8 = {
 						CreatedOnToolsVersion = 16.2;
-						TestTargetID = 79CD6BA32D443CB500161772;
+						TestTargetID = 793EB2BF2D60C02B009AF5A8;
 					};
 				};
 			};
-			buildConfigurationList = 79CD6B9F2D443CB500161772 /* Build configuration list for PBXProject "SwiftUIExample" */;
+			buildConfigurationList = 793EB2BB2D60C02B009AF5A8 /* Build configuration list for PBXProject "SwiftUIExample" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = 79CD6B9B2D443CB500161772;
+			mainGroup = 793EB2B72D60C02B009AF5A8;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				790D37A92D50008700A266FC /* XCRemoteSwiftPackageReference "reclaim-inapp-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 79CD6BA52D443CB500161772 /* Products */;
+			productRefGroup = 793EB2C12D60C02B009AF5A8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				79CD6BA32D443CB500161772 /* SwiftUIExample */,
-				79CD6BB32D443CB600161772 /* SwiftUIExampleTests */,
-				79CD6BBD2D443CB600161772 /* SwiftUIExampleUITests */,
+				793EB2BF2D60C02B009AF5A8 /* SwiftUIExample */,
+				793EB2CF2D60C02C009AF5A8 /* SwiftUIExampleTests */,
+				793EB2D92D60C02C009AF5A8 /* SwiftUIExampleUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		79CD6BA22D443CB500161772 /* Resources */ = {
+		793EB2BE2D60C02B009AF5A8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79CD6C332D445C2400161772 /* BaseConfig.xcconfig in Resources */,
+				793EB3082D60C713009AF5A8 /* BaseConfig.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		79CD6BB22D443CB600161772 /* Resources */ = {
+		793EB2CE2D60C02C009AF5A8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		79CD6BBC2D443CB600161772 /* Resources */ = {
+		793EB2D82D60C02C009AF5A8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -400,21 +255,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		79CD6BA02D443CB500161772 /* Sources */ = {
+		793EB2BC2D60C02B009AF5A8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		79CD6BB02D443CB600161772 /* Sources */ = {
+		793EB2CC2D60C02C009AF5A8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		79CD6BBA2D443CB600161772 /* Sources */ = {
+		793EB2D62D60C02C009AF5A8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -424,22 +279,22 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		79CD6BB62D443CB600161772 /* PBXTargetDependency */ = {
+		793EB2D22D60C02C009AF5A8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 79CD6BA32D443CB500161772 /* SwiftUIExample */;
-			targetProxy = 79CD6BB52D443CB600161772 /* PBXContainerItemProxy */;
+			target = 793EB2BF2D60C02B009AF5A8 /* SwiftUIExample */;
+			targetProxy = 793EB2D12D60C02C009AF5A8 /* PBXContainerItemProxy */;
 		};
-		79CD6BC02D443CB600161772 /* PBXTargetDependency */ = {
+		793EB2DC2D60C02C009AF5A8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 79CD6BA32D443CB500161772 /* SwiftUIExample */;
-			targetProxy = 79CD6BBF2D443CB600161772 /* PBXContainerItemProxy */;
+			target = 793EB2BF2D60C02B009AF5A8 /* SwiftUIExample */;
+			targetProxy = 793EB2DB2D60C02C009AF5A8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		79CD6BC62D443CB600161772 /* Debug */ = {
+		793EB2E22D60C02C009AF5A8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 79CD6C322D445C2400161772 /* BaseConfig.xcconfig */;
+			baseConfigurationReference = 793EB3072D60C713009AF5A8 /* BaseConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -501,9 +356,9 @@
 			};
 			name = Debug;
 		};
-		79CD6BC72D443CB600161772 /* Release */ = {
+		793EB2E32D60C02C009AF5A8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 79CD6C322D445C2400161772 /* BaseConfig.xcconfig */;
+			baseConfigurationReference = 793EB3072D60C713009AF5A8 /* BaseConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -558,9 +413,9 @@
 			};
 			name = Release;
 		};
-		79CD6BC92D443CB600161772 /* Debug */ = {
+		793EB2E52D60C02C009AF5A8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 79CD6C322D445C2400161772 /* BaseConfig.xcconfig */;
+			baseConfigurationReference = 793EB3072D60C713009AF5A8 /* BaseConfig.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -569,10 +424,6 @@
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftUIExample/Preview Content\"";
 				DEVELOPMENT_TEAM = 69T6V5YN8P;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/ReclaimXCFrameworks/",
-				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftUIExample/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -580,13 +431,12 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = org.reclaimprotocol.SwiftUIExample;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reclaimprotocol.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -594,9 +444,9 @@
 			};
 			name = Debug;
 		};
-		79CD6BCA2D443CB600161772 /* Release */ = {
+		793EB2E62D60C02C009AF5A8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 79CD6C322D445C2400161772 /* BaseConfig.xcconfig */;
+			baseConfigurationReference = 793EB3072D60C713009AF5A8 /* BaseConfig.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -605,10 +455,6 @@
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftUIExample/Preview Content\"";
 				DEVELOPMENT_TEAM = 69T6V5YN8P;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/ReclaimXCFrameworks/",
-				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftUIExample/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -616,13 +462,12 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = org.reclaimprotocol.SwiftUIExample;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reclaimprotocol.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -630,9 +475,9 @@
 			};
 			name = Release;
 		};
-		79CD6BCC2D443CB600161772 /* Debug */ = {
+		793EB2E82D60C02C009AF5A8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 79CD6C322D445C2400161772 /* BaseConfig.xcconfig */;
+			baseConfigurationReference = 793EB3072D60C713009AF5A8 /* BaseConfig.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -641,7 +486,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = org.reclaimprotocol.SwiftUIExampleTests;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reclaimprotocol.exampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -650,9 +495,9 @@
 			};
 			name = Debug;
 		};
-		79CD6BCD2D443CB600161772 /* Release */ = {
+		793EB2E92D60C02C009AF5A8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 79CD6C322D445C2400161772 /* BaseConfig.xcconfig */;
+			baseConfigurationReference = 793EB3072D60C713009AF5A8 /* BaseConfig.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -661,7 +506,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = org.reclaimprotocol.SwiftUIExampleTests;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reclaimprotocol.exampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -670,117 +515,86 @@
 			};
 			name = Release;
 		};
-		79CD6BCF2D443CB600161772 /* Debug */ = {
+		793EB2EB2D60C02C009AF5A8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 79CD6C322D445C2400161772 /* BaseConfig.xcconfig */;
+			baseConfigurationReference = 793EB3072D60C713009AF5A8 /* BaseConfig.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 69T6V5YN8P;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = org.reclaimprotocol.SwiftUIExampleUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reclaimprotocol.exampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = SwiftUIExample;
+				TEST_TARGET_NAME = example;
 			};
 			name = Debug;
 		};
-		79CD6BD02D443CB600161772 /* Release */ = {
+		793EB2EC2D60C02C009AF5A8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 79CD6C322D445C2400161772 /* BaseConfig.xcconfig */;
+			baseConfigurationReference = 793EB3072D60C713009AF5A8 /* BaseConfig.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 69T6V5YN8P;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = org.reclaimprotocol.SwiftUIExampleUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reclaimprotocol.exampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = SwiftUIExample;
+				TEST_TARGET_NAME = example;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		79CD6B9F2D443CB500161772 /* Build configuration list for PBXProject "SwiftUIExample" */ = {
+		793EB2BB2D60C02B009AF5A8 /* Build configuration list for PBXProject "SwiftUIExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				79CD6BC62D443CB600161772 /* Debug */,
-				79CD6BC72D443CB600161772 /* Release */,
+				793EB2E22D60C02C009AF5A8 /* Debug */,
+				793EB2E32D60C02C009AF5A8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		79CD6BC82D443CB600161772 /* Build configuration list for PBXNativeTarget "SwiftUIExample" */ = {
+		793EB2E42D60C02C009AF5A8 /* Build configuration list for PBXNativeTarget "SwiftUIExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				79CD6BC92D443CB600161772 /* Debug */,
-				79CD6BCA2D443CB600161772 /* Release */,
+				793EB2E52D60C02C009AF5A8 /* Debug */,
+				793EB2E62D60C02C009AF5A8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		79CD6BCB2D443CB600161772 /* Build configuration list for PBXNativeTarget "SwiftUIExampleTests" */ = {
+		793EB2E72D60C02C009AF5A8 /* Build configuration list for PBXNativeTarget "SwiftUIExampleTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				79CD6BCC2D443CB600161772 /* Debug */,
-				79CD6BCD2D443CB600161772 /* Release */,
+				793EB2E82D60C02C009AF5A8 /* Debug */,
+				793EB2E92D60C02C009AF5A8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		79CD6BCE2D443CB600161772 /* Build configuration list for PBXNativeTarget "SwiftUIExampleUITests" */ = {
+		793EB2EA2D60C02C009AF5A8 /* Build configuration list for PBXNativeTarget "SwiftUIExampleUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				79CD6BCF2D443CB600161772 /* Debug */,
-				79CD6BD02D443CB600161772 /* Release */,
+				793EB2EB2D60C02C009AF5A8 /* Debug */,
+				793EB2EC2D60C02C009AF5A8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		790D37A92D50008700A266FC /* XCRemoteSwiftPackageReference "reclaim-inapp-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		790D37AA2D50008700A266FC /* ReclaimInAppSdk */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 790D37A92D50008700A266FC /* XCRemoteSwiftPackageReference "reclaim-inapp-ios-sdk" */;
-			productName = ReclaimInAppSdk;
-		};
-		799B939E2D4BA9D0006AFC47 /* ReclaimInAppSdk */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ReclaimInAppSdk;
-		};
-		799B93A42D4BABC7006AFC47 /* ReclaimInAppSdk */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ReclaimInAppSdk;
-		};
-		799F223F2D4BC04100EF8FB1 /* ReclaimInAppSdk */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ReclaimInAppSdk;
-		};
-		79F2E0222D4A779F006D658B /* ReclaimInAppSdk */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ReclaimInAppSdk;
-		};
+		
 /* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = 79CD6B9C2D443CB500161772 /* Project object */;
+	rootObject = 793EB2B82D60C02B009AF5A8 /* Project object */;
 }

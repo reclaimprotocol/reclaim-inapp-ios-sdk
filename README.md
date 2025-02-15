@@ -198,11 +198,11 @@ More ways to create a request object are available in the `ReclaimVerification.R
 let result = try await ReclaimVerification.startVerification(request)
 ```
 
-The returned result is a `ReclaimVerification.Result` object. This object contains a response that has proofs, exception, and the sessionId if the verification is successful.
+The returned result is a `ReclaimVerification.Response` object. This object contains a response that has proofs, exception, and the sessionId if the verification is successful.
 
 If the verification is cancelled or failed, the result will contain an exception.
 
-You can use the `ReclaimVerification.Result` object to get the proof, exception, and sessionId.
+You can use the `ReclaimVerification.Response` object to get the proof, exception, and sessionId.
 
 ```swift
 let proof = result.response.proofs

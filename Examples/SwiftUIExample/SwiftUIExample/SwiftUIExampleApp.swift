@@ -1,8 +1,8 @@
 //
-//  SwiftUIExampleApp.swift
-//  SwiftUIExample
+//  exampleApp.swift
+//  example
 //
-//  Created by Mushaheed Syed on 25/01/25.
+//  Created by Mushaheed Syed on 15/02/25.
 //
 
 import SwiftUI

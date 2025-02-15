@@ -184,7 +184,7 @@ public class ReclaimVerification {
                 )
             }
         }
-
+        
         /// Start verification using explicit parameters
         case params(_ params: Params)
         /// Start verification using a pre-configured URL
@@ -193,15 +193,15 @@ public class ReclaimVerification {
         var maybeSessionId: String? {
             get {
                 return switch (self) {
-                    case .params(let request): request.sessionId
-                    case .url(let url): ""
+                case .params(let request): request.sessionId
+                case .url(let url): ""
                 }
             }
         }
     }
     
     /// Contains the proof and response data after verification
-    public struct Result {
+    public struct Response {
         /// The API response containing verification results and proof details
         /// Proofs are the data that is returned after verification.
         /// If proofs are empty, it means that the verification failed.
@@ -233,20 +233,20 @@ public class ReclaimVerification {
     /// - Parameter request: The verification request configuration
     /// - Returns: A Result containing the verification result
     /// - Throws: ReclaimVerificationError if verification fails or is cancelled
-    /// 
+    ///
     /// - Note: This method will fail to open the verification UI if the user's screen is getting shared.
     @MainActor
-    public static func startVerification(_ request: Request) async throws -> Result {
+    public static func startVerification(_ request: Request) async throws -> Response {
         // Set up consumer identity for this verification session
         ConsumerIdentity.setCurrentFromRequest(request)
         ConsumerLogging.setup()
-
+        
         // Initialize logger for debugging and tracking
         let logger = Logging.get("ReclaimVerification.startVerification")
-
+        
         // Create the view model and UI screen for verification
         let viewModel = ClaimCreationViewModel(request)
-
+        
         logger.log("started initialization")
         
         // Initialize the view model asynchronously
@@ -262,7 +262,7 @@ public class ReclaimVerification {
             // Get the current window to present the verification UI
             guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                   let window = windowScene.windows.first else {
-                    // TODO: A known issue where this fails is when the user's screen is getting shared. Find a way to fix this.
+                // TODO: A known issue where this fails is when the user's screen is getting shared. Find a way to fix this.
                 continuation.resume(throwing: ReclaimVerificationError.failed(
                     sessionId: request.maybeSessionId ?? "",
                     didSubmitManualVerification: false,
@@ -290,7 +290,7 @@ public class ReclaimVerification {
                     continuation.resume(with: result)
                 }
             }
-
+            
             // Present the verification UI
             logger.log("presenting reclaim view")
             window.rootViewController?.present(hostingController, animated: true)
@@ -309,9 +309,68 @@ public class ReclaimVerification {
             }
         }
     }
-
-    public static func setOverrides() {
+    
+    @MainActor
+    public static func setOverrides(
+        provider: ReclaimOverrides.ProviderInformation? = nil,
+        featureOptions: ReclaimOverrides.FeatureOptions? = nil,
+        logConsumer: ReclaimOverrides.LogConsumer? = nil,
+        sessionManagement: ReclaimOverrides.SessionManagement? = nil,
+        appInfo: ReclaimOverrides.ReclaimAppInfo? = nil
+    ) async throws -> Void {
+        let binaryMessenger = ReclaimFlutterViewService.flutterEngine.binaryMessenger
+        let api = ReclaimModuleApi.init(binaryMessenger: binaryMessenger)
         
+        ReclaimApiSetup.setUp(binaryMessenger: binaryMessenger, api: ReclaimApiImpl(
+            logConsumer: logConsumer,
+            sessionManagement: sessionManagement
+        ))
+        
+        // Use continuation to handle the asynchronous UI flow
+        return try await withCheckedThrowingContinuation { continuation in
+            let overrideProvider: ClientProviderInformationOverride? = if let provider {
+                switch (provider) {
+                case .jsonString(jsonString: let jsonString): .init(
+                    providerInformationUrl: nil, providerInformationJsonString: jsonString
+                )
+                case .url(url: let url): .init(
+                    providerInformationUrl: url, providerInformationJsonString: nil
+                )
+                }
+            } else {
+                nil
+            }
+            
+            api.setOverrides(
+                provider: overrideProvider,
+                feature: (featureOptions == nil) ? nil : ClientFeatureOverrides(
+                    cookiePersist: featureOptions?.cookiePersist,
+                    singleReclaimRequest: featureOptions?.singleReclaimRequest,
+                    idleTimeThresholdForManualVerificationTrigger: featureOptions?.idleTimeThresholdForManualVerificationTrigger,
+                    sessionTimeoutForManualVerificationTrigger: featureOptions?.sessionTimeoutForManualVerificationTrigger,
+                    attestorBrowserRpcUrl: featureOptions?.attestorBrowserRpcUrl,
+                    isResponseRedactionRegexEscapingEnabled: featureOptions?.isResponseRedactionRegexEscapingEnabled,
+                    isAIFlowEnabled: featureOptions?.isAIFlowEnabled
+                ),
+                logConsumer: (logConsumer == nil) ? nil : ClientLogConsumerOverride(
+                    enableLogHandler: logConsumer?.logHandler != nil,
+                    canSdkCollectTelemetry: logConsumer?.canSdkCollectTelemetry ?? true,
+                    canSdkPrintLogs: logConsumer?.canSdkPrintLogs
+                ),
+                sessionManagement: (sessionManagement == nil) ? nil : ClientReclaimSessionManagementOverride(
+                    // A handler has been provided. We'll not let SDK manage sessions in this case.
+                    // Disabling this lets the host manage sessions.
+                    enableSdkSessionManagement: false
+                ),
+                appInfo: (appInfo == nil) ? nil : ClientReclaimAppInfoOverride(
+                    appName: appInfo?.appName ?? "",
+                    appImageUrl: appInfo?.appImageUrl ?? "",
+                    isRecurring: appInfo?.isRecurring ?? false
+                )
+            ) { result in
+                continuation.resume(with: result)
+            }
+        }
     }
 }
 
@@ -329,4 +388,56 @@ public enum ReclaimVerificationError: Error {
     /// Verification failed with a specific reason
     /// - Parameter reason: Description of why the verification failed
     case failed(sessionId: String, didSubmitManualVerification: Bool, reason: String)
+}
+
+fileprivate class ReclaimApiImpl: ReclaimApi {
+    let logConsumer: ReclaimOverrides.LogConsumer?
+    let sessionManagement: ReclaimOverrides.SessionManagement?
+    
+    init(
+        logConsumer: ReclaimOverrides.LogConsumer?,
+        sessionManagement: ReclaimOverrides.SessionManagement?
+    ) {
+        self.logConsumer = logConsumer
+        self.sessionManagement = sessionManagement
+    }
+    
+    func ping(completion: @escaping (Result<Bool, Error>) -> Void) {
+        completion(.success(true))
+    }
+    
+    func onLogs(logJsonString: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+        logConsumer?.logHandler?.onLogs(logJsonString: logJsonString)
+        completion(.success(()))
+    }
+    
+    func createSession(appId: String, providerId: String, sessionId: String, completion: @escaping (Result<Bool, any Error>) -> Void) {
+        sessionManagement?.handler.createSession(appId: appId, providerId: providerId, sessionId: sessionId) { result in
+            completion(result)
+        }
+    }
+    
+    func updateSession(sessionId: String, status: ReclaimSessionStatus, completion: @escaping (Result<Bool, any Error>) -> Void) {
+        let mappedStatus: ReclaimOverrides.SessionManagement.SessionStatus = switch (status) {
+        case .pROOFGENERATIONFAILED: .PROOF_GENERATION_FAILED
+        case .pROOFGENERATIONRETRY: .PROOF_GENERATION_RETRY
+        case .pROOFGENERATIONSTARTED: .PROOF_GENERATION_STARTED
+        case .pROOFGENERATIONSUCCESS: .PROOF_GENERATION_SUCCESS
+        case .pROOFMANUALVERIFICATIONSUBMITTED: .PROOF_MANUAL_VERIFICATION_SUBMITTED
+        case .uSERSTARTEDVERIFICATION: .USER_STARTED_VERIFICATION
+        case .uSERINITVERIFICATION: .USER_INIT_VERIFICATION
+        case .pROOFSUBMITTED: .PROOF_SUBMITTED
+        case .pROOFSUBMISSIONFAILED: .PROOF_SUBMISSION_FAILED
+        }
+        sessionManagement?.handler.updateSession(
+            sessionId: sessionId,
+            status: mappedStatus
+        ) { result in
+            completion(result)
+        }
+    }
+    
+    func logSession(appId: String, providerId: String, sessionId: String, logType: String) throws {
+        sessionManagement?.handler.logSession(appId: appId, providerId: providerId, sessionId: sessionId, logType: logType)
+    }
 }
