@@ -235,17 +235,34 @@ do {
 
 For a complete example, see the [Reclaim Example - SwiftUI](Examples/SwiftUIExample/SwiftUIExample/ContentView.swift).
 
+#### Overrides | Advanced Usage
+
+You can use the `ReclaimOverrides` to customize the verification flow with `ReclaimVerification.setOverrides`.
+
+```swift
+func setOverrides() {
+    Task { @MainActor in
+        do {
+            try await ReclaimVerification.setOverrides(
+                appInfo: ReclaimOverrides.ReclaimAppInfo(
+                    appName: "Overriden Example",
+                    appImageUrl: "https://placehold.co/400x400/png"
+                )
+                // Add other overrides here
+            )
+        } catch {
+            print("unexpected failure error details: \(error)")
+            showAlert(message: "Could not set overrides")
+        }
+    }
+}
+```
+
 ## Upgrading
 
 To upgrade to a new version of the Reclaim InApp SDK, follow these steps:
 
-1. Make sure you have the latest version of the Reclaim InApp SDK. Currently the latest version is `v0.1.2`.
-1. Run the following script to download Reclaim's XCFrameworks in your Xcode Project directory (The parent directory where your .xcodeproj is located).
-
-```sh
-bash <(curl -s https://raw.githubusercontent.com/reclaimprotocol/reclaim-inapp-ios-sdk/refs/heads/main/Scripts/download_frameworks.sh)
-```
-
-1. Verify that all the frameworks are linked and embedded in your Xcode project. If required, follow the steps in the [Link All Frameworks Section](#link-all-frameworks) to link and embed the frameworks.
+1. Make sure you have the latest version of the Reclaim InApp SDK. Currently the latest version is `v0.1.2`. 
+1. Incase of any problems: remove package, clear build, restart Xcode, and add package again.
 
 Migration guides will be available when a new version with API changes is released. 
