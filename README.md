@@ -19,13 +19,15 @@ This SDK allows you to integrate Reclaim's in-app verification process into your
 
 ### 1. Adding Reclaim InApp SDK to your Xcode Project
 
-#### Method 1: When working with an Xcode project:
+#### Method 1: When working with an Xcode project (Recommended):
 
-Copy the following URL and paste it for a dependency into the Xcode project:
+Copy the following URL and use it to add Swift Package Manager (SPM) dependency into the Xcode project:
 
 ```
 https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git
 ```
+
+##### How to add a Swift Package Manager (SPM) dependency to your Xcode project:
 
 1. In your Xcode Editor's toolbar, click on `File` > `Add Package Dependency...`.
 <img src="Screenshots/Install/1.png" width="500" alt="Add a dependency to your Xcode project">
@@ -37,7 +39,77 @@ https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git
 
 This should complete the installation of the Reclaim InApp SDK. Now follow the [steps below to link the necessary frameworks to your Xcode project](#2-add-reclaims-xcframeworks-to-your-xcode-project).
 
-#### Method 2: When working with a Swift Package Manager manifest:
+#### Method 2: When working with an Xcode Workspace project with CocoaPods:
+
+1. Make sure to define a global platform for your project in your `Podfile` with version 13.0 or higher.
+
+```
+platform :ios, '13.0'
+```
+
+2. Add the following to your `Podfile`:
+
+- From a specific tag (recommended):
+
+```ruby
+pod 'ReclaimInAppSdk', :git => 'https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git', :tag => '0.1.2'
+```
+
+- or from git HEAD (Alternative):
+
+```ruby
+pod 'ReclaimInAppSdk', :git => 'https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git'
+```
+
+- or from a specific commit (Alternative):
+
+```ruby
+pod 'ReclaimInAppSdk', :git => 'https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git', :commit => '184d41628026768feb703dc7bb9a3d913c6b271e'
+```
+
+- or from a specific branch (Alternative):
+
+```ruby
+pod 'ReclaimInAppSdk', :git => 'https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git', :branch => 'main'
+```
+
+2. After adding the dependency, your podfile may look like this:
+
+```ruby
+platform :ios, '13.0'
+
+target 'GitPodSwiftUIExample' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for GitPodSwiftUIExample
+  pod 'ReclaimInAppSdk', :git => 'https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git', :commit => '184d41628026768feb703dc7bb9a3d913c6b271e'
+
+  target 'GitPodSwiftUIExampleTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'GitPodSwiftUIExampleUITests' do
+    # Pods for testing
+  end
+
+end
+```
+
+3. Run `pod install`.
+4. Open the `*.xcworkspace` file to work on the project. And build the project.
+5. Your build may fail due to an error like this:
+
+<img src="Screenshots/Install/PodBuildError.png" alt="Xcode build error due to CocoaPods" width="500">
+
+6. To fix this, open the `*.xcworkspace` file in Xcode. In your target's `Build Settings`, under `Build Options` Section, set `User Script Sandboxing` to `No` and build the project again.
+
+<img src="Screenshots/Install/PodBuildErrorFix.png" alt="Xcode build error due to CocoaPods" width="500">
+
+7. Your project should build successfully.
+
+#### Method 3: When working with a Swift Package Manager manifest:
 
 Either select a package version:
 
