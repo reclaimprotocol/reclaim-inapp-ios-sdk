@@ -15,19 +15,15 @@ Pod::Spec.new do |s|
     s.homepage          = 'https://docs.reclaimprotocol.org'
     s.license           = { :type => 'MIT', :file => 'LICENSE' }
     s.author            = 'Reclaim Protocol'
-
-    s.platform          = :ios, '13.0'
     s.source            = { :git => 'https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git', :tag => s.version }
 
-    s.ios.frameworks    = 'Foundation', 'UIKit', 'WebKit', 'SafariServices'
-    s.ios.vendored_frameworks = ['ReclaimInAppSdk.xcframework', 'ReclaimXCFrameworks/*.xcframework']
+    s.platform          = :ios, '13.0'
+    s.swift_version     = '5.0'
 
     s.source            = { :path => '.' }
-    s.source_files      = [ 'Sources/**/*.{h,m,mm,cpp,swift}', 'ReclaimXCFrameworks/*.xcframework/Headers/**/*.h' ]
-    s.exclude_files     = [ 'Examples/**' ]
+    s.source_files      = [ 'Sources/**/*.{h,m,mm,cpp,swift}' ]
+    s.exclude_files     = [ 'Examples/**', 'Devel/**', 'Scripts/**', 'Tests/**', 'Sources/ReclaimInAppSdk/Resources/**/*.{version,plist}' ]
 
-    # Resources:  Use resource_bundle for better organization
-    # s.resource_bundle = { 'ReclaimInAppSdk' => 'Sources/ReclaimInAppSdk/Resources/**/*' } # Path relative to repo root
     s.resources = ['Sources/ReclaimInAppSdk/Resources/**/*.{version,plist}']
 
     s.pod_target_xcconfig   = {
@@ -37,5 +33,35 @@ Pod::Spec.new do |s|
         # Flutter.framework does not contain a i386 slice.
         'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386'
     }
-    s.swift_version = '5.0'
+
+    xcframework_urls = [
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.1.2/BinaryTargets/App.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.1.2/BinaryTargets/Flutter.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.1.2/BinaryTargets/FlutterPluginRegistrant.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.1.2/BinaryTargets/OrderedSet.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.1.2/BinaryTargets/cupertino_http.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.1.2/BinaryTargets/device_info_plus.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.1.2/BinaryTargets/flutter_inappwebview_ios.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.1.2/BinaryTargets/flutter_secure_storage.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.1.2/BinaryTargets/fluttertoast.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.1.2/BinaryTargets/objective_c.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.1.2/BinaryTargets/package_info_plus.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.1.2/BinaryTargets/path_provider_foundation.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.1.2/BinaryTargets/permission_handler_apple.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.1.2/BinaryTargets/reclaim_gnark_zkoperator.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.1.2/BinaryTargets/share_plus.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.1.2/BinaryTargets/shared_preferences_foundation.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.1.2/BinaryTargets/sqflite_darwin.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.1.2/BinaryTargets/url_launcher_ios.zip',
+    ]
+
+    # Prepare command to download and unzip XCFrameworks
+    s.prepare_command = <<-CMD
+        mkdir -p ReclaimXCFrameworks
+        # Downloads and unzips the XCFrameworks on every pod install. Needs improvement.
+        #{xcframework_urls.map { |url| "curl -L '#{url}' -o $(basename '#{url}') && unzip -q -o $(basename '#{url}') -d ./ && rm $(basename '#{url}')" }.join("\n")}
+    CMD
+
+    # Specify the paths to the unzipped XCFramework directories
+    s.vendored_frameworks = ['ReclaimXCFrameworks/*.xcframework']
 end

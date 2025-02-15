@@ -9,6 +9,7 @@ REMOTE_FRAMEWORK_URL="https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/
 DEBUG_LOCAL_TARGET_STRING=""
 PROFILE_LOCAL_TARGET_STRING=""
 RELEASE_LOCAL_TARGET_STRING=""
+FRAMEWORK_URLS_STRING=""
 
 FRAMEWORK_PATTERN=""
 if [ "$ONLY_RELEASE_TARGETS" != "true" ]; then
@@ -59,6 +60,9 @@ for framework_path in $FRAMEWORK_PATTERN; do
             url: \"${framework_url}\",
             checksum: \"${framework_checksum}\"
         ),"
+
+        FRAMEWORK_URLS_STRING+="
+        '${framework_url}',"
 
         case $build_type in
             Debug)
@@ -142,3 +146,9 @@ let package = Package(
 
 $SDK_TARGET_FN_STRING
 " > Devel/Package.swift.prod
+
+echo "# GENERATED FILE, DO NOT EDIT BY HAND
+
+    xcframework_urls = [$FRAMEWORK_URLS_STRING
+    ]
+" > Devel/podspec.prod

@@ -43,76 +43,76 @@ let package = Package(
 func getSdkTargets() -> [Target] {
     return [
         .binaryTarget(
-            name: "01",
-            path: "ReclaimXCFrameworks/01.xcframework"
+            name: "App",
+            path: "ReclaimXCFrameworks/App.xcframework"
         ),
         .binaryTarget(
-            name: "02",
-            path: "ReclaimXCFrameworks/02.xcframework"
+            name: "Flutter",
+            path: "ReclaimXCFrameworks/Flutter.xcframework"
         ),
         .binaryTarget(
-            name: "03",
-            path: "ReclaimXCFrameworks/03.xcframework"
+            name: "FlutterPluginRegistrant",
+            path: "ReclaimXCFrameworks/FlutterPluginRegistrant.xcframework"
         ),
         .binaryTarget(
-            name: "04",
-            path: "ReclaimXCFrameworks/04.xcframework"
+            name: "OrderedSet",
+            path: "ReclaimXCFrameworks/OrderedSet.xcframework"
         ),
         .binaryTarget(
-            name: "05",
-            path: "ReclaimXCFrameworks/05.xcframework"
+            name: "cupertino_http",
+            path: "ReclaimXCFrameworks/cupertino_http.xcframework"
         ),
         .binaryTarget(
-            name: "06",
-            path: "ReclaimXCFrameworks/06.xcframework"
+            name: "device_info_plus",
+            path: "ReclaimXCFrameworks/device_info_plus.xcframework"
         ),
         .binaryTarget(
-            name: "07",
-            path: "ReclaimXCFrameworks/07.xcframework"
+            name: "flutter_inappwebview_ios",
+            path: "ReclaimXCFrameworks/flutter_inappwebview_ios.xcframework"
         ),
         .binaryTarget(
-            name: "08",
-            path: "ReclaimXCFrameworks/08.xcframework"
+            name: "flutter_secure_storage",
+            path: "ReclaimXCFrameworks/flutter_secure_storage.xcframework"
         ),
         .binaryTarget(
-            name: "09",
-            path: "ReclaimXCFrameworks/09.xcframework"
+            name: "fluttertoast",
+            path: "ReclaimXCFrameworks/fluttertoast.xcframework"
         ),
         .binaryTarget(
-            name: "10",
-            path: "ReclaimXCFrameworks/10.xcframework"
+            name: "objective_c",
+            path: "ReclaimXCFrameworks/objective_c.xcframework"
         ),
         .binaryTarget(
-            name: "11",
-            path: "ReclaimXCFrameworks/11.xcframework"
+            name: "package_info_plus",
+            path: "ReclaimXCFrameworks/package_info_plus.xcframework"
         ),
         .binaryTarget(
-            name: "12",
-            path: "ReclaimXCFrameworks/12.xcframework"
+            name: "path_provider_foundation",
+            path: "ReclaimXCFrameworks/path_provider_foundation.xcframework"
         ),
         .binaryTarget(
-            name: "13",
-            path: "ReclaimXCFrameworks/13.xcframework"
+            name: "permission_handler_apple",
+            path: "ReclaimXCFrameworks/permission_handler_apple.xcframework"
         ),
         .binaryTarget(
-            name: "14",
-            path: "ReclaimXCFrameworks/14.xcframework"
+            name: "reclaim_gnark_zkoperator",
+            path: "ReclaimXCFrameworks/reclaim_gnark_zkoperator.xcframework"
         ),
         .binaryTarget(
-            name: "15",
-            path: "ReclaimXCFrameworks/15.xcframework"
+            name: "share_plus",
+            path: "ReclaimXCFrameworks/share_plus.xcframework"
         ),
         .binaryTarget(
-            name: "16",
-            path: "ReclaimXCFrameworks/16.xcframework"
+            name: "shared_preferences_foundation",
+            path: "ReclaimXCFrameworks/shared_preferences_foundation.xcframework"
         ),
         .binaryTarget(
-            name: "17",
-            path: "ReclaimXCFrameworks/17.xcframework"
+            name: "sqflite_darwin",
+            path: "ReclaimXCFrameworks/sqflite_darwin.xcframework"
         ),
         .binaryTarget(
-            name: "PluginRegistrant",
-            path: "ReclaimXCFrameworks/PluginRegistrant.xcframework"
+            name: "url_launcher_ios",
+            path: "ReclaimXCFrameworks/url_launcher_ios.xcframework"
         ),
     ]
 }
