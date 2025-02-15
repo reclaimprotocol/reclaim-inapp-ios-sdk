@@ -235,7 +235,11 @@ do {
 
 For a complete example, see the [Reclaim Example - SwiftUI](Examples/SwiftUIExample/SwiftUIExample/ContentView.swift).
 
-#### Overrides | Advanced Usage
+#### Note
+
+- It's worth noting that you should commit the **swiftpm** folder that will be built and more specifically that the **Package.resolved** file should be included in your source control/git.
+
+## Overrides | Advanced Usage
 
 You can use the `ReclaimOverrides` to customize the verification flow with `ReclaimVerification.setOverrides`.
 

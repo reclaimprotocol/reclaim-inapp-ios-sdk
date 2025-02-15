@@ -1,0 +1,14 @@
+{
+  "originHash" : "86cb3b537218b477f8b131a7b61e3563cf2ccb98e0d85684afab074c2eca94fd",
+  "pins" : [
+    {
+      "identity" : "reclaim-inapp-ios-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk",
+      "state" : {
+        "revision" : "30ccddc787dc7d29e6fb651ba2eb5d18b62e95a0"
+      }
+    }
+  ],
+  "version" : 3
+}
