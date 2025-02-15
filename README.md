@@ -42,7 +42,7 @@ This should complete the installation of the Reclaim InApp SDK. Now follow the [
 Either select a package version:
 
 ```
-.package(url: "https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git", from: "0.1.0")
+.package(url: "https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git", from: "0.1.2")
 ```
 
 Or select the main branch:
@@ -59,7 +59,7 @@ Or select the main branch:
 .product(name: "ReclaimInAppSdk", package: "ReclaimInAppSdk")
 ```
 
-### 2. Add Reclaim's XCFrameworks to your Xcode Project
+<!-- ### 2. Add Reclaim's XCFrameworks to your Xcode Project
 
 Run the following script to download Reclaim's XCFrameworks in your Xcode Project directory (The parent directory where your `.xcodeproj` is located).
 
@@ -115,13 +115,14 @@ To embed your dynamic frameworks, complete the following procedure.
     6. Click the **Build Phases** tab.
     7. Expand **Embed Frameworks**. Your dynamic frameworks should display in that section.
 
-<img src="Screenshots/Install/9.png" alt="Embedded dynamic frameworks in Xcode" width="500">
+<img src="Screenshots/Install/9.png" alt="Embedded dynamic frameworks in Xcode" width="500"> -->
 
-4. Build the project.
-    1. If you have a `*.xcworkspace` then open `YourApp.xcworkspace` in Xcode. Verify that you're opening MyApp.xcworkspace and not opening MyApp.xcodeproj. The .xcworkspace file has the CocoaPod dependencies, the .xcodeproj doesn't. If you don't have a `*.xcworkspace` then open `YourApp.xcodeproj` in Xcode.
-    2. Select **Product** > **Build** or press `Cmd + B`.
+#### Build the project.
 
-### 3. Fixing performance issues
+1. If you have a `*.xcworkspace` then open `YourApp.xcworkspace` in Xcode. Verify that you're opening MyApp.xcworkspace and not opening MyApp.xcodeproj. The .xcworkspace file has the CocoaPod dependencies, the .xcodeproj doesn't. If you don't have a `*.xcworkspace` then open `YourApp.xcodeproj` in Xcode.
+2. Select **Product** > **Build** or press `Cmd + B`.
+
+### 2. Fixing performance issues
 
 Your app performance will be severely impacted when you run debug executable on a physical device. Fixing this requires a simple change in your Xcode project xcscheme.
 
@@ -144,7 +145,10 @@ Your app performance will be severely impacted when you run debug executable on 
 8. Click on the **Close** button in the dialog and build the project.
 9. Run the app on a physical device.
 
-#### Method 2: Enable "Debug executable"
+#### Method 2: Disable "Debug executable"
+
+This method is **not recommended** but could be useful if you don't want to add environment variables to the xcscheme.
+
 1. Open your project in Xcode.
 2. Click on the project target.
 3. Click on the **Scheme** dropdown.
@@ -235,7 +239,7 @@ For a complete example, see the [Reclaim Example - SwiftUI](Examples/SwiftUIExam
 
 To upgrade to a new version of the Reclaim InApp SDK, follow these steps:
 
-1. Make sure you have the latest version of the Reclaim InApp SDK. Currently the latest version is `v1.0.0`.
+1. Make sure you have the latest version of the Reclaim InApp SDK. Currently the latest version is `v0.1.2`.
 1. Run the following script to download Reclaim's XCFrameworks in your Xcode Project directory (The parent directory where your .xcodeproj is located).
 
 ```sh

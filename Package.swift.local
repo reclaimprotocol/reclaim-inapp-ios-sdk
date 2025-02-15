@@ -1,0 +1,119 @@
+// swift-tools-version: 6.0
+// The swift-tools-version declares the minimum version of Swift required to build this package.
+
+// GENERATED FILE, DO NOT EDIT BY HAND
+
+import PackageDescription
+
+let sdkTargets = getSdkTargets()
+let sdkTargetNames = sdkTargets.map { $0.name }
+
+let package = Package(
+    name: "ReclaimInAppSdk",
+    defaultLocalization: "en",
+    platforms: [
+        .iOS(.v13),
+        .macOS(.v10_15)
+    ],
+    products: [
+        // Products define the executables and libraries a package produces, making them visible to other packages.
+        .library(
+            name: "ReclaimInAppSdk",
+            targets: [
+                "ReclaimInAppSdk",
+            ] + sdkTargetNames
+        )
+    ],
+    targets: [
+        // Targets are the basic building blocks of a package, defining a module or a test suite.
+        // Targets can depend on other targets in this package and products from dependencies.
+        .target(
+            name: "ReclaimInAppSdk",
+            resources: [
+                .process("Resources")
+            ]
+        ),
+        .testTarget(
+            name: "ReclaimInAppSdkTests",
+            dependencies: ["ReclaimInAppSdk"]
+        ),
+    ] + sdkTargets
+)
+
+func getSdkTargets() -> [Target] {
+    return [
+        .binaryTarget(
+            name: "01",
+            path: "ReclaimXCFrameworks/01.xcframework"
+        ),
+        .binaryTarget(
+            name: "02",
+            path: "ReclaimXCFrameworks/02.xcframework"
+        ),
+        .binaryTarget(
+            name: "03",
+            path: "ReclaimXCFrameworks/03.xcframework"
+        ),
+        .binaryTarget(
+            name: "04",
+            path: "ReclaimXCFrameworks/04.xcframework"
+        ),
+        .binaryTarget(
+            name: "05",
+            path: "ReclaimXCFrameworks/05.xcframework"
+        ),
+        .binaryTarget(
+            name: "06",
+            path: "ReclaimXCFrameworks/06.xcframework"
+        ),
+        .binaryTarget(
+            name: "07",
+            path: "ReclaimXCFrameworks/07.xcframework"
+        ),
+        .binaryTarget(
+            name: "08",
+            path: "ReclaimXCFrameworks/08.xcframework"
+        ),
+        .binaryTarget(
+            name: "09",
+            path: "ReclaimXCFrameworks/09.xcframework"
+        ),
+        .binaryTarget(
+            name: "10",
+            path: "ReclaimXCFrameworks/10.xcframework"
+        ),
+        .binaryTarget(
+            name: "11",
+            path: "ReclaimXCFrameworks/11.xcframework"
+        ),
+        .binaryTarget(
+            name: "12",
+            path: "ReclaimXCFrameworks/12.xcframework"
+        ),
+        .binaryTarget(
+            name: "13",
+            path: "ReclaimXCFrameworks/13.xcframework"
+        ),
+        .binaryTarget(
+            name: "14",
+            path: "ReclaimXCFrameworks/14.xcframework"
+        ),
+        .binaryTarget(
+            name: "15",
+            path: "ReclaimXCFrameworks/15.xcframework"
+        ),
+        .binaryTarget(
+            name: "16",
+            path: "ReclaimXCFrameworks/16.xcframework"
+        ),
+        .binaryTarget(
+            name: "17",
+            path: "ReclaimXCFrameworks/17.xcframework"
+        ),
+        .binaryTarget(
+            name: "PluginRegistrant",
+            path: "ReclaimXCFrameworks/PluginRegistrant.xcframework"
+        ),
+    ]
+}
+

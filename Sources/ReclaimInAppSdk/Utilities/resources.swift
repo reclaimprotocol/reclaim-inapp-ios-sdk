@@ -10,6 +10,8 @@ func fetchPackageResource(
     _ extensionName: String
 ) throws -> String {
     let resourceFullName = "\(resourceName).\(extensionName)"
+    
+    #if SWIFT_PACKAGE
     guard let fileURL = Bundle.module.url(forResource: resourceName, withExtension: extensionName) else {
         if let resourceString = Bundle.main.path(forResource: resourceName, ofType: extensionName) {
             return resourceString
@@ -22,4 +24,10 @@ func fetchPackageResource(
     } catch {
         throw FetchPackageResourceError.loadingProblem(message: "Unable to load \(resourceFullName): \(error)")
     }
+    #else
+    if let resourceString = Bundle.main.path(forResource: resourceFullName, ofType: extensionName) {
+        return resourceString
+    }
+    throw FetchPackageResourceError.loadingProblem(message: "Unable to find \(resourceFullName) in bundle.")
+    #endif
 }

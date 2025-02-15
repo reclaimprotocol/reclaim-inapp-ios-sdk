@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
     s.name              = 'ReclaimInAppSdk'
     s.module_name       = 'ReclaimInAppSdk'
-    s.version           = '1.0.0'
+    s.version           = '0.1.2'
 
     s.summary           = 'The official Reclaim InApp SDK for iOS.'
 
@@ -27,7 +27,8 @@ Pod::Spec.new do |s|
     s.exclude_files     = [ 'Examples/**' ]
 
     # Resources:  Use resource_bundle for better organization
-    s.resource_bundle = { 'ReclaimInAppSdk' => 'Sources/ReclaimInAppSdk/Resources/**/*' } # Path relative to repo root
+    # s.resource_bundle = { 'ReclaimInAppSdk' => 'Sources/ReclaimInAppSdk/Resources/**/*' } # Path relative to repo root
+    s.resources = ['Sources/ReclaimInAppSdk/Resources/**/*.{version,plist}']
 
     s.pod_target_xcconfig   = {
         'SWIFT_VERSION' => '5.0',
