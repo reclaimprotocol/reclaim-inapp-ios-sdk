@@ -39,6 +39,10 @@ https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git
 
 This should complete the installation of the Reclaim InApp SDK. Now follow the [steps below to link the necessary frameworks to your Xcode project](#2-add-reclaims-xcframeworks-to-your-xcode-project).
 
+###### Note
+
+- It's worth noting that you should commit the **swiftpm** folder that will be built and more specifically that the **Package.resolved** file should be included in your source control/git.
+
 #### Method 2: When working with an Xcode Workspace project with CocoaPods:
 
 1. Make sure to define a global platform for your project in your `Podfile` with version 13.0 or higher.
@@ -306,10 +310,6 @@ do {
 ```
 
 For a complete example, see the [Reclaim Example - SwiftUI](Examples/SwiftUIExample/SwiftUIExample/ContentView.swift).
-
-#### Note
-
-- It's worth noting that you should commit the **swiftpm** folder that will be built and more specifically that the **Package.resolved** file should be included in your source control/git.
 
 ## Overrides | Advanced Usage
 
