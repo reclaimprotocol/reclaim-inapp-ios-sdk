@@ -38,7 +38,7 @@ import Foundation
     
     fileprivate static func sendLogEntries(
         _ logs: [Logging.LogRecord],
-        _ identity: ConsumerIdentity
+        _ identity: SessionIdentity
     ) async throws {
         let logEntries: [[String: Any]] = logs.map { e in
             return e.toJsonMap(identity: identity)
@@ -56,7 +56,7 @@ import Foundation
     }
     
     @MainActor fileprivate static func sendAndFlushLogsToRemote() async {
-        let identity = ConsumerIdentity.latest
+        let identity = SessionIdentity.latest
         guard let identity else { return }
         if buffer.isEmpty { return }
         let batch = buffer;

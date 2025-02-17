@@ -42,7 +42,7 @@ class SDKSettings {
         
         static func getReclaimSdkVersion() -> String {
             do {
-                var versionText = try fetchPackageResource("ReclaimInAppSdk", "version")
+                let versionText = try fetchPackageResource("ReclaimInAppSdk", "version")
                 return versionText.trimmingCharacters(in: .whitespacesAndNewlines)
             } catch {
                 if (isDebugMode()) {

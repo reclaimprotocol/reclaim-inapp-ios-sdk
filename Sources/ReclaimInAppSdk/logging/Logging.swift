@@ -180,7 +180,7 @@ public class Logging {
         
         @MainActor private static var _nextNumber = 0
 
-        func toJsonMap(identity: ConsumerIdentity) -> [String: Any] {
+        func toJsonMap(identity: SessionIdentity) -> [String: Any] {
             let msSinceEpoch = Date().timeIntervalSince1970 * 1000
             var logLine = message
             if let error = error {

@@ -13,13 +13,19 @@ public struct ReclaimSessionInformation {
     ///
     /// This value is at most
     /// 8,640,000,000,000,000ms (100,000,000 days) from the Unix epoch.
-    let timestamp: String
+    public let timestamp: String
     
     /// Unique identifier for the verification session
-    let sessionId: String
+    public let sessionId: String
     
     /// Cryptographic signature to validate the session
-    let signature: String
+    public let signature: String
+    
+    public init(timestamp: String, sessionId: String, signature: String) {
+        self.timestamp = timestamp
+        self.sessionId = sessionId
+        self.signature = signature
+    }
 }
 
 /// The main entry point for the Reclaim SDK verification flow.
@@ -37,18 +43,26 @@ public class ReclaimVerification {
     public enum Request {
         /// A Reclaim verification request with explicit parameters
         public struct Params {
-            var appId: String
-            var providerId: String
-            var secret: String
-            var signature: String = ""
-            var timestamp: String? = nil
-            var context: String
-            var sessionId: String = ""
-            var parameters: [String: String]
-            var hideLanding: Bool = true
-            var autoSubmit: Bool = false
-            var acceptAiProviders: Bool = false
-            var webhookUrl: String? = nil
+            /// Your Reclaim application ID. If not provided, SDK will look for ReclaimInAppSDKParam.ReclaimAppId in Info.plist
+            public var appId: String
+            /// The identifier for the Reclaim data provider to use in verification
+            public var providerId: String
+            /// Your Reclaim application secret. If not provided, SDK will look for ReclaimInAppSDKParam.ReclaimAppSecret in Info.plist
+            public var secret: String
+            /// Optional session information. If nil, SDK generates new session details
+            public var session: ReclaimSessionInformation? = nil
+            /// Additional data to associate with the verification attempt
+            public var context: String
+            /// Key-value pairs for prefilling claim creation variables
+            public var parameters: [String: String]
+            /// When false, shows an introductory page with claims to be proven
+            public var hideLanding: Bool = true
+            /// If true, automatically submits proof after generation
+            public var autoSubmit: Bool = false
+            /// Whether to accept AI-powered data providers
+            public var acceptAiProviders: Bool = false
+            /// Optional URL to receive verification status updates
+            public var webhookUrl: String? = nil
             
             /// Creates a Reclaim Verification Request with explicit app credentials.
             ///
@@ -98,10 +112,8 @@ public class ReclaimVerification {
                 self.appId = appId
                 self.secret = secret
                 self.providerId = providerId
-                self.signature = session?.signature ?? ""
-                self.timestamp = session?.timestamp ?? ""
+                self.session = session
                 self.context = context
-                self.sessionId = session?.sessionId ?? ""
                 self.parameters = parameters
                 self.hideLanding = hideLanding
                 self.autoSubmit = autoSubmit
@@ -190,11 +202,12 @@ public class ReclaimVerification {
         /// Start verification using a pre-configured URL
         case url(_ url: String)
         
-        var maybeSessionId: String? {
+        public var maybeSessionId: String? {
             get {
                 return switch (self) {
-                case .params(let request): request.sessionId
-                case .url(let url): ""
+                case .params(let request): request.session?.sessionId ?? ""
+                // TODO: Get Session Id from url
+                case .url(_): ""
                 }
             }
         }
@@ -238,7 +251,7 @@ public class ReclaimVerification {
     @MainActor
     public static func startVerification(_ request: Request) async throws -> Response {
         // Set up consumer identity for this verification session
-        ConsumerIdentity.setCurrentFromRequest(request)
+        SessionIdentity.setCurrentFromRequest(request)
         ConsumerLogging.setup()
         
         // Initialize logger for debugging and tracking
@@ -299,13 +312,8 @@ public class ReclaimVerification {
             
             Task { @MainActor in
                 let logger = Logging.get("ReclaimVerification.startVerification.Task")
-                do {
-                    logger.log("sending view model request")
-                    await viewModel.sendRequest()
-                } catch {
-                    let logger = Logging.get("ReclaimVerification.startVerification.Task")
-                    logger.log("Failed to send request", error: error)
-                }
+                logger.log("sending view model request")
+                await viewModel.sendRequest()
             }
         }
     }

@@ -41,27 +41,17 @@ class ClaimCreationViewModel: ObservableObject {
         }
         initializationState = .loading
         let logger = Logging.get("ReclaimVerification.startVerification.Task")
-        do {
-            logger.log("starting")
-            Task { @MainActor in
-                logger.log("starting main actor")
-            }
-            DispatchQueue.main.async {
-                logger.log("starting main async")
-            }
-            let binaryMessenger = ReclaimFlutterViewService.flutterEngine.binaryMessenger
-            let api = ReclaimModuleApi.init(binaryMessenger: binaryMessenger)
-            moduleApi = api
-            initializationState = .ready
-        } catch (let error) {
-            logger.log("Failed to fetch provider \(error)")
-            initializationState = .failed(error)
-            complete(with: .failure(.failed(
-                sessionId: request.maybeSessionId ?? "",
-                didSubmitManualVerification: false,
-                reason: "Failed to fetch provider"
-            )))
+        logger.log("starting")
+        Task { @MainActor in
+            logger.log("starting main actor")
         }
+        DispatchQueue.main.async {
+            logger.log("starting main async")
+        }
+        let binaryMessenger = ReclaimFlutterViewService.flutterEngine.binaryMessenger
+        let api = ReclaimModuleApi.init(binaryMessenger: binaryMessenger)
+        moduleApi = api
+        initializationState = .ready
     }
     
     @MainActor func onResponse(result: Result<ReclaimApiVerificationResponse, PigeonError>) {
@@ -122,10 +112,10 @@ class ClaimCreationViewModel: ObservableObject {
                     appId: request.appId,
                     providerId: request.providerId,
                     secret: request.secret,
-                    signature: request.signature,
-                    timestamp: request.timestamp,
+                    signature: request.session?.signature ?? "",
+                    timestamp: request.session?.timestamp ?? "",
                     context: request.context,
-                    sessionId: request.sessionId,
+                    sessionId: request.session?.sessionId ?? "",
                     parameters: request.parameters,
                     hideLanding: request.hideLanding,
                     autoSubmit: request.autoSubmit,

@@ -24,15 +24,17 @@ struct JSONUtility {
         return nil
     }
     
-    static func toString(_ json: Any) -> String {
-        if (json == nil) {return "null"}
-        if (json is String) {return json as! String}
-        if let jsonData = try? JSONSerialization.data(withJSONObject: json, options: [
-            JSONSerialization.WritingOptions.sortedKeys,
-            JSONSerialization.WritingOptions.fragmentsAllowed
-        ]) {
-            return String(data: jsonData, encoding: .utf8) ?? "null"
+    static func toString(_ json: Any?) -> String {
+        if let json {
+            if (json is String) {return json as! String}
+            if let jsonData = try? JSONSerialization.data(withJSONObject: json, options: [
+                JSONSerialization.WritingOptions.sortedKeys,
+                JSONSerialization.WritingOptions.fragmentsAllowed
+            ]) {
+                return String(data: jsonData, encoding: .utf8) ?? "null"
+            }
         }
+        
         return "null"
     }
 }
