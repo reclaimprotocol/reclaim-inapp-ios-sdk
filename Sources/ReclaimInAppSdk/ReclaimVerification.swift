@@ -206,7 +206,7 @@ public class ReclaimVerification {
             get {
                 return switch (self) {
                 case .params(let request): request.session?.sessionId ?? ""
-                // TODO: Get Session Id from url
+                    // TODO: Get Session Id from url
                 case .url(_): ""
                 }
             }
@@ -420,9 +420,7 @@ fileprivate class ReclaimApiImpl: ReclaimApi {
     }
     
     func createSession(appId: String, providerId: String, sessionId: String, completion: @escaping (Result<Bool, any Error>) -> Void) {
-        sessionManagement?.handler.createSession(appId: appId, providerId: providerId, sessionId: sessionId) { result in
-            completion(result)
-        }
+        sessionManagement?.handler.createSession(appId: appId, providerId: providerId, sessionId: sessionId, completion: completion)
     }
     
     func updateSession(sessionId: String, status: ReclaimSessionStatus, completion: @escaping (Result<Bool, any Error>) -> Void) {
@@ -439,10 +437,9 @@ fileprivate class ReclaimApiImpl: ReclaimApi {
         }
         sessionManagement?.handler.updateSession(
             sessionId: sessionId,
-            status: mappedStatus
-        ) { result in
-            completion(result)
-        }
+            status: mappedStatus,
+            completion: completion
+        )
     }
     
     func logSession(appId: String, providerId: String, sessionId: String, logType: String) throws {

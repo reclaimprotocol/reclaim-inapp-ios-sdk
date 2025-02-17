@@ -53,7 +53,7 @@ public class ReclaimOverrides {
          * Defaults to enabled when not in release mode.
          */
         public let canSdkPrintLogs: Bool?
-
+        
         public init(
             logHandler: LogHandler? = nil,
             canSdkCollectTelemetry: Bool = true,
@@ -71,7 +71,7 @@ public class ReclaimOverrides {
     
     public struct SessionManagement {
         public let handler: SessionHandler
-
+        
         public init(handler: SessionHandler) {
             self.handler = handler
         }
@@ -81,13 +81,13 @@ public class ReclaimOverrides {
                 appId: String,
                 providerId: String,
                 sessionId: String,
-                callback: (Result<Bool, Error>) -> Void
+                completion: @escaping (Result<Bool, Error>) -> Void
             )
             
             func updateSession(
                 sessionId: String,
                 status: SessionStatus,
-                callback: (Result<Bool, Error>) -> Void
+                completion: @escaping (Result<Bool, Error>) -> Void
             )
             
             func logSession(

@@ -12,7 +12,7 @@ import Foundation
         let formattedTime = dateFormatter.string(from: record.time)
         let label =
         "\(formattedTime) \(record.level.name) \(record.loggerName) (\(record.sequenceNumber))";
-        let message = record.message ?? ""
+        let message = record.message
         print("\(label) \(message)")
         let error = record.error
         if let e = error {
