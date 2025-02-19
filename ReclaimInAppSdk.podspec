@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
     s.name              = 'ReclaimInAppSdk'
     s.module_name       = 'ReclaimInAppSdk'
-    s.version           = '0.1.2'
+    s.version           = '0.1.3'
 
     s.summary           = 'The official Reclaim InApp SDK for iOS.'
 
@@ -10,7 +10,6 @@ Pod::Spec.new do |s|
                           the Reclaim Protocol API. ReclaimInAppSdk is an embeddable framework
                           that handles Reclaim Verification's Claim Creation and Claim Submission.
                           DESC
-    s.screenshot        = 'https://docs.reclaimprotocol.org/ios/ios.png'
 
     s.homepage          = 'https://docs.reclaimprotocol.org'
     s.license           = { :type => 'MIT', :file => 'LICENSE' }
@@ -18,13 +17,12 @@ Pod::Spec.new do |s|
     s.source            = { :git => 'https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git', :tag => s.version }
 
     s.platform          = :ios, '13.0'
-    s.swift_version     = '5.0'
+    s.swift_version     = '6.0'
 
-    s.source            = { :path => '.' }
     s.source_files      = [ 'Sources/**/*.{h,m,mm,cpp,swift}' ]
     s.exclude_files     = [ 'Examples/**', 'Devel/**', 'Scripts/**', 'Tests/**', 'Sources/ReclaimInAppSdk/Resources/**/*.{version,plist}' ]
 
-    s.resources = ['Sources/ReclaimInAppSdk/Resources/**/*.{version,plist}']
+    s.resources = ['Sources/ReclaimInAppSdk/Resources/*.{version,xcprivacy}']
 
     s.pod_target_xcconfig   = {
         'SWIFT_VERSION' => '5.0',

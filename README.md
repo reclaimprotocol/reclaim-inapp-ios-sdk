@@ -11,7 +11,7 @@ This SDK allows you to integrate Reclaim's in-app verification process into your
 
 ## Example
 
-- See the [Reclaim Example - SwiftUI](Examples/SwiftUIExample/README.md) for a complete example of how to use the SDK in a SwiftUI application.
+- See the [Reclaim Example - SwiftUI](https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/blob/53a19f88c8d90df485a60dc20190f740cd9fd108/Examples/SwiftUIExample/README.md) for a complete example of how to use the SDK in a SwiftUI application.
 <!-- Under development -->
 <!-- - See the [Reclaim Example - UIKit](Examples/StoryboardExample/README.md) for a complete example of how to use the SDK. -->
 
@@ -30,12 +30,12 @@ https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git
 ##### How to add a Swift Package Manager (SPM) dependency to your Xcode project:
 
 1. In your Xcode Editor's toolbar, click on `File` > `Add Package Dependency...`.
-<img src="Screenshots/Install/1.png" width="500" alt="Add a dependency to your Xcode project">
+<img src="https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/raw/53a19f88c8d90df485a60dc20190f740cd9fd108/Screenshots/Install/1.png" width="500" alt="Add a dependency to your Xcode project">
 2. In the `Add Package Dependency` dialog box, paste the URL `https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git` into the `Search or Enter package URL` field on the top right corner of dialog box.
-<img src="Screenshots/Install/2.png" width="500" alt="Add a dependency to your Xcode project">
+<img src="https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/raw/53a19f88c8d90df485a60dc20190f740cd9fd108/Screenshots/Install/2.png" width="500" alt="Add a dependency to your Xcode project">
 3. Click `Add Package`.
 4. In the other window, select your **app target** in the `Add to Targets` section and then click `Add package`.
-<img src="Screenshots/Install/3.png" width="500" alt="Add a dependency to your Xcode project">
+<img src="https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/raw/53a19f88c8d90df485a60dc20190f740cd9fd108/Screenshots/Install/3.png" width="500" alt="Add a dependency to your Xcode project">
 
 This should complete the installation of the Reclaim InApp SDK. Now follow the [steps below to link the necessary frameworks to your Xcode project](#2-add-reclaims-xcframeworks-to-your-xcode-project).
 
@@ -51,7 +51,7 @@ This should complete the installation of the Reclaim InApp SDK. Now follow the [
 platform :ios, '13.0'
 ```
 
-2. Add the following to your `Podfile`:
+2. Add the following to your `Podfile` to override the default version of the ReclaimInAppSdk (optional):
 
 - From a specific tag (recommended):
 
@@ -105,11 +105,11 @@ end
 4. Open the `*.xcworkspace` file to work on the project. And build the project.
 5. Your build may fail due to an error like this:
 
-<img src="Screenshots/Install/PodBuildError.png" alt="Xcode build error due to CocoaPods" width="500">
+<img src="https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/raw/53a19f88c8d90df485a60dc20190f740cd9fd108/Screenshots/Install/PodBuildError.png" alt="Xcode build error due to CocoaPods" width="500">
 
 6. To fix this, open the `*.xcworkspace` file in Xcode. In your target's `Build Settings`, under `Build Options` Section, set `User Script Sandboxing` to `No` and build the project again.
 
-<img src="Screenshots/Install/PodBuildErrorFix.png" alt="Xcode build error due to CocoaPods" width="500">
+<img src="https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/raw/53a19f88c8d90df485a60dc20190f740cd9fd108/Screenshots/Install/PodBuildErrorFix.png" alt="Xcode build error due to CocoaPods" width="500">
 
 7. Your project should build successfully.
 
@@ -147,7 +147,7 @@ bash <(curl -s https://raw.githubusercontent.com/reclaimprotocol/reclaim-inapp-i
 
 To link the necessary frameworks, follow this procedure.
 
-<img src="Screenshots/Install/4.png" alt="Expand the Link Binary With Libraries build phase in Xcode" width="500">
+<img src="https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/raw/53a19f88c8d90df485a60dc20190f740cd9fd108/Screenshots/Install/4.png" alt="Expand the Link Binary With Libraries build phase in Xcode" width="500">
 
 1. Choose the frameworks to link.
     1. In the **Project Navigator**, click on your project target.
@@ -158,7 +158,7 @@ To link the necessary frameworks, follow this procedure.
     6. From the **Choose frameworks and libraries to add**: dialog box, navigate to the `ReclaimXCFrameworks` directory in your Xcode Project directory's root and **select all the frameworks**.
     7. Command-click the frameworks in that directory then click Open.
 
-<img src="Screenshots/Install/5.png" alt="Choose frameworks to link from the Choose frameworks and libraries to add: dialog box in Xcode" width="500">
+<img src="https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/raw/53a19f88c8d90df485a60dc20190f740cd9fd108/Screenshots/Install/5.png" alt="Choose frameworks to link from the Choose frameworks and libraries to add: dialog box in Xcode" width="500">
 
 2. Update search paths.
     1. Again, in the **Project Navigator**, click on your project target.
@@ -169,7 +169,7 @@ To link the necessary frameworks, follow this procedure.
     6. Click **+** (plus sign).
     7. Type `$(PROJECT_DIR)/ReclaimXCFrameworks/` and press `Enter`.
 
-<img src="Screenshots/Install/6.png" alt="Update Framework Search Paths in Xcode" width="500">
+<img src="https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/raw/53a19f88c8d90df485a60dc20190f740cd9fd108/Screenshots/Install/6.png" alt="Update Framework Search Paths in Xcode" width="500">
 
 After linking the frameworks, they should display in the **Frameworks, Libraries, and Embedded Content** section of your target's **General** settings.
 
@@ -182,16 +182,16 @@ To embed your dynamic frameworks, complete the following procedure.
     3. Scroll down to the **Frameworks, Libraries, and Embedded Content** section.
     4. Click on each dynamic framework and set the **Embed** option to **Embed & Sign**.
 
-<img src="Screenshots/Install/7.png" alt="Embed dynamic frameworks in Xcode" width="500">
+<img src="https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/raw/53a19f88c8d90df485a60dc20190f740cd9fd108/Screenshots/Install/7.png" alt="Embed dynamic frameworks in Xcode" width="500">
 
     5. Don't include any static frameworks, including `PluginRegistrant.xcframework`. Do not embed them. Your embedded frameworks should only be dynamic frameworks and will look like the below screenshot.
 
-<img src="Screenshots/Install/8.png" alt="Embed dynamic frameworks in Xcode" width="500">
+<img src="https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/raw/53a19f88c8d90df485a60dc20190f740cd9fd108/Screenshots/Install/8.png" alt="Embed dynamic frameworks in Xcode" width="500">
 
     6. Click the **Build Phases** tab.
     7. Expand **Embed Frameworks**. Your dynamic frameworks should display in that section.
 
-<img src="Screenshots/Install/9.png" alt="Embedded dynamic frameworks in Xcode" width="500"> -->
+<img src="https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/raw/53a19f88c8d90df485a60dc20190f740cd9fd108/Screenshots/Install/9.png" alt="Embedded dynamic frameworks in Xcode" width="500"> -->
 
 #### Build the project.
 
@@ -207,13 +207,13 @@ Your app performance will be severely impacted when you run debug executable on 
 2. Click on the project target.
 3. Click on the **Scheme** dropdown.
 
-<img src="Screenshots/Install/10.png" alt="Edit current xcscheme in Xcode" width="500">
+<img src="https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/raw/53a19f88c8d90df485a60dc20190f740cd9fd108/Screenshots/Install/10.png" alt="Edit current xcscheme in Xcode" width="500">
 
 4. Click on the **Edit Scheme** button.
 5. Click on the **Run** tab.
 6. Click on the **Arguments** tab and check the **Environment Variables** section.
 
-<img src="Screenshots/Install/12.png" alt="Enable Debug executable in Xcode" width="500">
+<img src="https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/raw/53a19f88c8d90df485a60dc20190f740cd9fd108/Screenshots/Install/12.png" alt="Enable Debug executable in Xcode" width="500">
 
 7. Add the following environment variable:
     - Key: `GODEBUG`
@@ -229,13 +229,13 @@ This method is **not recommended** but could be useful if you don't want to add 
 2. Click on the project target.
 3. Click on the **Scheme** dropdown.
 
-<img src="Screenshots/Install/10.png" alt="Edit current xcscheme in Xcode" width="500">
+<img src="https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/raw/53a19f88c8d90df485a60dc20190f740cd9fd108/Screenshots/Install/10.png" alt="Edit current xcscheme in Xcode" width="500">
 
 4. Click on the **Edit Scheme** button.
 5. Click on the **Run** tab.
 6. Uncheck the **Debug executable** checkbox.
 
-<img src="Screenshots/Install/11.png" alt="Enable Debug executable in Xcode" width="500">
+<img src="https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/raw/53a19f88c8d90df485a60dc20190f740cd9fd108/Screenshots/Install/11.png" alt="Enable Debug executable in Xcode" width="500">
 
 ### 4. Use ReclaimInAppSdk in your project
 
@@ -309,7 +309,7 @@ do {
 }
 ```
 
-For a complete example, see the [Reclaim Example - SwiftUI](Examples/SwiftUIExample/SwiftUIExample/ContentView.swift).
+For a complete example, see the [Reclaim Example - SwiftUI](https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/blob/53a19f88c8d90df485a60dc20190f740cd9fd108/Examples/SwiftUIExample/SwiftUIExample/ContentView.swift).
 
 ## Overrides | Advanced Usage
 
