@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
                           that handles Reclaim Verification's Claim Creation and Claim Submission.
                           DESC
 
-    s.homepage          = 'https://docs.reclaimprotocol.org'
+    s.homepage          = 'https://docs.reclaimprotocol.org/inapp-sdks/ios'
     s.license           = { :type => 'MIT', :file => 'LICENSE' }
     s.author            = 'Reclaim Protocol'
     s.source            = { :git => 'https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git', :tag => s.version }
