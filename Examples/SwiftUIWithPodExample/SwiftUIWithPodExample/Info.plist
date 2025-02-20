@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ReclaimProviderId</key>
+	<string>$(RECLAIM_PROVIDER_ID)</string>
+	<key>ReclaimInAppSDKParam</key>
+	<dict>
+		<key>ReclaimAppId</key>
+		<string>$(RECLAIM_APP_ID)</string>
+		<key>ReclaimAppSecret</key>
+		<string>$(RECLAIM_APP_SECRET)</string>
+	</dict>
+</dict>
+</plist>

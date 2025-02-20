@@ -12,6 +12,7 @@ This SDK allows you to integrate Reclaim's in-app verification process into your
 ## Example
 
 - See the [Reclaim Example - SwiftUI](https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/blob/53a19f88c8d90df485a60dc20190f740cd9fd108/Examples/SwiftUIExample/README.md) for a complete example of how to use the SDK in a SwiftUI application.
+- See the [Reclaim Example - SwiftUI with CocoaPods](https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/blob/main/Examples/SwiftUIWithPodExample/README.md) for a complete example of how to use the SDK in a SwiftUI application with CocoaPods.
 <!-- Under development -->
 <!-- - See the [Reclaim Example - UIKit](Examples/StoryboardExample/README.md) for a complete example of how to use the SDK. -->
 
@@ -112,6 +113,8 @@ end
 <img src="https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/raw/53a19f88c8d90df485a60dc20190f740cd9fd108/Screenshots/Install/PodBuildErrorFix.png" alt="Xcode build error due to CocoaPods" width="500">
 
 7. Your project should build successfully.
+
+For more info, check the [Reclaim Example - SwiftUI with CocoaPods](https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/blob/main/Examples/SwiftUIWithPodExample/README.md) for a complete example of how to use the SDK in a SwiftUI application with CocoaPods.
 
 #### Method 3: When working with a Swift Package Manager manifest:
 

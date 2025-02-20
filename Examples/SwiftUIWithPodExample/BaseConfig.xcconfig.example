@@ -1,0 +1,15 @@
+//
+//  BaseConfig.xcconfig
+//  SwiftUIExample
+//
+//  Created by Mushaheed Syed on 25/01/25.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+// Make sure to remove the quotes around the values
+
+RECLAIM_APP_ID = YOUR_APP_ID
+RECLAIM_APP_SECRET = YOUR_APP_SECRET
+RECLAIM_PROVIDER_ID = YOUR_PROVIDER_ID
