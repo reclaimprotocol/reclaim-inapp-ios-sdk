@@ -1,4 +1,4 @@
-public class ReclaimOverrides {
+final public class ReclaimOverrides {
     public enum ProviderInformation {
         /**
          * Represents a provider information override using url.
@@ -21,7 +21,7 @@ public class ReclaimOverrides {
                 sessionId: String,
                 signature: String,
                 timestamp: String,
-                completion: @escaping (Result<[String : (any Sendable)?], any Error>) -> Void
+                completion: @escaping (Result<String, any Error>) -> Void
             )
         }
     }

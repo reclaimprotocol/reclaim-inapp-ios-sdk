@@ -611,7 +611,7 @@ protocol ReclaimApi {
   func updateSession(sessionId: String, status: ReclaimSessionStatus, completion: @escaping (Result<Bool, Error>) -> Void)
   func logSession(appId: String, providerId: String, sessionId: String, logType: String, completion: @escaping (Result<Void, Error>) -> Void)
   func onSessionIdentityUpdate(update: ReclaimSessionIdentityUpdate?, completion: @escaping (Result<Void, Error>) -> Void)
-  func fetchProviderInformation(appId: String, providerId: String, sessionId: String, signature: String, timestamp: String, completion: @escaping (Result<[String: Sendable?], Error>) -> Void)
+  func fetchProviderInformation(appId: String, providerId: String, sessionId: String, signature: String, timestamp: String, completion: @escaping (Result<String, Error>) -> Void)
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.

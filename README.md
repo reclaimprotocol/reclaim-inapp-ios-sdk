@@ -1,5 +1,9 @@
 # Reclaim InApp SDK
 
+[![Documentation](https://img.shields.io/badge/read_the-docs-blue)](https://docs.reclaimprotocol.org/inapp-sdks/ios)
+[![Platforms](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Freclaimprotocol%2Freclaim-inapp-ios-sdk%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/reclaimprotocol/reclaim-inapp-ios-sdk)
+[![Swift 6.0](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Freclaimprotocol%2Freclaim-inapp-ios-sdk%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/reclaimprotocol/reclaim-inapp-ios-sdk)
+
 This SDK allows you to integrate Reclaim's in-app verification process into your SwiftUI application.
 
 ## Prerequisites

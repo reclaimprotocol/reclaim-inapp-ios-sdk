@@ -372,7 +372,7 @@ public class ReclaimVerification {
             case .callback(callbackHandler: let callbackHandler): callbackHandler;
             default: nil
         }
-
+        
         let hostApi = ReclaimApiImpl(
             providerInformationCallbackHandler: providerInformationCallbackHandler,
             logConsumer: logConsumer,
@@ -382,7 +382,7 @@ public class ReclaimVerification {
         )
         ReclaimApiSetup.setUp(binaryMessenger: binaryMessenger, api: hostApi)
         previousReclaimApiImpl = hostApi
-
+        
         // Use continuation to handle the asynchronous UI flow
         return try await withCheckedThrowingContinuation { continuation in
             let overrideProvider: ClientProviderInformationOverride? = if let provider {
@@ -428,11 +428,14 @@ public class ReclaimVerification {
                 ),
                 capabilityAccessToken: capabilityAccessToken
             ) { result in
-                continuation.resume(with: result)
+                switch (result) {
+                    case .success(): continuation.resume(returning: ())
+                    case .failure(let error): continuation.resume(throwing: ReclaimPlatformException(pigeonError: error))
+                }
             }
         }
     }
-
+    
     @MainActor
     public static func clearAllOverrides() async throws {
         let binaryMessenger = ReclaimFlutterViewService.flutterEngine.binaryMessenger
@@ -460,6 +463,43 @@ public enum ReclaimVerificationError: Error {
     /// Verification failed with a specific reason
     /// - Parameter reason: Description of why the verification failed
     case failed(sessionId: String, didSubmitManualVerification: Bool, reason: String)
+}
+
+@objc(ReclaimPlatformException) final public class ReclaimPlatformException: NSError, Sendable {
+    let pigeonError: PigeonError
+    public let errorCode: String
+    public let message: String?
+    public let details: Sendable?
+    
+    init(pigeonError: PigeonError) {
+        self.pigeonError = pigeonError
+        self.errorCode = pigeonError.code
+        self.message = pigeonError.message
+        self.details = pigeonError.details
+        super.init(domain: "org.reclaimprotocol.inapp_sdk", code: 1, userInfo: [
+            "errorCode": errorCode,
+            "message": message,
+            "details": details
+        ])
+    }
+
+    public override var underlyingErrors: [any Error] {
+        get {
+            return [pigeonError]
+        }
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public override var localizedDescription: String {
+        return "ReclaimPlatformException(code: \(errorCode), message: \(message ?? "<nil>"), details: \(details ?? "<nil>")"
+    }
+    
+    public override var localizedFailureReason: String {
+        return message ?? "<nil>"
+    }
 }
 
 fileprivate class ReclaimApiImpl: ReclaimApi {
@@ -526,7 +566,7 @@ fileprivate class ReclaimApiImpl: ReclaimApi {
             return previousReclaimApiImpl.updateSession(sessionId: sessionId, status: status, completion: completion)
         }
     }
-
+    
     func logSession(appId: String, providerId: String, sessionId: String, logType: String, completion: @escaping (Result<Void, any Error>) -> Void) {
         if let sessionManagement {
             sessionManagement.handler.logSession(appId: appId, providerId: providerId, sessionId: sessionId, logType: logType)
@@ -535,7 +575,7 @@ fileprivate class ReclaimApiImpl: ReclaimApi {
         }
         completion(.success(()))
     }
-
+    
     func onSessionIdentityUpdate(update: ReclaimSessionIdentityUpdate?, completion: @escaping (Result<Void, any Error>) -> Void) {
         let identity: ReclaimVerification.ReclaimSessionIdentity? = if let update {
             .init(sessionId: update.sessionId, providerId: update.providerId, appId: update.appId)
@@ -553,8 +593,8 @@ fileprivate class ReclaimApiImpl: ReclaimApi {
             return previousReclaimApiImpl.onSessionIdentityUpdate(update: update, completion: completion)
         }
     }
-
-    func fetchProviderInformation(appId: String, providerId: String, sessionId: String, signature: String, timestamp: String, completion: @escaping (Result<[String : (any Sendable)?], any Error>) -> Void) {
+    
+    func fetchProviderInformation(appId: String, providerId: String, sessionId: String, signature: String, timestamp: String, completion: @escaping (Result<String, any Error>) -> Void) {
         if let providerInformationCallbackHandler {
             providerInformationCallbackHandler.fetchProviderInformation(
                 appId: appId,

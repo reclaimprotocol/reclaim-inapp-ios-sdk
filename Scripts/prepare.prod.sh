@@ -39,13 +39,13 @@ for framework_path in $FRAMEWORK_PATTERN; do
         fi
         echo "Target name: $target_name"
 
-        framework_zip_path="$DIST_DIR/${framework_name}.zip"
+        framework_zip_path="$(realpath $DIST_DIR)/${framework_name}.zip"
 
         # Remove existing zip if it exists
         rm -f "$framework_zip_path" 2>/dev/null
 
         # Zip the framework
-        zip -r "$framework_zip_path" "$framework_path"
+        (cd "$(dirname "$framework_path")"; zip -r "$framework_zip_path" "$(basename "$framework_path")")
 
         # Compute and display checksum
         echo "Checksum for ${framework_name}.zip from:"

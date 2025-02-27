@@ -1,6 +1,6 @@
 import Foundation
-struct JSONUtility {
-    static func fromString(_ messageBody: Any) -> Any? {
+public struct JSONUtility {
+    public static func fromString(_ messageBody: Any) -> Any? {
         if  let messageBodyString = messageBody as? String {
             let messageBodyBytes = messageBodyString.data(using: .utf8)
             do {
@@ -24,7 +24,7 @@ struct JSONUtility {
         return nil
     }
     
-    static func toString(_ json: Any?) -> String {
+    public static func toString(_ json: Any?) -> String {
         if let json {
             if (json is String) {return json as! String}
             if let jsonData = try? JSONSerialization.data(withJSONObject: json, options: [
