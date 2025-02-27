@@ -2,7 +2,7 @@
 
 RECLAIM_SDK_VERSION=$(cat Sources/ReclaimInAppSdk/Resources/ReclaimInAppSdk.version)
 
-DIST_DIR="Dist/${RECLAIM_SDK_VERSION}/BinaryTargets"
+DIST_DIR="Build/${RECLAIM_SDK_VERSION}/BinaryTargets"
 mkdir -p $DIST_DIR
 REMOTE_FRAMEWORK_URL="https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/${RECLAIM_SDK_VERSION}/BinaryTargets"
 
@@ -13,9 +13,9 @@ FRAMEWORK_URLS_STRING=""
 
 FRAMEWORK_PATTERN=""
 if [ "$ONLY_RELEASE_TARGETS" != "true" ]; then
-    FRAMEWORK_PATTERN="ReclaimXCFrameworks/**/*.xcframework"
+    FRAMEWORK_PATTERN="Build/Cache/ReclaimXCFrameworks/**/*.xcframework"
 else
-    FRAMEWORK_PATTERN="ReclaimXCFrameworks/*.xcframework"
+    FRAMEWORK_PATTERN="Build/Cache/ReclaimXCFrameworks/*.xcframework"
 fi
 
 for framework_path in $FRAMEWORK_PATTERN; do

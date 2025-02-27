@@ -6,9 +6,9 @@ RELEASE_LOCAL_TARGET_STRING=""
 
 FRAMEWORK_PATTERN=""
 if [ "$ONLY_RELEASE_TARGETS" != "true" ]; then
-    FRAMEWORK_PATTERN="ReclaimXCFrameworks/**/*.xcframework"
+    FRAMEWORK_PATTERN="Build/Cache/ReclaimXCFrameworks/**/*.xcframework"
 else
-    FRAMEWORK_PATTERN="ReclaimXCFrameworks/*.xcframework"
+    FRAMEWORK_PATTERN="Build/Cache/ReclaimXCFrameworks/*.xcframework"
 fi
 
 for framework_path in $FRAMEWORK_PATTERN; do

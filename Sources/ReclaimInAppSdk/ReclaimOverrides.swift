@@ -9,6 +9,21 @@ public class ReclaimOverrides {
          * Represents a provider information override using json string.
          */
         case jsonString(jsonString: String)
+        /**
+         * Represents a provider information override using callback handler.
+         */
+        case callback(callbackHandler: CallbackHandler)
+
+        public protocol CallbackHandler {
+            func fetchProviderInformation(
+                appId: String,
+                providerId: String,
+                sessionId: String,
+                signature: String,
+                timestamp: String,
+                completion: @escaping (Result<[String : (any Sendable)?], any Error>) -> Void
+            )
+        }
     }
     
     public struct FeatureOptions {
@@ -38,7 +53,7 @@ public class ReclaimOverrides {
             self.isAIFlowEnabled = isAIFlowEnabled
         }
     }
-    
+
     public struct LogConsumer {
         /**
          * Handler for consuming logs exported from the SDK.
@@ -146,5 +161,9 @@ public class ReclaimOverrides {
             self.appImageUrl = appImageUrl
             self.isRecurring = isRecurring
         }
+    }
+    
+    public protocol SessionIdentityUpdateHandler {
+        func onSessionIdentityUpdate(identity: ReclaimVerification.ReclaimSessionIdentity?)
     }
 }

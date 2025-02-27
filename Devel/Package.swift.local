@@ -44,75 +44,71 @@ func getSdkTargets() -> [Target] {
     return [
         .binaryTarget(
             name: "App",
-            path: "ReclaimXCFrameworks/App.xcframework"
+            path: "Build/Cache/ReclaimXCFrameworks/App.xcframework"
         ),
         .binaryTarget(
             name: "Flutter",
-            path: "ReclaimXCFrameworks/Flutter.xcframework"
+            path: "Build/Cache/ReclaimXCFrameworks/Flutter.xcframework"
         ),
         .binaryTarget(
             name: "FlutterPluginRegistrant",
-            path: "ReclaimXCFrameworks/FlutterPluginRegistrant.xcframework"
+            path: "Build/Cache/ReclaimXCFrameworks/FlutterPluginRegistrant.xcframework"
         ),
         .binaryTarget(
             name: "OrderedSet",
-            path: "ReclaimXCFrameworks/OrderedSet.xcframework"
+            path: "Build/Cache/ReclaimXCFrameworks/OrderedSet.xcframework"
         ),
         .binaryTarget(
             name: "cupertino_http",
-            path: "ReclaimXCFrameworks/cupertino_http.xcframework"
+            path: "Build/Cache/ReclaimXCFrameworks/cupertino_http.xcframework"
         ),
         .binaryTarget(
             name: "device_info_plus",
-            path: "ReclaimXCFrameworks/device_info_plus.xcframework"
+            path: "Build/Cache/ReclaimXCFrameworks/device_info_plus.xcframework"
         ),
         .binaryTarget(
             name: "flutter_inappwebview_ios",
-            path: "ReclaimXCFrameworks/flutter_inappwebview_ios.xcframework"
+            path: "Build/Cache/ReclaimXCFrameworks/flutter_inappwebview_ios.xcframework"
         ),
         .binaryTarget(
             name: "flutter_secure_storage",
-            path: "ReclaimXCFrameworks/flutter_secure_storage.xcframework"
+            path: "Build/Cache/ReclaimXCFrameworks/flutter_secure_storage.xcframework"
         ),
         .binaryTarget(
             name: "fluttertoast",
-            path: "ReclaimXCFrameworks/fluttertoast.xcframework"
+            path: "Build/Cache/ReclaimXCFrameworks/fluttertoast.xcframework"
         ),
         .binaryTarget(
             name: "objective_c",
-            path: "ReclaimXCFrameworks/objective_c.xcframework"
+            path: "Build/Cache/ReclaimXCFrameworks/objective_c.xcframework"
         ),
         .binaryTarget(
             name: "package_info_plus",
-            path: "ReclaimXCFrameworks/package_info_plus.xcframework"
+            path: "Build/Cache/ReclaimXCFrameworks/package_info_plus.xcframework"
         ),
         .binaryTarget(
             name: "path_provider_foundation",
-            path: "ReclaimXCFrameworks/path_provider_foundation.xcframework"
+            path: "Build/Cache/ReclaimXCFrameworks/path_provider_foundation.xcframework"
         ),
         .binaryTarget(
             name: "permission_handler_apple",
-            path: "ReclaimXCFrameworks/permission_handler_apple.xcframework"
+            path: "Build/Cache/ReclaimXCFrameworks/permission_handler_apple.xcframework"
         ),
         .binaryTarget(
             name: "reclaim_gnark_zkoperator",
-            path: "ReclaimXCFrameworks/reclaim_gnark_zkoperator.xcframework"
-        ),
-        .binaryTarget(
-            name: "share_plus",
-            path: "ReclaimXCFrameworks/share_plus.xcframework"
+            path: "Build/Cache/ReclaimXCFrameworks/reclaim_gnark_zkoperator.xcframework"
         ),
         .binaryTarget(
             name: "shared_preferences_foundation",
-            path: "ReclaimXCFrameworks/shared_preferences_foundation.xcframework"
+            path: "Build/Cache/ReclaimXCFrameworks/shared_preferences_foundation.xcframework"
         ),
         .binaryTarget(
             name: "sqflite_darwin",
-            path: "ReclaimXCFrameworks/sqflite_darwin.xcframework"
+            path: "Build/Cache/ReclaimXCFrameworks/sqflite_darwin.xcframework"
         ),
         .binaryTarget(
             name: "url_launcher_ios",
-            path: "ReclaimXCFrameworks/url_launcher_ios.xcframework"
+            path: "Build/Cache/ReclaimXCFrameworks/url_launcher_ios.xcframework"
         ),
     ]
 }

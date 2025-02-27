@@ -38,7 +38,7 @@ import Foundation
     
     fileprivate static func sendLogEntries(
         _ logs: [Logging.LogRecord],
-        _ identity: SessionIdentity
+        _ identity: ReclaimVerification.ReclaimSessionIdentity
     ) async throws {
         let logEntries: [[String: Any]] = logs.map { e in
             return e.toJsonMap(identity: identity)
@@ -52,11 +52,11 @@ import Foundation
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
-        try await URLSession.shared.data(for: request)
+        let _ = try await URLSession.shared.data(for: request)
     }
     
     @MainActor fileprivate static func sendAndFlushLogsToRemote() async {
-        let identity = SessionIdentity.latest
+        let identity = ReclaimVerification.ReclaimSessionIdentity.shared
         guard let identity else { return }
         if buffer.isEmpty { return }
         let batch = buffer;

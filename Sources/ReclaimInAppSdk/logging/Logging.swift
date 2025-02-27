@@ -129,7 +129,7 @@ public class Logging {
                 msg = "\(m)"
             }
         } else {
-            msg = "\(message)"
+            msg = "\(message ?? "<nil>")"
         }
         if (stackTrace == nil && level >= recordStackTraceAtLevel) {
             stackTrace = Thread.callStackSymbols
@@ -144,7 +144,7 @@ public class Logging {
             stackTrace: stackTrace
         )
         
-        if let p = parent {
+        if parent != nil {
             var target: Logging? = self
             while let t = target {
                 t.publisher.publish(record)
@@ -180,7 +180,7 @@ public class Logging {
         
         @MainActor private static var _nextNumber = 0
 
-        func toJsonMap(identity: SessionIdentity) -> [String: Any] {
+        func toJsonMap(identity: ReclaimVerification.ReclaimSessionIdentity) -> [String: Any] {
             let msSinceEpoch = Date().timeIntervalSince1970 * 1000
             var logLine = message
             if let error = error {

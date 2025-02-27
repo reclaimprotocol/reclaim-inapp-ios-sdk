@@ -34,6 +34,45 @@ public struct ReclaimSessionInformation {
 public class ReclaimVerification {
     private init() {}
     
+    public struct ReclaimSessionIdentity: Sendable {
+        public let sessionId: String
+        public let providerId: String
+        public let appId: String
+        let clientSource: String
+        let deviceId: String
+        
+        public init(sessionId: String, providerId: String, appId: String) {
+            self.sessionId = sessionId
+            self.providerId = providerId
+            self.appId = appId
+            let settings = SDKSettings()
+            self.clientSource = settings.getClientSource(appId: appId)
+            self.deviceId = settings.getDeviceLoggingId()
+        }
+        
+        @MainActor static var shared: ReclaimSessionIdentity? = nil
+        
+        @MainActor public static func setCurrentFromRequest(_ request: ReclaimVerification.Request) {
+            switch (request) {
+            case .params(let req):
+                shared = .init(
+                    sessionId: req.session?.sessionId ?? "",
+                    providerId: req.providerId,
+                    appId: req.appId
+                )
+                break
+            case .url(_):
+                // TODO: Get session information from url
+                shared = .init(
+                    sessionId: "",
+                    providerId: "",
+                    appId: ""
+                )
+                break
+            }
+        }
+    }
+    
     /// Configuration structure for storing Reclaim app credentials
     private struct ReclaimClientConfiguration: Decodable {
         public let ReclaimAppId, ReclaimAppSecret: String
@@ -224,6 +263,11 @@ public class ReclaimVerification {
         public var proofs: [[String: Any?]]
     }
     
+    @MainActor
+    public static func preWarm() {
+        let _ = ReclaimFlutterViewService.flutterEngine
+    }
+    
     /// Initiates the verification process by presenting a full-screen interface.
     ///
     /// This method handles the entire verification flow, including:
@@ -251,7 +295,7 @@ public class ReclaimVerification {
     @MainActor
     public static func startVerification(_ request: Request) async throws -> Response {
         // Set up consumer identity for this verification session
-        SessionIdentity.setCurrentFromRequest(request)
+        ReclaimVerification.ReclaimSessionIdentity.setCurrentFromRequest(request)
         ConsumerLogging.setup()
         
         // Initialize logger for debugging and tracking
@@ -319,31 +363,47 @@ public class ReclaimVerification {
     }
     
     @MainActor
+    private static var previousReclaimApiImpl: ReclaimApi? = nil
+    
+    @MainActor
     public static func setOverrides(
         provider: ReclaimOverrides.ProviderInformation? = nil,
         featureOptions: ReclaimOverrides.FeatureOptions? = nil,
         logConsumer: ReclaimOverrides.LogConsumer? = nil,
         sessionManagement: ReclaimOverrides.SessionManagement? = nil,
-        appInfo: ReclaimOverrides.ReclaimAppInfo? = nil
+        appInfo: ReclaimOverrides.ReclaimAppInfo? = nil,
+        sessionIdentityUpdateHandler: ReclaimOverrides.SessionIdentityUpdateHandler? = nil,
+        capabilityAccessToken: String? = nil
     ) async throws -> Void {
         let binaryMessenger = ReclaimFlutterViewService.flutterEngine.binaryMessenger
         let api = ReclaimModuleApi.init(binaryMessenger: binaryMessenger)
-        
-        ReclaimApiSetup.setUp(binaryMessenger: binaryMessenger, api: ReclaimApiImpl(
+        let providerInformationCallbackHandler: ReclaimOverrides.ProviderInformation.CallbackHandler? = switch (provider) {
+            case .callback(callbackHandler: let callbackHandler): callbackHandler;
+            default: nil
+        }
+
+        let hostApi = ReclaimApiImpl(
+            providerInformationCallbackHandler: providerInformationCallbackHandler,
             logConsumer: logConsumer,
-            sessionManagement: sessionManagement
-        ))
-        
+            sessionManagement: sessionManagement,
+            sessionIdentityUpdateHandler: sessionIdentityUpdateHandler,
+            previousReclaimApiImpl: previousReclaimApiImpl
+        )
+        ReclaimApiSetup.setUp(binaryMessenger: binaryMessenger, api: hostApi)
+        previousReclaimApiImpl = hostApi
+
         // Use continuation to handle the asynchronous UI flow
         return try await withCheckedThrowingContinuation { continuation in
             let overrideProvider: ClientProviderInformationOverride? = if let provider {
                 switch (provider) {
                 case .jsonString(jsonString: let jsonString): .init(
-                    providerInformationUrl: nil, providerInformationJsonString: jsonString
+                    providerInformationUrl: nil, providerInformationJsonString: jsonString, canFetchProviderInformationFromHost: false
                 )
                 case .url(url: let url): .init(
-                    providerInformationUrl: url, providerInformationJsonString: nil
+                    providerInformationUrl: url, providerInformationJsonString: nil, canFetchProviderInformationFromHost: false
                 )
+                case .callback(callbackHandler: let callbackHandler): .init(
+                    providerInformationUrl: nil, providerInformationJsonString: nil, canFetchProviderInformationFromHost: true)
                 }
             } else {
                 nil
@@ -374,8 +434,21 @@ public class ReclaimVerification {
                     appName: appInfo?.appName ?? "",
                     appImageUrl: appInfo?.appImageUrl ?? "",
                     isRecurring: appInfo?.isRecurring ?? false
-                )
+                ),
+                capabilityAccessToken: capabilityAccessToken
             ) { result in
+                continuation.resume(with: result)
+            }
+        }
+    }
+
+    @MainActor
+    public static func clearAllOverrides() async throws {
+        let binaryMessenger = ReclaimFlutterViewService.flutterEngine.binaryMessenger
+        let api = ReclaimModuleApi.init(binaryMessenger: binaryMessenger)
+        return try await withCheckedThrowingContinuation { continuation in
+            api.clearAllOverrides { result in
+                previousReclaimApiImpl = nil
                 continuation.resume(with: result)
             }
         }
@@ -399,15 +472,24 @@ public enum ReclaimVerificationError: Error {
 }
 
 fileprivate class ReclaimApiImpl: ReclaimApi {
+    let providerInformationCallbackHandler: ReclaimOverrides.ProviderInformation.CallbackHandler?
     let logConsumer: ReclaimOverrides.LogConsumer?
     let sessionManagement: ReclaimOverrides.SessionManagement?
+    let sessionIdentityUpdateHandler: ReclaimOverrides.SessionIdentityUpdateHandler?
+    let previousReclaimApiImpl: ReclaimApi?
     
     init(
+        providerInformationCallbackHandler: ReclaimOverrides.ProviderInformation.CallbackHandler?,
         logConsumer: ReclaimOverrides.LogConsumer?,
-        sessionManagement: ReclaimOverrides.SessionManagement?
+        sessionManagement: ReclaimOverrides.SessionManagement?,
+        sessionIdentityUpdateHandler: ReclaimOverrides.SessionIdentityUpdateHandler?,
+        previousReclaimApiImpl: ReclaimApi?
     ) {
         self.logConsumer = logConsumer
         self.sessionManagement = sessionManagement
+        self.sessionIdentityUpdateHandler = sessionIdentityUpdateHandler
+        self.providerInformationCallbackHandler = providerInformationCallbackHandler
+        self.previousReclaimApiImpl = previousReclaimApiImpl
     }
     
     func ping(completion: @escaping (Result<Bool, Error>) -> Void) {
@@ -415,12 +497,20 @@ fileprivate class ReclaimApiImpl: ReclaimApi {
     }
     
     func onLogs(logJsonString: String, completion: @escaping (Result<Void, any Error>) -> Void) {
-        logConsumer?.logHandler?.onLogs(logJsonString: logJsonString)
+        if let logConsumer {
+            logConsumer.logHandler?.onLogs(logJsonString: logJsonString)
+        } else if let previousReclaimApiImpl {
+            return previousReclaimApiImpl.onLogs(logJsonString: logJsonString, completion: completion)
+        }
         completion(.success(()))
     }
     
     func createSession(appId: String, providerId: String, sessionId: String, completion: @escaping (Result<Bool, any Error>) -> Void) {
-        sessionManagement?.handler.createSession(appId: appId, providerId: providerId, sessionId: sessionId, completion: completion)
+        if let sessionManagement {
+            sessionManagement.handler.createSession(appId: appId, providerId: providerId, sessionId: sessionId, completion: completion)
+        } else if let previousReclaimApiImpl {
+            return previousReclaimApiImpl.createSession(appId: appId, providerId: providerId, sessionId: sessionId, completion: completion)
+        }
     }
     
     func updateSession(sessionId: String, status: ReclaimSessionStatus, completion: @escaping (Result<Bool, any Error>) -> Void) {
@@ -435,14 +525,63 @@ fileprivate class ReclaimApiImpl: ReclaimApi {
         case .pROOFSUBMITTED: .PROOF_SUBMITTED
         case .pROOFSUBMISSIONFAILED: .PROOF_SUBMISSION_FAILED
         }
-        sessionManagement?.handler.updateSession(
-            sessionId: sessionId,
-            status: mappedStatus,
-            completion: completion
-        )
+        if let sessionManagement {
+            sessionManagement.handler.updateSession(
+                sessionId: sessionId,
+                status: mappedStatus,
+                completion: completion
+            )
+        } else if let previousReclaimApiImpl {
+            return previousReclaimApiImpl.updateSession(sessionId: sessionId, status: status, completion: completion)
+        }
     }
-    
-    func logSession(appId: String, providerId: String, sessionId: String, logType: String) throws {
-        sessionManagement?.handler.logSession(appId: appId, providerId: providerId, sessionId: sessionId, logType: logType)
+
+    func logSession(appId: String, providerId: String, sessionId: String, logType: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+        if let sessionManagement {
+            sessionManagement.handler.logSession(appId: appId, providerId: providerId, sessionId: sessionId, logType: logType)
+        } else if let previousReclaimApiImpl {
+            return previousReclaimApiImpl.logSession(appId: appId, providerId: providerId, sessionId: sessionId, logType: logType, completion: completion)
+        }
+        completion(.success(()))
+    }
+
+    func onSessionIdentityUpdate(update: ReclaimSessionIdentityUpdate?, completion: @escaping (Result<Void, any Error>) -> Void) {
+        let identity: ReclaimVerification.ReclaimSessionIdentity? = if let update {
+            .init(sessionId: update.sessionId, providerId: update.providerId, appId: update.appId)
+        } else {
+            nil
+        }
+        
+        Task { @MainActor in
+            ReclaimVerification.ReclaimSessionIdentity.shared = identity
+        }
+        
+        if let sessionIdentityUpdateHandler {
+            sessionIdentityUpdateHandler.onSessionIdentityUpdate(identity: identity)
+        } else if let previousReclaimApiImpl {
+            return previousReclaimApiImpl.onSessionIdentityUpdate(update: update, completion: completion)
+        }
+    }
+
+    func fetchProviderInformation(appId: String, providerId: String, sessionId: String, signature: String, timestamp: String, completion: @escaping (Result<[String : (any Sendable)?], any Error>) -> Void) {
+        if let providerInformationCallbackHandler {
+            providerInformationCallbackHandler.fetchProviderInformation(
+                appId: appId,
+                providerId: providerId,
+                sessionId: sessionId,
+                signature: signature,
+                timestamp: timestamp,
+                completion: completion
+            )
+        } else if let previousReclaimApiImpl {
+            return previousReclaimApiImpl.fetchProviderInformation(
+                appId: appId,
+                providerId: providerId,
+                sessionId: sessionId,
+                signature: signature,
+                timestamp: timestamp,
+                completion: completion
+            )
+        }
     }
 }

@@ -121,7 +121,7 @@ For more info, check the [Reclaim Example - SwiftUI with CocoaPods](https://gith
 Either select a package version:
 
 ```
-.package(url: "https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git", from: "0.1.2")
+.package(url: "https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git", from: "0.2.0")
 ```
 
 Or select the main branch:
