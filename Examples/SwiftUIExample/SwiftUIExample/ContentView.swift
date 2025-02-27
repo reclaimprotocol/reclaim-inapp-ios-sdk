@@ -32,7 +32,7 @@ struct ContentView: View {
             }
         }
     }
- 
+
     var body: some View {
         VStack {
             Text("Reclaim SDK Example")
@@ -53,7 +53,7 @@ struct ContentView: View {
             }
             .buttonStyle(BorderedProminentButtonStyle())
             
-            if let result = result {
+            if let result {
                 Text("Result: \(result)")
                     .padding()
             }
@@ -96,8 +96,8 @@ struct ContentView: View {
             showAlert(message: "Cancelled")
         } catch ReclaimVerificationError.dismissed {
             showAlert(message: "Cancelled by user")
-        } catch ReclaimVerificationError.failed(_, _, let message) {
-            print("failure error details: \(message)")
+        } catch ReclaimVerificationError.failed(let sessionId, _, let message) {
+            print("failure error details (session \(sessionId): \(message)")
             Task { @MainActor in
                 showAlert(message: "Something went wrong")
             }
