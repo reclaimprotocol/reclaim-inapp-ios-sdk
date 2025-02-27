@@ -7,8 +7,6 @@
 
 import SwiftUI
 import ReclaimInAppSdk
-import Combine
-import WebKit
 
 struct ContentView: View {
     @State private var result: ReclaimVerification.Response?

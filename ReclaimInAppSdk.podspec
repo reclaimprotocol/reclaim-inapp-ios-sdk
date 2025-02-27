@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
     s.name              = 'ReclaimInAppSdk'
     s.module_name       = 'ReclaimInAppSdk'
-    s.version           = '0.1.4'
+    s.version           = '0.2.0'
 
     s.summary           = 'The official Reclaim InApp SDK for iOS.'
 
@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
     s.source            = { :git => 'https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git', :tag => s.version }
 
     s.platform          = :ios, '13.0'
-    s.swift_version     = '6.0'
+    s.swift_version     = '5.8'
 
     # Ensure developers won't hit CocoaPods/CocoaPods#11402 with the resource
     # bundle for the privacy manifest.
@@ -60,12 +60,13 @@ Pod::Spec.new do |s|
 
     # Prepare command to download and unzip XCFrameworks
     s.prepare_command = <<-CMD
-        rm -rf ReclaimXCFrameworks
-        mkdir -p ReclaimXCFrameworks
+        rm -rf ReclaimXCFrameworks # clear older xcframeworks
+        rm -rf Build/PodCache
+        mkdir -p Build/PodCache
         # Downloads and unzips the XCFrameworks on every pod install. Needs improvement.
-        #{xcframework_urls.map { |url| "curl -L '#{url}' -o $(basename '#{url}') && unzip -q -o $(basename '#{url}') -d ./ && rm $(basename '#{url}')" }.join("\n")}
+        #{xcframework_urls.map { |url| "curl -L '#{url}' -o $(basename '#{url}') && unzip -q -o $(basename '#{url}') -d ./Build/PodCache && rm $(basename '#{url}')" }.join("\n")}
     CMD
 
     # Specify the paths to the unzipped XCFramework directories
-    s.vendored_frameworks = ['ReclaimXCFrameworks/*.xcframework']
+    s.vendored_frameworks = ['Build/PodCache/*.xcframework']
 end

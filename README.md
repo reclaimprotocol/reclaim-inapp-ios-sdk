@@ -3,6 +3,8 @@
 [![Documentation](https://img.shields.io/badge/read_the-docs-blue)](https://docs.reclaimprotocol.org/inapp-sdks/ios)
 [![Platforms](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Freclaimprotocol%2Freclaim-inapp-ios-sdk%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/reclaimprotocol/reclaim-inapp-ios-sdk)
 [![Swift 6.0](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Freclaimprotocol%2Freclaim-inapp-ios-sdk%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/reclaimprotocol/reclaim-inapp-ios-sdk)
+[![Swift Package Manager](https://img.shields.io/badge/Swift_Package_Manager-compatible-green)](https://swiftpackageindex.com/reclaimprotocol/reclaim-inapp-ios-sdk)
+[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/ReclaimInAppSdk.svg)](https://cocoapods.org/pods/ReclaimInAppSdk)
 
 This SDK allows you to integrate Reclaim's in-app verification process into your SwiftUI application.
 
@@ -61,7 +63,7 @@ platform :ios, '13.0'
 - From a specific tag (recommended):
 
 ```ruby
-pod 'ReclaimInAppSdk', :git => 'https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git', :tag => '0.1.4'
+pod 'ReclaimInAppSdk', :git => 'https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git', :tag => '0.2.0'
 ```
 
 - or from git HEAD (Alternative):
@@ -345,7 +347,7 @@ func setOverrides() {
 
 To upgrade to a new version of the Reclaim InApp SDK, follow these steps:
 
-1. Make sure you have the latest version of the Reclaim InApp SDK. Currently the latest version is `0.1.4`. 
+1. Make sure you have the latest version of the Reclaim InApp SDK. Currently the latest version is `0.2.0`. 
 1. Incase of any problems: remove package, clear build, restart Xcode, and add package again.
 
 Migration guides will be available when a new version with API changes is released. 
