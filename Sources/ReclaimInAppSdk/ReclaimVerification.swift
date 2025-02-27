@@ -94,8 +94,6 @@ public class ReclaimVerification {
             public var context: String
             /// Key-value pairs for prefilling claim creation variables
             public var parameters: [String: String]
-            /// When false, shows an introductory page with claims to be proven
-            public var hideLanding: Bool = true
             /// If true, automatically submits proof after generation
             public var autoSubmit: Bool = false
             /// Whether to accept AI-powered data providers
@@ -124,7 +122,6 @@ public class ReclaimVerification {
             ///   - session: Optional session information. If nil, SDK generates new session details
             ///   - context: Additional data to associate with the verification attempt
             ///   - parameters: Key-value pairs for prefilling claim creation variables
-            ///   - hideLanding: When false, shows an introductory page with claims to be proven
             ///   - autoSubmit: If true, automatically submits proof after generation
             ///   - acceptAiProviders: Whether to accept AI-powered data providers
             ///   - webhookUrl: Optional URL to receive verification status updates
@@ -141,8 +138,6 @@ public class ReclaimVerification {
                 context: String = "",
                 /// Prefill variables that can be used during the claim creation process.
                 parameters: [String : String] = [String:String](),
-                /// When false, sdk shows a page with claims that'll be proven and waits for the user to press start before starting verification flow
-                hideLanding: Bool = true,
                 /// If true, automatically submits proof after proof is generated from the claim creation process. Otherwise, lets the user submit proof by pressing a submit button when proof is generated.
                 autoSubmit: Bool = false,
                 acceptAiProviders: Bool = false,
@@ -154,7 +149,6 @@ public class ReclaimVerification {
                 self.session = session
                 self.context = context
                 self.parameters = parameters
-                self.hideLanding = hideLanding
                 self.autoSubmit = autoSubmit
                 self.acceptAiProviders = acceptAiProviders
                 self.webhookUrl = webhookUrl
@@ -191,7 +185,6 @@ public class ReclaimVerification {
             ///   - session: Optional session information. If nil, SDK generates new session details
             ///   - context: Additional data to associate with the verification attempt
             ///   - parameters: Key-value pairs for prefilling claim creation variables
-            ///   - hideLanding: When false, shows an introductory page with claims to be proven
             ///   - autoSubmit: If true, automatically submits proof after generation
             ///   - acceptAiProviders: Whether to accept AI-powered data providers
             ///   - webhookUrl: Optional URL to receive manual verification status updates
@@ -205,7 +198,6 @@ public class ReclaimVerification {
                 context: String = "",
                 /// Prefill variables that can be used during the claim creation process.
                 parameters: [String : String] = [String:String](),
-                hideLanding: Bool = true,
                 /// If true, automatically submits proof after proof is generated from the claim creation process. Otherwise, lets the user submit proof by pressing a submit button when proof is generated.
                 autoSubmit: Bool = false,
                 acceptAiProviders: Bool = false,
@@ -228,7 +220,6 @@ public class ReclaimVerification {
                     session: session,
                     context: context,
                     parameters: parameters,
-                    hideLanding: hideLanding,
                     autoSubmit: autoSubmit,
                     acceptAiProviders: acceptAiProviders,
                     webhookUrl: webhookUrl
