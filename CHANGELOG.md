@@ -1,3 +1,7 @@
+## 0.2.1
+
+- Update [BREAKING] capability token verification
+
 ## 0.2.0
 
 - Updated breaking changes in the use of the module apis
