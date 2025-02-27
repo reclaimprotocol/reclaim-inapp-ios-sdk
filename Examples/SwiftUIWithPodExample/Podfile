@@ -7,6 +7,7 @@ target 'SwiftUIWithPodExample' do
 
   pod 'ReclaimInAppSdk', '~> 0.2.1'
   # pod 'ReclaimInAppSdk', :path => '../../'
+  # pod 'ReclaimInAppSdk', :git => 'https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git', :tag => '0.2.1'
 
   # Pods for SwiftUIWithPodExample
 

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		793EB3082D60C713009AF5A8 /* BaseConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 793EB3072D60C713009AF5A8 /* BaseConfig.xcconfig */; };
-		798912FB2D7069FD00052828 /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 798912FA2D7069FD00052828 /* ReclaimInAppSdk */; };
+		79976AD02D70BB0D003FE5D2 /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 79976ACF2D70BB0D003FE5D2 /* ReclaimInAppSdk */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,7 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				798912FB2D7069FD00052828 /* ReclaimInAppSdk in Frameworks */,
+				79976AD02D70BB0D003FE5D2 /* ReclaimInAppSdk in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,7 +133,7 @@
 			);
 			name = SwiftUIExample;
 			packageProductDependencies = (
-				798912FA2D7069FD00052828 /* ReclaimInAppSdk */,
+				79976ACF2D70BB0D003FE5D2 /* ReclaimInAppSdk */,
 			);
 			productName = example;
 			productReference = 793EB2C02D60C02B009AF5A8 /* SwiftUIExample.app */;
@@ -218,7 +218,7 @@
 			mainGroup = 793EB2B72D60C02B009AF5A8;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				798912F92D7069FD00052828 /* XCRemoteSwiftPackageReference "reclaim-inapp-ios-sdk" */,
+				79976ACE2D70BB0D003FE5D2 /* XCRemoteSwiftPackageReference "reclaim-inapp-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 793EB2C12D60C02B009AF5A8 /* Products */;
@@ -596,20 +596,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		798912F92D7069FD00052828 /* XCRemoteSwiftPackageReference "reclaim-inapp-ios-sdk" */ = {
+		79976ACE2D70BB0D003FE5D2 /* XCRemoteSwiftPackageReference "reclaim-inapp-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk";
 			requirement = {
-				kind = revision;
-				revision = 82f8d4256c48d2c21da1bb3f13f05041ad04f1d0;
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		798912FA2D7069FD00052828 /* ReclaimInAppSdk */ = {
+		79976ACF2D70BB0D003FE5D2 /* ReclaimInAppSdk */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 798912F92D7069FD00052828 /* XCRemoteSwiftPackageReference "reclaim-inapp-ios-sdk" */;
+			package = 79976ACE2D70BB0D003FE5D2 /* XCRemoteSwiftPackageReference "reclaim-inapp-ios-sdk" */;
 			productName = ReclaimInAppSdk;
 		};
 /* End XCSwiftPackageProductDependency section */
