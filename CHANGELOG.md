@@ -1,3 +1,7 @@
+## 0.3.0
+
+- Add setter for ReclaimVerificationOptions which can be used in ReclaimVerification.
+
 ## 0.2.1
 
 - Update [BREAKING] capability token verification
