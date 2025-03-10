@@ -141,7 +141,7 @@ Or select the main branch:
 - ReclaimInAppSdk
 
 ```
-.product(name: "ReclaimInAppSdk", package: "ReclaimInAppSdk")
+.product(name: "ReclaimInAppSdk", package: "reclaim-inapp-ios-sdk")
 ```
 
 <!-- ### 2. Add Reclaim's XCFrameworks to your Xcode Project
