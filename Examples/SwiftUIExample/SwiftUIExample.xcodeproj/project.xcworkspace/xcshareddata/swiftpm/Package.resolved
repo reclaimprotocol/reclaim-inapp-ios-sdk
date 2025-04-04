@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk",
       "state" : {
-        "revision" : "3caa6fc7961382ac5ac56a764165613b8cd08005",
-        "version" : "0.3.0"
+        "revision" : "c9f1f0158ef68b6513284d5db62d6949c58a64a6",
+        "version" : "0.4.0"
       }
     }
   ],
