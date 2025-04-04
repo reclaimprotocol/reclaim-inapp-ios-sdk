@@ -246,7 +246,6 @@ struct ClientFeatureOverrides {
   var idleTimeThresholdForManualVerificationTrigger: Int64? = nil
   var sessionTimeoutForManualVerificationTrigger: Int64? = nil
   var attestorBrowserRpcUrl: String? = nil
-  var isResponseRedactionRegexEscapingEnabled: Bool? = nil
   var isAIFlowEnabled: Bool? = nil
 
 
@@ -257,8 +256,7 @@ struct ClientFeatureOverrides {
     let idleTimeThresholdForManualVerificationTrigger: Int64? = nilOrValue(pigeonVar_list[2])
     let sessionTimeoutForManualVerificationTrigger: Int64? = nilOrValue(pigeonVar_list[3])
     let attestorBrowserRpcUrl: String? = nilOrValue(pigeonVar_list[4])
-    let isResponseRedactionRegexEscapingEnabled: Bool? = nilOrValue(pigeonVar_list[5])
-    let isAIFlowEnabled: Bool? = nilOrValue(pigeonVar_list[6])
+    let isAIFlowEnabled: Bool? = nilOrValue(pigeonVar_list[5])
 
     return ClientFeatureOverrides(
       cookiePersist: cookiePersist,
@@ -266,7 +264,6 @@ struct ClientFeatureOverrides {
       idleTimeThresholdForManualVerificationTrigger: idleTimeThresholdForManualVerificationTrigger,
       sessionTimeoutForManualVerificationTrigger: sessionTimeoutForManualVerificationTrigger,
       attestorBrowserRpcUrl: attestorBrowserRpcUrl,
-      isResponseRedactionRegexEscapingEnabled: isResponseRedactionRegexEscapingEnabled,
       isAIFlowEnabled: isAIFlowEnabled
     )
   }
@@ -277,7 +274,6 @@ struct ClientFeatureOverrides {
       idleTimeThresholdForManualVerificationTrigger,
       sessionTimeoutForManualVerificationTrigger,
       attestorBrowserRpcUrl,
-      isResponseRedactionRegexEscapingEnabled,
       isAIFlowEnabled,
     ]
   }
@@ -794,7 +790,7 @@ class ReclaimHostOverridesApiSetup {
 }
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol ReclaimHostVerificationApi {
-    func fetchAttestorAuthenticationRequest(reclaimHttpProvider: [AnyHashable?: Sendable?], completion: @escaping (Result<String, Error>) -> Void)
+  func fetchAttestorAuthenticationRequest(reclaimHttpProvider: [AnyHashable?: Sendable?], completion: @escaping (Result<String, Error>) -> Void)
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.

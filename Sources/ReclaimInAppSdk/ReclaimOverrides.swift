@@ -32,7 +32,6 @@ final public class ReclaimOverrides {
         public let idleTimeThresholdForManualVerificationTrigger: Int64?
         public let sessionTimeoutForManualVerificationTrigger: Int64?
         public let attestorBrowserRpcUrl: String?
-        public let isResponseRedactionRegexEscapingEnabled: Bool?
         public let isAIFlowEnabled: Bool?
         
         public init(
@@ -41,7 +40,6 @@ final public class ReclaimOverrides {
             idleTimeThresholdForManualVerificationTrigger: Int64? = nil,
             sessionTimeoutForManualVerificationTrigger: Int64? = nil,
             attestorBrowserRpcUrl: String? = nil,
-            isResponseRedactionRegexEscapingEnabled: Bool? = nil,
             isAIFlowEnabled: Bool? = nil
         ) {
             self.cookiePersist = cookiePersist
@@ -49,7 +47,6 @@ final public class ReclaimOverrides {
             self.idleTimeThresholdForManualVerificationTrigger = idleTimeThresholdForManualVerificationTrigger
             self.sessionTimeoutForManualVerificationTrigger = sessionTimeoutForManualVerificationTrigger
             self.attestorBrowserRpcUrl = attestorBrowserRpcUrl
-            self.isResponseRedactionRegexEscapingEnabled = isResponseRedactionRegexEscapingEnabled
             self.isAIFlowEnabled = isAIFlowEnabled
         }
     }

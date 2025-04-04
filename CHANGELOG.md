@@ -1,3 +1,11 @@
+## 0.4.0
+
+* Add updated version of reclaim verifier sdk to 0.4.0
+* Removed `isResponseRedactionRegexEscapingEnabled` from features override
+* Updated verification flow UI
+* Fixed support for cascading requests (fixed number)
+* Add param interpolation for xpath and jsonpath
+
 ## 0.3.0
 
 - Add setter for ReclaimVerificationOptions which can be used in ReclaimVerification.

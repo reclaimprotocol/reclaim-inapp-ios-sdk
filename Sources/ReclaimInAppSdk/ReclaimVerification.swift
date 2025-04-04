@@ -429,7 +429,6 @@ public class ReclaimVerification {
                     idleTimeThresholdForManualVerificationTrigger: featureOptions?.idleTimeThresholdForManualVerificationTrigger,
                     sessionTimeoutForManualVerificationTrigger: featureOptions?.sessionTimeoutForManualVerificationTrigger,
                     attestorBrowserRpcUrl: featureOptions?.attestorBrowserRpcUrl,
-                    isResponseRedactionRegexEscapingEnabled: featureOptions?.isResponseRedactionRegexEscapingEnabled,
                     isAIFlowEnabled: featureOptions?.isAIFlowEnabled
                 ),
                 logConsumer: (logConsumer == nil) ? nil : ClientLogConsumerOverride(
