@@ -92,8 +92,9 @@ final public class ReclaimOverrides {
             func createSession(
                 appId: String,
                 providerId: String,
-                sessionId: String,
-                completion: @escaping (Result<Bool, Error>) -> Void
+                timestamp: String,
+                signature: String,
+                completion: @escaping (Result<String, any Error>) -> Void
             )
             
             func updateSession(
@@ -106,7 +107,8 @@ final public class ReclaimOverrides {
                 appId: String,
                 providerId: String,
                 sessionId: String,
-                logType: String
+                logType: String,
+                metadata: [String : (any Sendable)?]?
             )
         }
         

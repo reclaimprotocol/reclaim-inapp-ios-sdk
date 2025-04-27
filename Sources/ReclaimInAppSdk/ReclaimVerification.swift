@@ -257,13 +257,16 @@ public class ReclaimVerification {
     public struct VerificationOptions {
         public let canDeleteCookiesBeforeVerificationStarts: Bool
         public let attestorAuthRequestProvider: AttestorAuthRequestProvider?
+        public let claimCreationType: ClaimCreationType
         
         public init(
             canDeleteCookiesBeforeVerificationStarts: Bool = true,
-            attestorAuthRequestProvider: AttestorAuthRequestProvider? = nil
+            attestorAuthRequestProvider: AttestorAuthRequestProvider? = nil,
+            claimCreationType: ClaimCreationType =  .standalone
         ) {
             self.canDeleteCookiesBeforeVerificationStarts = canDeleteCookiesBeforeVerificationStarts
             self.attestorAuthRequestProvider = attestorAuthRequestProvider
+            self.claimCreationType = claimCreationType
         }
         
         public protocol AttestorAuthRequestProvider {
@@ -271,6 +274,18 @@ public class ReclaimVerification {
                 reclaimHttpProvider: [AnyHashable?: (any Sendable)?],
                 completion: @escaping (Result<String, any Error>) -> Void
             )
+        }
+        
+        public enum ClaimCreationType: Int {
+              case standalone = 0
+              case onMeChain = 1
+                
+              fileprivate func toApi() -> ClaimCreationTypeApi {
+                  switch (self) {
+                      case .standalone: .standalone
+                      case .onMeChain: .onMeChain
+                  }
+              }
         }
     }
     
@@ -480,7 +495,8 @@ public class ReclaimVerification {
                 hostApi.attestorAuthRequestProvider = provider
                 api.setVerificationOptions(options: .init(
                     canDeleteCookiesBeforeVerificationStarts: options.canDeleteCookiesBeforeVerificationStarts,
-                    canUseAttestorAuthenticationRequest: provider != nil
+                    canUseAttestorAuthenticationRequest: provider != nil,
+                    claimCreationType: options.claimCreationType.toApi()
                 )) { result in
                     continuation.resume(with: result)
                 }
@@ -573,8 +589,8 @@ fileprivate class ReclaimHostOverridesApiImpl: ReclaimHostOverridesApi {
         completion(.success(()))
     }
     
-    func createSession(appId: String, providerId: String, sessionId: String, completion: @escaping (Result<Bool, any Error>) -> Void) {
-        sessionHandler?.createSession(appId: appId, providerId: providerId, sessionId: sessionId, completion: completion)
+    func createSession(appId: String, providerId: String, timestamp: String, signature: String, completion: @escaping (Result<String, any Error>) -> Void) {
+        sessionHandler?.createSession(appId: appId, providerId: providerId, timestamp: timestamp, signature: signature, completion: completion)
     }
     
     func updateSession(sessionId: String, status: ReclaimSessionStatus, completion: @escaping (Result<Bool, any Error>) -> Void) {
@@ -596,8 +612,8 @@ fileprivate class ReclaimHostOverridesApiImpl: ReclaimHostOverridesApi {
         )
     }
     
-    func logSession(appId: String, providerId: String, sessionId: String, logType: String, completion: @escaping (Result<Void, any Error>) -> Void) {
-        sessionHandler?.logSession(appId: appId, providerId: providerId, sessionId: sessionId, logType: logType)
+    func logSession(appId: String, providerId: String, sessionId: String, logType: String, metadata: [String : (any Sendable)?]?, completion: @escaping (Result<Void, any Error>) -> Void) {
+        sessionHandler?.logSession(appId: appId, providerId: providerId, sessionId: sessionId, logType: logType, metadata: metadata)
         completion(.success(()))
     }
     
