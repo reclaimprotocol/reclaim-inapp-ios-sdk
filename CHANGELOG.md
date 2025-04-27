@@ -1,3 +1,12 @@
+## 0.5.0
+
+* Add devtools ordering preference for params displayed in UI 
+* Fix display of different params with same key
+* Update [BREAKING] session initialization and logging api
+* Collect performance metrics and send it to session logs
+* Add provider script environment
+* Add claim creation types to reclaim verification options
+
 ## 0.4.0
 
 * Add updated version of reclaim verifier sdk to 0.4.0
