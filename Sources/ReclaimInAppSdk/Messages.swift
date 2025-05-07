@@ -157,7 +157,7 @@ enum ReclaimSessionStatus: Int {
 
 enum ClaimCreationTypeApi: Int {
   case standalone = 0
-  case onMeChain = 1
+  case meChain = 1
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
@@ -170,7 +170,6 @@ struct ReclaimApiVerificationRequest: Hashable {
   var context: String
   var sessionId: String
   var parameters: [String: String]
-  var autoSubmit: Bool
   var acceptAiProviders: Bool
   var webhookUrl: String? = nil
 
@@ -185,9 +184,8 @@ struct ReclaimApiVerificationRequest: Hashable {
     let context = pigeonVar_list[5] as! String
     let sessionId = pigeonVar_list[6] as! String
     let parameters = pigeonVar_list[7] as! [String: String]
-    let autoSubmit = pigeonVar_list[8] as! Bool
-    let acceptAiProviders = pigeonVar_list[9] as! Bool
-    let webhookUrl: String? = nilOrValue(pigeonVar_list[10])
+    let acceptAiProviders = pigeonVar_list[8] as! Bool
+    let webhookUrl: String? = nilOrValue(pigeonVar_list[9])
 
     return ReclaimApiVerificationRequest(
       appId: appId,
@@ -198,7 +196,6 @@ struct ReclaimApiVerificationRequest: Hashable {
       context: context,
       sessionId: sessionId,
       parameters: parameters,
-      autoSubmit: autoSubmit,
       acceptAiProviders: acceptAiProviders,
       webhookUrl: webhookUrl
     )
@@ -213,7 +210,6 @@ struct ReclaimApiVerificationRequest: Hashable {
       context,
       sessionId,
       parameters,
-      autoSubmit,
       acceptAiProviders,
       webhookUrl,
     ]
@@ -512,6 +508,12 @@ struct ReclaimApiVerificationOptions: Hashable {
   /// {@macro CreateClaimOptions.attestorAuthenticationRequest}
   var canUseAttestorAuthenticationRequest: Bool
   var claimCreationType: ClaimCreationTypeApi
+  /// Whether module can auto submit the claim.
+  /// Defaults to true.
+  var canAutoSubmit: Bool
+  /// Whether the close button is visible.
+  /// Defaults to true.
+  var isCloseButtonVisible: Bool
 
 
   // swift-format-ignore: AlwaysUseLowerCamelCase
@@ -519,11 +521,15 @@ struct ReclaimApiVerificationOptions: Hashable {
     let canDeleteCookiesBeforeVerificationStarts = pigeonVar_list[0] as! Bool
     let canUseAttestorAuthenticationRequest = pigeonVar_list[1] as! Bool
     let claimCreationType = pigeonVar_list[2] as! ClaimCreationTypeApi
+    let canAutoSubmit = pigeonVar_list[3] as! Bool
+    let isCloseButtonVisible = pigeonVar_list[4] as! Bool
 
     return ReclaimApiVerificationOptions(
       canDeleteCookiesBeforeVerificationStarts: canDeleteCookiesBeforeVerificationStarts,
       canUseAttestorAuthenticationRequest: canUseAttestorAuthenticationRequest,
-      claimCreationType: claimCreationType
+      claimCreationType: claimCreationType,
+      canAutoSubmit: canAutoSubmit,
+      isCloseButtonVisible: isCloseButtonVisible
     )
   }
   func toList() -> [Any?] {
@@ -531,6 +537,8 @@ struct ReclaimApiVerificationOptions: Hashable {
       canDeleteCookiesBeforeVerificationStarts,
       canUseAttestorAuthenticationRequest,
       claimCreationType,
+      canAutoSubmit,
+      isCloseButtonVisible,
     ]
   }
   static func == (lhs: ReclaimApiVerificationOptions, rhs: ReclaimApiVerificationOptions) -> Bool {

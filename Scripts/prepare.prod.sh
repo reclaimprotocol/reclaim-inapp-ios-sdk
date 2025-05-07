@@ -102,7 +102,7 @@ SDK_TARGET_FN_STRING="func getSdkTargets() -> [Target] {
 }"
 fi
 
-echo "// swift-tools-version: 6.0
+echo "// swift-tools-version: 5.8
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 // GENERATED FILE, DO NOT EDIT BY HAND
@@ -151,7 +151,7 @@ echo "# GENERATED FILE, DO NOT EDIT BY HAND
 Pod::Spec.new do |s|
     s.name              = 'ReclaimInAppSdk'
     s.module_name       = 'ReclaimInAppSdk'
-    s.version           = '0.4.0'
+    s.version           = '${RECLAIM_SDK_VERSION}'
 
     s.summary           = 'The official Reclaim InApp SDK for iOS.'
 
@@ -177,7 +177,7 @@ Pod::Spec.new do |s|
 
     s.resources = ['Sources/ReclaimInAppSdk/Resources/*.{version}']
     s.resource_bundle = {
-        "#{s.module_name}_Privacy" => "Sources/#{s.module_name}/Resources/PrivacyInfo.xcprivacy"
+        \"#{s.module_name}_Privacy\" => \"Sources/#{s.module_name}/Resources/PrivacyInfo.xcprivacy\"
     }
 
     s.pod_target_xcconfig   = {
@@ -197,7 +197,7 @@ Pod::Spec.new do |s|
         rm -rf Build/PodCache
         mkdir -p Build/PodCache
         # Downloads and unzips the XCFrameworks on every pod install. Needs improvement.
-        #{xcframework_urls.map { |url| "curl -L '#{url}' -o $(basename '#{url}') && unzip -q -o $(basename '#{url}') -d ./Build/PodCache && rm $(basename '#{url}')" }.join("\n")}
+        #{xcframework_urls.map { |url| \"curl -L '#{url}' -o \$(basename '#{url}') && unzip -q -o \$(basename '#{url}') -d ./Build/PodCache && rm \$(basename '#{url}')\" }.join(\"\n\")}
     CMD
 
     # Specify the paths to the unzipped XCFramework directories

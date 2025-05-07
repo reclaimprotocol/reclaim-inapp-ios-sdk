@@ -94,8 +94,6 @@ public class ReclaimVerification {
             public var context: String
             /// Key-value pairs for prefilling claim creation variables
             public var parameters: [String: String]
-            /// If true, automatically submits proof after generation
-            public var autoSubmit: Bool = false
             /// Whether to accept AI-powered data providers
             public var acceptAiProviders: Bool = false
             /// Optional URL to receive verification status updates
@@ -122,7 +120,6 @@ public class ReclaimVerification {
             ///   - session: Optional session information. If nil, SDK generates new session details
             ///   - context: Additional data to associate with the verification attempt
             ///   - parameters: Key-value pairs for prefilling claim creation variables
-            ///   - autoSubmit: If true, automatically submits proof after generation
             ///   - acceptAiProviders: Whether to accept AI-powered data providers
             ///   - webhookUrl: Optional URL to receive verification status updates
             public init(
@@ -138,8 +135,6 @@ public class ReclaimVerification {
                 context: String = "",
                 /// Prefill variables that can be used during the claim creation process.
                 parameters: [String : String] = [String:String](),
-                /// If true, automatically submits proof after proof is generated from the claim creation process. Otherwise, lets the user submit proof by pressing a submit button when proof is generated.
-                autoSubmit: Bool = false,
                 acceptAiProviders: Bool = false,
                 webhookUrl: String? = nil
             ) {
@@ -149,7 +144,6 @@ public class ReclaimVerification {
                 self.session = session
                 self.context = context
                 self.parameters = parameters
-                self.autoSubmit = autoSubmit
                 self.acceptAiProviders = acceptAiProviders
                 self.webhookUrl = webhookUrl
             }
@@ -220,7 +214,6 @@ public class ReclaimVerification {
                     session: session,
                     context: context,
                     parameters: parameters,
-                    autoSubmit: autoSubmit,
                     acceptAiProviders: acceptAiProviders,
                     webhookUrl: webhookUrl
                 )
@@ -258,15 +251,23 @@ public class ReclaimVerification {
         public let canDeleteCookiesBeforeVerificationStarts: Bool
         public let attestorAuthRequestProvider: AttestorAuthRequestProvider?
         public let claimCreationType: ClaimCreationType
+        /// If true, automatically submits proof after proof is generated from the claim creation process. Otherwise, lets the user submit proof by pressing a submit button when proof is generated.
+        public let canAutoSubmit: Bool
+        /// Whether the close button is visible
+        public let isCloseButtonVisible: Bool
         
         public init(
             canDeleteCookiesBeforeVerificationStarts: Bool = true,
             attestorAuthRequestProvider: AttestorAuthRequestProvider? = nil,
-            claimCreationType: ClaimCreationType =  .standalone
+            claimCreationType: ClaimCreationType =  .standalone,
+            canAutoSubmit: Bool = true,
+            isCloseButtonVisible: Bool = true
         ) {
             self.canDeleteCookiesBeforeVerificationStarts = canDeleteCookiesBeforeVerificationStarts
             self.attestorAuthRequestProvider = attestorAuthRequestProvider
             self.claimCreationType = claimCreationType
+            self.canAutoSubmit = canAutoSubmit
+            self.isCloseButtonVisible = isCloseButtonVisible
         }
         
         public protocol AttestorAuthRequestProvider {
@@ -278,12 +279,12 @@ public class ReclaimVerification {
         
         public enum ClaimCreationType: Int {
               case standalone = 0
-              case onMeChain = 1
+              case meChain = 1
                 
               fileprivate func toApi() -> ClaimCreationTypeApi {
                   switch (self) {
                       case .standalone: .standalone
-                      case .onMeChain: .onMeChain
+                      case .meChain: .meChain
                   }
               }
         }
@@ -496,7 +497,9 @@ public class ReclaimVerification {
                 api.setVerificationOptions(options: .init(
                     canDeleteCookiesBeforeVerificationStarts: options.canDeleteCookiesBeforeVerificationStarts,
                     canUseAttestorAuthenticationRequest: provider != nil,
-                    claimCreationType: options.claimCreationType.toApi()
+                    claimCreationType: options.claimCreationType.toApi(),
+                    canAutoSubmit: options.canAutoSubmit,
+                    isCloseButtonVisible: options.isCloseButtonVisible
                 )) { result in
                     continuation.resume(with: result)
                 }

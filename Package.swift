@@ -44,88 +44,88 @@ func getSdkTargets() -> [Target] {
     return [
         .binaryTarget(
             name: "App",
-            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.5.0/BinaryTargets/App.zip",
-            checksum: "e1f42673a28c0c0cccf1ea965c12a4b8604ec387aa6e0d3cf310f3022c0bcc73"
+            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.6.0/BinaryTargets/App.zip",
+            checksum: "5006c3d6e963968ecc0006895aaa875076570784ea8f1c3bdb18f0ce6d3ccfb6"
         ),
         .binaryTarget(
             name: "cupertino_http",
-            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.5.0/BinaryTargets/cupertino_http.zip",
-            checksum: "b77bd2ce01714066be19dbde3996ee4df5d00b9febc95bcba528591e24b249ef"
+            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.6.0/BinaryTargets/cupertino_http.zip",
+            checksum: "235fe49e1785c5c279adcbaf2650ebfa05d5505e07c83a883bef39ed622919d3"
         ),
         .binaryTarget(
             name: "device_info_plus",
-            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.5.0/BinaryTargets/device_info_plus.zip",
-            checksum: "a52237cc951b264fa38968d6f1147b22d49db6ad6f8b907a5fe4de7d493a5573"
+            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.6.0/BinaryTargets/device_info_plus.zip",
+            checksum: "04b44b1801b520fb2c6a84d3f94657ba7c284ce58b88a7773e67803125f89dfe"
         ),
         .binaryTarget(
             name: "flutter_inappwebview_ios",
-            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.5.0/BinaryTargets/flutter_inappwebview_ios.zip",
-            checksum: "9f737583885d8d9385b69f1f69ea5dc7d2ca40e8bb4bfda538703af236a90342"
+            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.6.0/BinaryTargets/flutter_inappwebview_ios.zip",
+            checksum: "c9225c3960373a90cf3af1da355262bb85dc5f2f9c374ff966483e4db30a248e"
         ),
         .binaryTarget(
             name: "flutter_secure_storage",
-            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.5.0/BinaryTargets/flutter_secure_storage.zip",
-            checksum: "4711ec0b6ecd5a70b6ddfc561faad2dcf9fb0f6086154a88781f540b9da4b12c"
+            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.6.0/BinaryTargets/flutter_secure_storage.zip",
+            checksum: "f1d18b1ef0c78359405b0d69e5189ed0fe80bbf55b670a33cfc52f2544f27d8a"
         ),
         .binaryTarget(
             name: "Flutter",
-            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.5.0/BinaryTargets/Flutter.zip",
-            checksum: "ae07eb3c0cc68b8691db9afba18d676177b1005cfc4ca2aa5d30078b924fe8a7"
+            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.6.0/BinaryTargets/Flutter.zip",
+            checksum: "bdf1ab93f01b92df613c3ae8ad44319b5cfd40cd400752a56be8c18ebbc06087"
         ),
         .binaryTarget(
             name: "FlutterPluginRegistrant",
-            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.5.0/BinaryTargets/FlutterPluginRegistrant.zip",
-            checksum: "8bdab29348a89ad8d01fc465ead71aeb4795b4e2cfa64522aefce63c994ea59c"
+            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.6.0/BinaryTargets/FlutterPluginRegistrant.zip",
+            checksum: "4db75ed608312c969e0afdf8a77fee0a712ba7eeb118370095012647d7562a61"
         ),
         .binaryTarget(
             name: "fluttertoast",
-            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.5.0/BinaryTargets/fluttertoast.zip",
-            checksum: "796be00eb7836590283357499e950dce9960bcdf6d49515c1a72f5c012d33efc"
+            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.6.0/BinaryTargets/fluttertoast.zip",
+            checksum: "cfff652491d545cdf8fc3153ac205d9453eaf7804b1cbd9286916bd486c0336f"
         ),
         .binaryTarget(
             name: "objective_c",
-            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.5.0/BinaryTargets/objective_c.zip",
-            checksum: "13b7c107ebb56ef7948c34c99fafb3585750a713d91afce994af5e10a00443b1"
+            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.6.0/BinaryTargets/objective_c.zip",
+            checksum: "5ed4377e377c07723694b6a01ac2f7d36ba03b6ca6afce82a2efc1d048960570"
         ),
         .binaryTarget(
             name: "OrderedSet",
-            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.5.0/BinaryTargets/OrderedSet.zip",
-            checksum: "5a95355eaf772cb8e464fc5f753c89fef8d69b24c234202c168fcc5dd6a234c2"
+            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.6.0/BinaryTargets/OrderedSet.zip",
+            checksum: "f8654ef3f729d04f47c08a548231e6f811bdf5ce2ec83b88f47b6b85899522b9"
         ),
         .binaryTarget(
             name: "package_info_plus",
-            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.5.0/BinaryTargets/package_info_plus.zip",
-            checksum: "3ace9dc2e2b4bede09be415d75032aad050c30eb92a44d081feb429904fb2c6f"
+            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.6.0/BinaryTargets/package_info_plus.zip",
+            checksum: "d396e995c11f29d4cbe40c93b1428ac397b56510e214a862ce46ad4fcfd8c57c"
         ),
         .binaryTarget(
             name: "path_provider_foundation",
-            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.5.0/BinaryTargets/path_provider_foundation.zip",
-            checksum: "9244c4b60b72ca87420a77242b82e8466572303ab8e051b68e0b00ca9f3872ed"
+            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.6.0/BinaryTargets/path_provider_foundation.zip",
+            checksum: "8dff401448f50f937a6be2ddb0b368462124dd17eb139a5020fd723d140bdc84"
         ),
         .binaryTarget(
             name: "permission_handler_apple",
-            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.5.0/BinaryTargets/permission_handler_apple.zip",
-            checksum: "89825171d731c9e3cf15ca1e1238f65babe25fbf5a1c12a1eaf5ef46ef0f9562"
+            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.6.0/BinaryTargets/permission_handler_apple.zip",
+            checksum: "e13e91b5c44b3813bd2e2d33c2c240b3b5a0899afaeb9629517de1f36dc87718"
         ),
         .binaryTarget(
             name: "reclaim_gnark_zkoperator",
-            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.5.0/BinaryTargets/reclaim_gnark_zkoperator.zip",
-            checksum: "12761690426ba8037bc886311a0beb022784c089783ea674a59bac55a39d6c28"
+            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.6.0/BinaryTargets/reclaim_gnark_zkoperator.zip",
+            checksum: "5b5daee3e514b6c7edd8f8ae2cf9947d68b85e00559f323a9e189bdc0f686466"
         ),
         .binaryTarget(
             name: "shared_preferences_foundation",
-            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.5.0/BinaryTargets/shared_preferences_foundation.zip",
-            checksum: "fec66590c65317180aefd53b4b06ace127db52feef0c7caa9e73d055936ec810"
+            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.6.0/BinaryTargets/shared_preferences_foundation.zip",
+            checksum: "f7dbe3a2945aab585b4163220028182aa3375c2d870d7ea724da26c19014fbb2"
         ),
         .binaryTarget(
             name: "sqflite_darwin",
-            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.5.0/BinaryTargets/sqflite_darwin.zip",
-            checksum: "fa0c54764d4df309a00c6d680ee1bd0f35fa0ebda32f699fac2636e20ba26c6f"
+            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.6.0/BinaryTargets/sqflite_darwin.zip",
+            checksum: "f1cf0141b9cf74afd5e4fbadd2e0628f90a2035d705cc8c66cf66a5551e8a1e7"
         ),
         .binaryTarget(
             name: "url_launcher_ios",
-            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.5.0/BinaryTargets/url_launcher_ios.zip",
-            checksum: "479f9ab9603f588faebbc5624d933a84163adbfe14be7a2b28f8eab15932603c"
+            url: "https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.6.0/BinaryTargets/url_launcher_ios.zip",
+            checksum: "33fd287892c376a19e71fe1639b0630ca270517cec6c6074a263bb2ee342fe5b"
         ),
     ]
 }
