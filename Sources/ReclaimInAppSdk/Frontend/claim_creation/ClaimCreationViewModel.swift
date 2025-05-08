@@ -117,7 +117,6 @@ class ClaimCreationViewModel: ObservableObject {
                     context: request.context,
                     sessionId: request.session?.sessionId ?? "",
                     parameters: request.parameters,
-                    autoSubmit: request.autoSubmit,
                     acceptAiProviders: request.acceptAiProviders,
                     webhookUrl: request.webhookUrl
                 ),

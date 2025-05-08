@@ -75,7 +75,7 @@ SDK_TARGET_FN_STRING="func getSdkTargets() -> [Target] {
 }"
 fi
 
-echo "// swift-tools-version: 6.0
+echo "// swift-tools-version: 5.8
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 // GENERATED FILE, DO NOT EDIT BY HAND
