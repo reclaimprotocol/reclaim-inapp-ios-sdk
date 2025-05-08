@@ -179,7 +179,6 @@ public class ReclaimVerification {
             ///   - session: Optional session information. If nil, SDK generates new session details
             ///   - context: Additional data to associate with the verification attempt
             ///   - parameters: Key-value pairs for prefilling claim creation variables
-            ///   - autoSubmit: If true, automatically submits proof after generation
             ///   - acceptAiProviders: Whether to accept AI-powered data providers
             ///   - webhookUrl: Optional URL to receive manual verification status updates
             /// - Throws: ReclaimVerificationError if required credentials are missing from Info.plist
@@ -192,8 +191,6 @@ public class ReclaimVerification {
                 context: String = "",
                 /// Prefill variables that can be used during the claim creation process.
                 parameters: [String : String] = [String:String](),
-                /// If true, automatically submits proof after proof is generated from the claim creation process. Otherwise, lets the user submit proof by pressing a submit button when proof is generated.
-                autoSubmit: Bool = false,
                 acceptAiProviders: Bool = false,
                 webhookUrl: String? = nil
             ) throws {
