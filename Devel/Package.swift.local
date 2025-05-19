@@ -106,10 +106,6 @@ func getSdkTargets() -> [Target] {
             name: "sqflite_darwin",
             path: "Build/Cache/ReclaimXCFrameworks/sqflite_darwin.xcframework"
         ),
-        .binaryTarget(
-            name: "url_launcher_ios",
-            path: "Build/Cache/ReclaimXCFrameworks/url_launcher_ios.xcframework"
-        ),
     ]
 }
 
