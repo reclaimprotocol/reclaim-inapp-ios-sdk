@@ -67,11 +67,15 @@
 		};
 		79D4066B2D675B2600460F00 /* SwiftUIWithPodExampleTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = SwiftUIWithPodExampleTests;
 			sourceTree = "<group>";
 		};
 		79D406752D675B2600460F00 /* SwiftUIWithPodExampleUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = SwiftUIWithPodExampleUITests;
 			sourceTree = "<group>";
 		};
@@ -343,13 +347,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SwiftUIWithPodExample-SwiftUIWithPodExampleUITests/Pods-SwiftUIWithPodExample-SwiftUIWithPodExampleUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SwiftUIWithPodExample-SwiftUIWithPodExampleUITests/Pods-SwiftUIWithPodExample-SwiftUIWithPodExampleUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -386,13 +386,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SwiftUIWithPodExample/Pods-SwiftUIWithPodExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SwiftUIWithPodExample/Pods-SwiftUIWithPodExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
