@@ -1,3 +1,12 @@
+## 0.8.3
+
+* Updates inapp module dependency to 0.8.3
+* Add support for versioned providers
+* Update [BREAKING] session init handler
+* Updates the UI with a verification review banner in the verification flow
+* Remove [BREAKING] `acceptAiProviders`, and `webhookUrl` from ReclaimVerification Request
+* Update formatting with swift-format
+
 ## 0.7.0
 
 * Updates inapp module dependency to 0.7.0

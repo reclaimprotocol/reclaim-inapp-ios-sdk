@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-RECLAIM_SDK_VERSION=$(cat Sources/ReclaimInAppSdk/Resources/ReclaimInAppSdk.version)
+RECLAIM_SDK_VERSION=$(cat Sources/ReclaimInAppSdk/Resources/InAppSdk.version)
 
 DIST_DIR="Build/${RECLAIM_SDK_VERSION}/BinaryTargets"
 mkdir -p $DIST_DIR
@@ -124,7 +124,7 @@ let package = Package(
         .library(
             name: \"ReclaimInAppSdk\",
             targets: [
-                \"ReclaimInAppSdk\",
+                \"ReclaimInAppSdk\"
             ] + sdkTargetNames
         )
     ],
@@ -140,7 +140,7 @@ let package = Package(
         .testTarget(
             name: \"ReclaimInAppSdkTests\",
             dependencies: [\"ReclaimInAppSdk\"]
-        ),
+        )
     ] + sdkTargets
 )
 

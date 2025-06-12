@@ -68,6 +68,11 @@ struct ContentView: View {
     
     func startClaimCreation() async {
         do {
+            /// Optionally, you can set the verification options to customize the verification flow.
+            try await ReclaimVerification.setVerificationOptions(options: .init(
+                canAutoSubmit: false,
+                isCloseButtonVisible: true
+            ))
             let request = ReclaimVerification.Request.params(
                 try .init(
                     /// You can use the appId and secret from Reclaim Devtools to create a request.

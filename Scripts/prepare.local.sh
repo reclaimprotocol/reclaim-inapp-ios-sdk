@@ -97,7 +97,7 @@ let package = Package(
         .library(
             name: \"ReclaimInAppSdk\",
             targets: [
-                \"ReclaimInAppSdk\",
+                \"ReclaimInAppSdk\"
             ] + sdkTargetNames
         )
     ],
@@ -113,7 +113,7 @@ let package = Package(
         .testTarget(
             name: \"ReclaimInAppSdkTests\",
             dependencies: [\"ReclaimInAppSdk\"]
-        ),
+        )
     ] + sdkTargets
 )
 

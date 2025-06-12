@@ -602,7 +602,7 @@
 			repositoryURL = "https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.5.0;
+				minimumVersion = 0.8.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

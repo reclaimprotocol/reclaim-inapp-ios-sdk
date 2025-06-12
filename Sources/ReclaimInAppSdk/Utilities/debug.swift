@@ -1,7 +1,7 @@
 func isDebugMode() -> Bool {
-#if DEBUG
+  #if DEBUG
     return true
-#else
+  #else
     return false
-#endif
+  #endif
 }
