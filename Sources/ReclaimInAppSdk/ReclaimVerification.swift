@@ -179,9 +179,10 @@ public class ReclaimVerification {
         let sdkParam =
           Bundle.main.infoDictionary?["ReclaimInAppSDKParam"]
           as? [String: Any]
-        if sdkParam == nil || sdkParam?["ReclaimAppId"] == nil
-          || sdkParam?["ReclaimAppSecret"] == nil
-        {
+        guard
+          let appId = sdkParam?["ReclaimAppId"] as? String,
+          let secret = sdkParam?["ReclaimAppSecret"] as? String
+        else {
           throw ReclaimVerificationError.failed(
             sessionId: session?.sessionId ?? "",
             didSubmitManualVerification: false,
@@ -189,8 +190,7 @@ public class ReclaimVerification {
               "ReclaimInAppSDKParam.ReclaimAppId or ReclaimInAppSDKParam.ReclaimAppSecret are missing in Info.plist. Either provide appId and secret in Info.plist or use ReclaimVerification(appId:secret:) initializer"
           )
         }
-        let appId = sdkParam?["ReclaimAppId"] as! String
-        let secret = sdkParam?["ReclaimAppSecret"] as! String
+
         self.init(
           appId: appId,
           secret: secret,
@@ -417,7 +417,6 @@ public class ReclaimVerification {
           )
           logger.log("ViewModel notifies completion")
           hostingController?.dismiss(animated: true)
-          hostingController = nil
           continuation.resume(with: result)
         }
       }
