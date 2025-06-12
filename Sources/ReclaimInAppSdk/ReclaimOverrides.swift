@@ -25,7 +25,7 @@ final public class ReclaimOverrides {
             )
         }
     }
-    
+
     public struct FeatureOptions {
         public let cookiePersist: Bool?
         public let singleReclaimRequest: Bool?
@@ -33,21 +33,29 @@ final public class ReclaimOverrides {
         public let sessionTimeoutForManualVerificationTrigger: Int64?
         public let attestorBrowserRpcUrl: String?
         public let isAIFlowEnabled: Bool?
-        
+        public let manualReviewMessage: String?
+        public let loginPromptMessage: String?
+
         public init(
             cookiePersist: Bool? = nil,
             singleReclaimRequest: Bool? = nil,
             idleTimeThresholdForManualVerificationTrigger: Int64? = nil,
             sessionTimeoutForManualVerificationTrigger: Int64? = nil,
             attestorBrowserRpcUrl: String? = nil,
-            isAIFlowEnabled: Bool? = nil
+            isAIFlowEnabled: Bool? = nil,
+            manualReviewMessage: String? = nil,
+            loginPromptMessage: String? = nil
         ) {
             self.cookiePersist = cookiePersist
             self.singleReclaimRequest = singleReclaimRequest
-            self.idleTimeThresholdForManualVerificationTrigger = idleTimeThresholdForManualVerificationTrigger
-            self.sessionTimeoutForManualVerificationTrigger = sessionTimeoutForManualVerificationTrigger
+            self.idleTimeThresholdForManualVerificationTrigger =
+                idleTimeThresholdForManualVerificationTrigger
+            self.sessionTimeoutForManualVerificationTrigger =
+                sessionTimeoutForManualVerificationTrigger
             self.attestorBrowserRpcUrl = attestorBrowserRpcUrl
             self.isAIFlowEnabled = isAIFlowEnabled
+            self.manualReviewMessage = manualReviewMessage
+            self.loginPromptMessage = loginPromptMessage
         }
     }
 
@@ -65,7 +73,7 @@ final public class ReclaimOverrides {
          * Defaults to enabled when not in release mode.
          */
         public let canSdkPrintLogs: Bool?
-        
+
         public init(
             logHandler: LogHandler? = nil,
             canSdkCollectTelemetry: Bool = true,
@@ -75,43 +83,48 @@ final public class ReclaimOverrides {
             self.canSdkCollectTelemetry = canSdkCollectTelemetry
             self.canSdkPrintLogs = canSdkPrintLogs
         }
-        
+
         public protocol LogHandler {
             func onLogs(logJsonString: String)
         }
     }
-    
+
     public struct SessionManagement {
         public let handler: SessionHandler
-        
+
         public init(handler: SessionHandler) {
             self.handler = handler
         }
-        
+
         public protocol SessionHandler {
             func createSession(
                 appId: String,
                 providerId: String,
                 timestamp: String,
                 signature: String,
-                completion: @escaping (Result<String, any Error>) -> Void
+                completion: @escaping (Result<InitResponse, any Error>) -> Void
             )
-            
+
             func updateSession(
                 sessionId: String,
                 status: SessionStatus,
                 completion: @escaping (Result<Bool, Error>) -> Void
             )
-            
+
             func logSession(
                 appId: String,
                 providerId: String,
                 sessionId: String,
                 logType: String,
-                metadata: [String : (any Sendable)?]?
+                metadata: [String: (any Sendable)?]?
             )
         }
-        
+
+        public struct InitResponse: Hashable {
+            public var sessionId: String
+            public var resolvedProviderVersion: String? = nil
+        }
+
         public enum SessionStatus: Int {
             case USER_STARTED_VERIFICATION = 0
             case USER_INIT_VERIFICATION = 1
@@ -122,47 +135,53 @@ final public class ReclaimOverrides {
             case PROOF_SUBMITTED = 6
             case PROOF_SUBMISSION_FAILED = 7
             case PROOF_MANUAL_VERIFICATION_SUBMITTED = 8
-            
+
             public static func fromInt(_ value: Int) -> SessionStatus? {
                 return switch value {
                 case 0:
-                        .USER_STARTED_VERIFICATION
+                    .USER_STARTED_VERIFICATION
                 case 1:
-                        .USER_INIT_VERIFICATION
+                    .USER_INIT_VERIFICATION
                 case 2:
-                        .PROOF_GENERATION_STARTED
+                    .PROOF_GENERATION_STARTED
                 case 3:
-                        .PROOF_GENERATION_RETRY
+                    .PROOF_GENERATION_RETRY
                 case 4:
-                        .PROOF_GENERATION_SUCCESS
+                    .PROOF_GENERATION_SUCCESS
                 case 5:
-                        .PROOF_GENERATION_FAILED
+                    .PROOF_GENERATION_FAILED
                 case 6:
-                        .PROOF_SUBMITTED
+                    .PROOF_SUBMITTED
                 case 7:
-                        .PROOF_SUBMISSION_FAILED
+                    .PROOF_SUBMISSION_FAILED
                 case 8:
-                        .PROOF_MANUAL_VERIFICATION_SUBMITTED
+                    .PROOF_MANUAL_VERIFICATION_SUBMITTED
                 default:
                     nil
                 }
             }
         }
     }
-    
+
     public struct ReclaimAppInfo {
         public let appName: String
         public let appImageUrl: String
         public let isRecurring: Bool
-        
-        public init(appName: String, appImageUrl: String, isRecurring: Bool = false) {
+
+        public init(
+            appName: String,
+            appImageUrl: String,
+            isRecurring: Bool = false
+        ) {
             self.appName = appName
             self.appImageUrl = appImageUrl
             self.isRecurring = isRecurring
         }
     }
-    
+
     public protocol SessionIdentityUpdateHandler {
-        func onSessionIdentityUpdate(identity: ReclaimVerification.ReclaimSessionIdentity?)
+        func onSessionIdentityUpdate(
+            identity: ReclaimVerification.ReclaimSessionIdentity?
+        )
     }
 }

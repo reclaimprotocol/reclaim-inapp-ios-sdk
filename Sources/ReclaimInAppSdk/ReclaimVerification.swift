@@ -14,13 +14,13 @@ public struct ReclaimSessionInformation {
     /// This value is at most
     /// 8,640,000,000,000,000ms (100,000,000 days) from the Unix epoch.
     public let timestamp: String
-    
+
     /// Unique identifier for the verification session
     public let sessionId: String
-    
+
     /// Cryptographic signature to validate the session
     public let signature: String
-    
+
     public init(timestamp: String, sessionId: String, signature: String) {
         self.timestamp = timestamp
         self.sessionId = sessionId
@@ -33,14 +33,14 @@ public struct ReclaimSessionInformation {
 /// for proving claims about user data through various providers.
 public class ReclaimVerification {
     private init() {}
-    
+
     public struct ReclaimSessionIdentity: Sendable {
         public let sessionId: String
         public let providerId: String
         public let appId: String
         let clientSource: String
         let deviceId: String
-        
+
         public init(sessionId: String, providerId: String, appId: String) {
             self.sessionId = sessionId
             self.providerId = providerId
@@ -49,35 +49,25 @@ public class ReclaimVerification {
             self.clientSource = settings.getClientSource(appId: appId)
             self.deviceId = settings.getDeviceLoggingId()
         }
-        
+
         @MainActor static var shared: ReclaimSessionIdentity? = nil
-        
-        @MainActor public static func setCurrentFromRequest(_ request: ReclaimVerification.Request) {
-            switch (request) {
-            case .params(let req):
-                shared = .init(
-                    sessionId: req.session?.sessionId ?? "",
-                    providerId: req.providerId,
-                    appId: req.appId
-                )
-                break
-            case .url(_):
-                // TODO: Get session information from url
-                shared = .init(
-                    sessionId: "",
-                    providerId: "",
-                    appId: ""
-                )
-                break
-            }
+
+        @MainActor public static func setCurrentFromRequest(
+            _ request: ReclaimVerification.Request
+        ) {
+            shared = .init(
+                sessionId: request.maybeSessionId ?? "",
+                providerId: "",
+                appId: ""
+            )
         }
     }
-    
+
     /// Configuration structure for storing Reclaim app credentials
     private struct ReclaimClientConfiguration: Decodable {
         public let ReclaimAppId, ReclaimAppSecret: String
     }
-    
+
     /// Represents different ways to initiate a verification request
     public enum Request {
         /// A Reclaim verification request with explicit parameters
@@ -94,11 +84,9 @@ public class ReclaimVerification {
             public var context: String
             /// Key-value pairs for prefilling claim creation variables
             public var parameters: [String: String]
-            /// Whether to accept AI-powered data providers
-            public var acceptAiProviders: Bool = false
-            /// Optional URL to receive verification status updates
-            public var webhookUrl: String? = nil
-            
+            /// A `ProviderVersion` for resolving the version of provider that must be used in the verification flow. Defaults to a versionExpression with empty string that represents latest version.
+            public var providerVersion: ProviderVersion
+
             /// Creates a Reclaim Verification Request with explicit app credentials.
             ///
             /// Use this initializer when you want to provide the app credentials programmatically
@@ -120,8 +108,7 @@ public class ReclaimVerification {
             ///   - session: Optional session information. If nil, SDK generates new session details
             ///   - context: Additional data to associate with the verification attempt
             ///   - parameters: Key-value pairs for prefilling claim creation variables
-            ///   - acceptAiProviders: Whether to accept AI-powered data providers
-            ///   - webhookUrl: Optional URL to receive verification status updates
+            ///   - providerVersion: The provider version details  for fetching a resolved version of the provider
             public init(
                 /// If not provided, sdk will look for an appId from ReclaimInAppSDKParam.ReclaimAppId in Info.plist
                 appId: String,
@@ -134,9 +121,9 @@ public class ReclaimVerification {
                 /// Additional data that can be associated with a verification attempt and returned in proofs. Defaults to an empty [String].
                 context: String = "",
                 /// Prefill variables that can be used during the claim creation process.
-                parameters: [String : String] = [String:String](),
-                acceptAiProviders: Bool = false,
-                webhookUrl: String? = nil
+                parameters: [String: String] = [String: String](),
+                /// The provider version expression for resolving the provider
+                providerVersion: ProviderVersion = .init(versionExpression: "")
             ) {
                 self.appId = appId
                 self.secret = secret
@@ -144,10 +131,9 @@ public class ReclaimVerification {
                 self.session = session
                 self.context = context
                 self.parameters = parameters
-                self.acceptAiProviders = acceptAiProviders
-                self.webhookUrl = webhookUrl
+                self.providerVersion = providerVersion
             }
-            
+
             /// Creates a Reclaim Verification Request using app credentials from Info.plist.
             ///
             /// This initializer retrieves the app credentials from your Info.plist file.
@@ -179,8 +165,6 @@ public class ReclaimVerification {
             ///   - session: Optional session information. If nil, SDK generates new session details
             ///   - context: Additional data to associate with the verification attempt
             ///   - parameters: Key-value pairs for prefilling claim creation variables
-            ///   - acceptAiProviders: Whether to accept AI-powered data providers
-            ///   - webhookUrl: Optional URL to receive manual verification status updates
             /// - Throws: ReclaimVerificationError if required credentials are missing from Info.plist
             public init(
                 /// The Reclaim data provider Id that should be used in the Reclaim Verification Process.
@@ -190,16 +174,19 @@ public class ReclaimVerification {
                 /// Additional data that can be associated with a verification attempt and returned in proofs. Defaults to an empty [String].
                 context: String = "",
                 /// Prefill variables that can be used during the claim creation process.
-                parameters: [String : String] = [String:String](),
-                acceptAiProviders: Bool = false,
-                webhookUrl: String? = nil
+                parameters: [String: String] = [String: String]()
             ) throws {
-                let sdkParam = Bundle.main.infoDictionary?["ReclaimInAppSDKParam"] as? [String : Any]
-                if (sdkParam == nil || sdkParam?["ReclaimAppId"] == nil || sdkParam?["ReclaimAppSecret"] == nil) {
+                let sdkParam =
+                    Bundle.main.infoDictionary?["ReclaimInAppSDKParam"]
+                    as? [String: Any]
+                if sdkParam == nil || sdkParam?["ReclaimAppId"] == nil
+                    || sdkParam?["ReclaimAppSecret"] == nil
+                {
                     throw ReclaimVerificationError.failed(
                         sessionId: session?.sessionId ?? "",
                         didSubmitManualVerification: false,
-                        reason: "ReclaimInAppSDKParam.ReclaimAppId or ReclaimInAppSDKParam.ReclaimAppSecret are missing in Info.plist. Either provide appId and secret in Info.plist or use ReclaimVerification(appId:secret:) initializer"
+                        reason:
+                            "ReclaimInAppSDKParam.ReclaimAppId or ReclaimInAppSDKParam.ReclaimAppSecret are missing in Info.plist. Either provide appId and secret in Info.plist or use ReclaimVerification(appId:secret:) initializer"
                     )
                 }
                 let appId = sdkParam?["ReclaimAppId"] as! String
@@ -210,29 +197,73 @@ public class ReclaimVerification {
                     providerId: providerId,
                     session: session,
                     context: context,
-                    parameters: parameters,
-                    acceptAiProviders: acceptAiProviders,
-                    webhookUrl: webhookUrl
+                    parameters: parameters
                 )
             }
+
+            /// The exact provider version
+            public struct ProviderVersion: Hashable {
+                public let resolvedVersion: String
+                public let versionExpression: String
+
+                /// ProviderVersion with `exactVersion` version and an optional `versionExpression` following semantic version
+                public init(
+                    exactVersion: String,
+                    versionExpression: String? = nil
+                ) {
+                    self.resolvedVersion = exactVersion
+                    self.versionExpression = versionExpression ?? exactVersion
+                }
+
+                /// A `versionExpression` following semantic version for resolving a version of the provider
+                public init(versionExpression: String = "") {
+                    self.resolvedVersion = versionExpression
+                    self.versionExpression = versionExpression
+                }
+            }
         }
-        
+
         /// Start verification using explicit parameters
         case params(_ params: Params)
         /// Start verification using a pre-configured URL
         case url(_ url: String)
-        
+        /// Start verification using a json template object
+        case json(_ template: [AnyHashable?: Sendable?])
+
         public var maybeSessionId: String? {
-            get {
-                return switch (self) {
-                case .params(let request): request.session?.sessionId ?? ""
-                    // TODO: Get Session Id from url
-                case .url(_): ""
-                }
+            return switch self {
+            case .params(let request): request.session?.sessionId ?? ""
+            case .url(let url):
+                URLComponents(
+                    string: url.replacingOccurrences(
+                        of: "/template",
+                        with: "/?template"
+                    )
+                )?.queryItems?.first(where: { $0.name == "template" })?.value
+                    ?? ""
+            case .json(let template): (template["sessionId"] as? String) ?? ""
             }
         }
+
+        static private func getValuesFromTemplateUrl(url: String) -> [String:
+            Any?]
+        {
+            let values: [String: Sendable?] = [:]
+            let dataString = URLComponents(
+                string: url.replacingOccurrences(
+                    of: "/template",
+                    with: "/?template"
+                )
+            )?.queryItems?.first(where: { $0.name == "template" })?.value
+            guard let dataString else { return values }
+            let dataJson = JSONUtility.fromString(dataString)
+            guard let dataMap = dataJson as? [String: Any?] else {
+                return values
+            }
+            return dataMap
+        }
     }
-    
+
     /// Contains the proof and response data after verification
     public struct Response {
         /// The API response containing verification results and proof details
@@ -243,7 +274,7 @@ public class ReclaimVerification {
         public var didSubmitManualVerification: Bool
         public var proofs: [[String: Any?]]
     }
-    
+
     public struct VerificationOptions {
         public let canDeleteCookiesBeforeVerificationStarts: Bool
         public let attestorAuthRequestProvider: AttestorAuthRequestProvider?
@@ -252,46 +283,47 @@ public class ReclaimVerification {
         public let canAutoSubmit: Bool
         /// Whether the close button is visible
         public let isCloseButtonVisible: Bool
-        
+
         public init(
             canDeleteCookiesBeforeVerificationStarts: Bool = true,
             attestorAuthRequestProvider: AttestorAuthRequestProvider? = nil,
-            claimCreationType: ClaimCreationType =  .standalone,
+            claimCreationType: ClaimCreationType = .standalone,
             canAutoSubmit: Bool = true,
             isCloseButtonVisible: Bool = true
         ) {
-            self.canDeleteCookiesBeforeVerificationStarts = canDeleteCookiesBeforeVerificationStarts
+            self.canDeleteCookiesBeforeVerificationStarts =
+                canDeleteCookiesBeforeVerificationStarts
             self.attestorAuthRequestProvider = attestorAuthRequestProvider
             self.claimCreationType = claimCreationType
             self.canAutoSubmit = canAutoSubmit
             self.isCloseButtonVisible = isCloseButtonVisible
         }
-        
+
         public protocol AttestorAuthRequestProvider {
             func fetchAttestorAuthenticationRequest(
                 reclaimHttpProvider: [AnyHashable?: (any Sendable)?],
                 completion: @escaping (Result<String, any Error>) -> Void
             )
         }
-        
+
         public enum ClaimCreationType: Int {
-              case standalone = 0
-              case meChain = 1
-                
-              fileprivate func toApi() -> ClaimCreationTypeApi {
-                  switch (self) {
-                      case .standalone: .standalone
-                      case .meChain: .meChain
-                  }
-              }
+            case standalone = 0
+            case meChain = 1
+
+            fileprivate func toApi() -> ClaimCreationTypeApi {
+                switch self {
+                case .standalone: .standalone
+                case .meChain: .meChain
+                }
+            }
         }
     }
-    
+
     @MainActor
     public static func preWarm() {
         let _ = ReclaimFlutterViewService.flutterEngine
     }
-    
+
     /// Initiates the verification process by presenting a full-screen interface.
     ///
     /// This method handles the entire verification flow, including:
@@ -317,42 +349,55 @@ public class ReclaimVerification {
     ///
     /// - Note: This method will fail to open the verification UI if the user's screen is getting shared.
     @MainActor
-    public static func startVerification(_ request: Request) async throws -> Response {
+    public static func startVerification(_ request: Request) async throws
+        -> Response
+    {
         // Set up consumer identity for this verification session
-        ReclaimVerification.ReclaimSessionIdentity.setCurrentFromRequest(request)
+        ReclaimVerification.ReclaimSessionIdentity.setCurrentFromRequest(
+            request
+        )
         ConsumerLogging.setup()
-        
+
         // Initialize logger for debugging and tracking
         let logger = Logging.get("ReclaimVerification.startVerification")
-        
+
         // Create the view model and UI screen for verification
         let viewModel = ClaimCreationViewModel(request)
-        
+
         logger.log("started initialization")
-        
+
         // Initialize the view model asynchronously
         Task { @MainActor in
-            let logger = Logging.get("ReclaimVerification.startVerification.Task")
+            let logger = Logging.get(
+                "ReclaimVerification.startVerification.Task"
+            )
             logger.log("started viewModel.initialization")
             await viewModel.initialize()
             logger.log("started viewModel.initializated")
         }
-        
+
         // Use continuation to handle the asynchronous UI flow
         return try await withCheckedThrowingContinuation { continuation in
             // Get the current window to present the verification UI
-            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                  let window = windowScene.windows.first else {
+            guard
+                let windowScene = UIApplication.shared.connectedScenes.first
+                    as? UIWindowScene,
+                let window = windowScene.windows.first
+            else {
                 // TODO: A known issue where this fails is when the user's screen is getting shared. Find a way to fix this.
-                continuation.resume(throwing: ReclaimVerificationError.failed(
-                    sessionId: request.maybeSessionId ?? "",
-                    didSubmitManualVerification: false,
-                    reason: "Could not start verification UI"
-                ))
+                continuation.resume(
+                    throwing: ReclaimVerificationError.failed(
+                        sessionId: request.maybeSessionId ?? "",
+                        didSubmitManualVerification: false,
+                        reason: "Could not start verification UI"
+                    )
+                )
                 return
             }
-            
-            let logger = Logging.get("ReclaimVerification.startVerification.BuildingReclaimUIViewController")
+
+            let logger = Logging.get(
+                "ReclaimVerification.startVerification.BuildingReclaimUIViewController"
+            )
             logger.log("Building Reclaim UIView Controller")
             // Create and configure the hosting controller for the Reclaim view
             let hostingController = ReclaimFlutterViewService.uiViewController
@@ -360,32 +405,39 @@ public class ReclaimVerification {
             hostingController.modalPresentationStyle = .fullScreen
             hostingController.view.backgroundColor = .white
             logger.log("Reclaim UIView controller built")
-            
+
             // Set up completion handler to dismiss UI and return result
             viewModel.onCompletion = { [weak hostingController] result in
                 Task { @MainActor in
-                    let logger = Logging.get("ReclaimVerification.startVerification.call.viewModel.onCompletion")
+                    let logger = Logging.get(
+                        "ReclaimVerification.startVerification.call.viewModel.onCompletion"
+                    )
                     logger.log("ViewModel notifies completion")
                     hostingController?.dismiss(animated: true)
                     hostingController = nil
                     continuation.resume(with: result)
                 }
             }
-            
+
             // Present the verification UI
             logger.log("presenting reclaim view")
-            window.rootViewController?.present(hostingController, animated: true)
+            window.rootViewController?.present(
+                hostingController,
+                animated: true
+            )
             logger.log("presented reclaim view")
             logger.log("started client webview")
-            
+
             Task { @MainActor in
-                let logger = Logging.get("ReclaimVerification.startVerification.Task")
+                let logger = Logging.get(
+                    "ReclaimVerification.startVerification.Task"
+                )
                 logger.log("sending view model request")
                 await viewModel.sendRequest()
             }
         }
     }
-    
+
     @MainActor
     public static func setOverrides(
         provider: ReclaimOverrides.ProviderInformation? = nil,
@@ -393,19 +445,26 @@ public class ReclaimVerification {
         logConsumer: ReclaimOverrides.LogConsumer? = nil,
         sessionManagement: ReclaimOverrides.SessionManagement? = nil,
         appInfo: ReclaimOverrides.ReclaimAppInfo? = nil,
-        sessionIdentityUpdateHandler: ReclaimOverrides.SessionIdentityUpdateHandler? = nil,
+        sessionIdentityUpdateHandler: ReclaimOverrides
+            .SessionIdentityUpdateHandler? = nil,
         capabilityAccessToken: String? = nil
-    ) async throws -> Void {
-        let binaryMessenger = ReclaimFlutterViewService.flutterEngine.binaryMessenger
+    ) async throws {
+        let binaryMessenger = ReclaimFlutterViewService.flutterEngine
+            .binaryMessenger
         let api = ReclaimModuleApi.init(binaryMessenger: binaryMessenger)
-        let providerInformationCallbackHandler: ReclaimOverrides.ProviderInformation.CallbackHandler? = switch (provider) {
-            case .callback(callbackHandler: let callbackHandler): callbackHandler;
-            default: nil
-        }
-        
-        let hostApi = ReclaimHostOverridesApiImpl.getInstance(binaryMessenger: binaryMessenger)
+        let providerInformationCallbackHandler:
+            ReclaimOverrides.ProviderInformation.CallbackHandler? =
+                switch provider {
+                case .callback(let callbackHandler): callbackHandler
+                default: nil
+                }
+
+        let hostApi = ReclaimHostOverridesApiImpl.getInstance(
+            binaryMessenger: binaryMessenger
+        )
         if let providerInformationCallbackHandler {
-            hostApi.providerInformationCallbackHandler = providerInformationCallbackHandler
+            hostApi.providerInformationCallbackHandler =
+                providerInformationCallbackHandler
         }
         if let logHandler = logConsumer?.logHandler {
             hostApi.logHandler = logHandler
@@ -416,64 +475,99 @@ public class ReclaimVerification {
         if let sessionIdentityUpdateHandler {
             hostApi.sessionIdentityUpdateHandler = sessionIdentityUpdateHandler
         }
-        
+
         // Use continuation to handle the asynchronous UI flow
         return try await withCheckedThrowingContinuation { continuation in
-            let overrideProvider: ClientProviderInformationOverride? = if let provider {
-                switch (provider) {
-                case .jsonString(jsonString: let jsonString): .init(
-                    providerInformationUrl: nil, providerInformationJsonString: jsonString, canFetchProviderInformationFromHost: false
-                )
-                case .url(url: let url): .init(
-                    providerInformationUrl: url, providerInformationJsonString: nil, canFetchProviderInformationFromHost: false
-                )
-                case .callback(callbackHandler: _): .init(
-                    providerInformationUrl: nil, providerInformationJsonString: nil, canFetchProviderInformationFromHost: true)
+            let overrideProvider: ClientProviderInformationOverride? =
+                if let provider {
+                    switch provider {
+                    case .jsonString(let jsonString):
+                        .init(
+                            providerInformationUrl: nil,
+                            providerInformationJsonString: jsonString,
+                            canFetchProviderInformationFromHost: false
+                        )
+                    case .url(let url):
+                        .init(
+                            providerInformationUrl: url,
+                            providerInformationJsonString: nil,
+                            canFetchProviderInformationFromHost: false
+                        )
+                    case .callback(callbackHandler: _):
+                        .init(
+                            providerInformationUrl: nil,
+                            providerInformationJsonString: nil,
+                            canFetchProviderInformationFromHost: true
+                        )
+                    }
+                } else {
+                    nil
                 }
-            } else {
-                nil
-            }
-            
+
             api.setOverrides(
                 provider: overrideProvider,
-                feature: (featureOptions == nil) ? nil : ClientFeatureOverrides(
-                    cookiePersist: featureOptions?.cookiePersist,
-                    singleReclaimRequest: featureOptions?.singleReclaimRequest,
-                    idleTimeThresholdForManualVerificationTrigger: featureOptions?.idleTimeThresholdForManualVerificationTrigger,
-                    sessionTimeoutForManualVerificationTrigger: featureOptions?.sessionTimeoutForManualVerificationTrigger,
-                    attestorBrowserRpcUrl: featureOptions?.attestorBrowserRpcUrl,
-                    isAIFlowEnabled: featureOptions?.isAIFlowEnabled
-                ),
-                logConsumer: (logConsumer == nil) ? nil : ClientLogConsumerOverride(
-                    enableLogHandler: logConsumer?.logHandler != nil,
-                    canSdkCollectTelemetry: logConsumer?.canSdkCollectTelemetry ?? true,
-                    canSdkPrintLogs: logConsumer?.canSdkPrintLogs
-                ),
-                sessionManagement: (sessionManagement == nil) ? nil : ClientReclaimSessionManagementOverride(
-                    // A handler has been provided. We'll not let SDK manage sessions in this case.
-                    // Disabling this lets the host manage sessions.
-                    enableSdkSessionManagement: false
-                ),
-                appInfo: (appInfo == nil) ? nil : ClientReclaimAppInfoOverride(
-                    appName: appInfo?.appName ?? "",
-                    appImageUrl: appInfo?.appImageUrl ?? "",
-                    isRecurring: appInfo?.isRecurring ?? false
-                ),
+                feature: (featureOptions == nil)
+                    ? nil
+                    : ClientFeatureOverrides(
+                        cookiePersist: featureOptions?.cookiePersist,
+                        singleReclaimRequest: featureOptions?
+                            .singleReclaimRequest,
+                        idleTimeThresholdForManualVerificationTrigger:
+                            featureOptions?
+                            .idleTimeThresholdForManualVerificationTrigger,
+                        sessionTimeoutForManualVerificationTrigger:
+                            featureOptions?
+                            .sessionTimeoutForManualVerificationTrigger,
+                        attestorBrowserRpcUrl: featureOptions?
+                            .attestorBrowserRpcUrl,
+                        isAIFlowEnabled: featureOptions?.isAIFlowEnabled,
+                        manualReviewMessage: featureOptions?
+                            .manualReviewMessage,
+                        loginPromptMessage: featureOptions?.loginPromptMessage
+                    ),
+                logConsumer: (logConsumer == nil)
+                    ? nil
+                    : ClientLogConsumerOverride(
+                        enableLogHandler: logConsumer?.logHandler != nil,
+                        canSdkCollectTelemetry: logConsumer?
+                            .canSdkCollectTelemetry ?? true,
+                        canSdkPrintLogs: logConsumer?.canSdkPrintLogs
+                    ),
+                sessionManagement: (sessionManagement == nil)
+                    ? nil
+                    : ClientReclaimSessionManagementOverride(
+                        // A handler has been provided. We'll not let SDK manage sessions in this case.
+                        // Disabling this lets the host manage sessions.
+                        enableSdkSessionManagement: false
+                    ),
+                appInfo: (appInfo == nil)
+                    ? nil
+                    : ClientReclaimAppInfoOverride(
+                        appName: appInfo?.appName ?? "",
+                        appImageUrl: appInfo?.appImageUrl ?? "",
+                        isRecurring: appInfo?.isRecurring ?? false
+                    ),
                 capabilityAccessToken: capabilityAccessToken
             ) { result in
-                switch (result) {
-                    case .success(): continuation.resume(returning: ())
-                    case .failure(let error): continuation.resume(throwing: ReclaimPlatformException(pigeonError: error))
+                switch result {
+                case .success(): continuation.resume(returning: ())
+                case .failure(let error):
+                    continuation.resume(
+                        throwing: ReclaimPlatformException(pigeonError: error)
+                    )
                 }
             }
         }
     }
-    
+
     @MainActor
     public static func clearAllOverrides() async throws {
-        let binaryMessenger = ReclaimFlutterViewService.flutterEngine.binaryMessenger
+        let binaryMessenger = ReclaimFlutterViewService.flutterEngine
+            .binaryMessenger
         let api = ReclaimModuleApi.init(binaryMessenger: binaryMessenger)
-        let hostApi = ReclaimHostOverridesApiImpl.getInstance(binaryMessenger: binaryMessenger)
+        let hostApi = ReclaimHostOverridesApiImpl.getInstance(
+            binaryMessenger: binaryMessenger
+        )
         return try await withCheckedThrowingContinuation { continuation in
             api.clearAllOverrides { result in
                 hostApi.clearOverrides()
@@ -481,23 +575,31 @@ public class ReclaimVerification {
             }
         }
     }
-    
+
     @MainActor
-    public static func setVerificationOptions(options: VerificationOptions?) async throws {
-        let binaryMessenger = ReclaimFlutterViewService.flutterEngine.binaryMessenger
+    public static func setVerificationOptions(options: VerificationOptions?)
+        async throws
+    {
+        let binaryMessenger = ReclaimFlutterViewService.flutterEngine
+            .binaryMessenger
         let api = ReclaimModuleApi.init(binaryMessenger: binaryMessenger)
-        let hostApi = ReclaimHostVerificationApiImpl.getInstance(binaryMessenger: binaryMessenger)
+        let hostApi = ReclaimHostVerificationApiImpl.getInstance(
+            binaryMessenger: binaryMessenger
+        )
         return try await withCheckedThrowingContinuation { continuation in
             if let options {
                 let provider = options.attestorAuthRequestProvider
                 hostApi.attestorAuthRequestProvider = provider
-                api.setVerificationOptions(options: .init(
-                    canDeleteCookiesBeforeVerificationStarts: options.canDeleteCookiesBeforeVerificationStarts,
-                    canUseAttestorAuthenticationRequest: provider != nil,
-                    claimCreationType: options.claimCreationType.toApi(),
-                    canAutoSubmit: options.canAutoSubmit,
-                    isCloseButtonVisible: options.isCloseButtonVisible
-                )) { result in
+                api.setVerificationOptions(
+                    options: .init(
+                        canDeleteCookiesBeforeVerificationStarts: options
+                            .canDeleteCookiesBeforeVerificationStarts,
+                        canUseAttestorAuthenticationRequest: provider != nil,
+                        claimCreationType: options.claimCreationType.toApi(),
+                        canAutoSubmit: options.canAutoSubmit,
+                        isCloseButtonVisible: options.isCloseButtonVisible
+                    )
+                ) { result in
                     continuation.resume(with: result)
                 }
             } else {
@@ -513,19 +615,24 @@ public class ReclaimVerification {
 public enum ReclaimVerificationError: Error {
     /// User explicitly cancelled the verification process
     case cancelled(sessionId: String, didSubmitManualVerification: Bool)
-    
+
     /// Verification UI was dismissed without completion
     case dismissed(sessionId: String, didSubmitManualVerification: Bool)
-    
+
     /// The verification session has expired
     case sessionExpired(sessionId: String, didSubmitManualVerification: Bool)
-    
+
     /// Verification failed with a specific reason
     /// - Parameter reason: Description of why the verification failed
-    case failed(sessionId: String, didSubmitManualVerification: Bool, reason: String)
+    case failed(
+        sessionId: String,
+        didSubmitManualVerification: Bool,
+        reason: String
+    )
 }
 
-@objc(ReclaimPlatformException) final public class ReclaimPlatformException: NSError, @unchecked Sendable {
+@objc(ReclaimPlatformException)
+final public class ReclaimPlatformException: NSError, @unchecked Sendable {
     let pigeonError: PigeonError
     public let errorCode: String
     public let message: String?
@@ -536,47 +643,55 @@ public enum ReclaimVerificationError: Error {
         self.errorCode = pigeonError.code
         self.message = pigeonError.message
         self.details = pigeonError.details
-        super.init(domain: "org.reclaimprotocol.inapp_sdk", code: 1, userInfo: [
-            "errorCode": errorCode,
-            "message": message ?? "",
-            "details": details ?? ""
-        ])
+        super.init(
+            domain: "org.reclaimprotocol.inapp_sdk",
+            code: 1,
+            userInfo: [
+                "errorCode": errorCode,
+                "message": message ?? "",
+                "details": details ?? "",
+            ]
+        )
     }
 
     public override var underlyingErrors: [any Error] {
-        get {
-            return [pigeonError]
-        }
+        return [pigeonError]
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     public override var localizedDescription: String {
-        return "ReclaimPlatformException(code: \(errorCode), message: \(message ?? "<nil>"), details: \(details ?? "<nil>")"
+        return
+            "ReclaimPlatformException(code: \(errorCode), message: \(message ?? "<nil>"), details: \(details ?? "<nil>")"
     }
-    
+
     public override var localizedFailureReason: String {
         return message ?? "<nil>"
     }
 }
 
-fileprivate class ReclaimHostOverridesApiImpl: ReclaimHostOverridesApi {
+private class ReclaimHostOverridesApiImpl: ReclaimHostOverridesApi {
     private static var instance = ReclaimHostOverridesApiImpl()
-    
+
     static func getInstance(
         binaryMessenger: MessagesBinaryMessenger
     ) -> ReclaimHostOverridesApiImpl {
-        ReclaimHostOverridesApiSetup.setUp(binaryMessenger: binaryMessenger, api: instance)
+        ReclaimHostOverridesApiSetup.setUp(
+            binaryMessenger: binaryMessenger,
+            api: instance
+        )
         return instance
     }
 
-    var providerInformationCallbackHandler: ReclaimOverrides.ProviderInformation.CallbackHandler? = nil
+    var providerInformationCallbackHandler:
+        ReclaimOverrides.ProviderInformation.CallbackHandler? = nil
     var logHandler: ReclaimOverrides.LogConsumer.LogHandler? = nil
     var sessionHandler: ReclaimOverrides.SessionManagement.SessionHandler? = nil
-    var sessionIdentityUpdateHandler: ReclaimOverrides.SessionIdentityUpdateHandler? = nil
-    
+    var sessionIdentityUpdateHandler:
+        ReclaimOverrides.SessionIdentityUpdateHandler? = nil
+
     func clearOverrides() {
         providerInformationCallbackHandler = nil
         logHandler = nil
@@ -584,54 +699,121 @@ fileprivate class ReclaimHostOverridesApiImpl: ReclaimHostOverridesApi {
         sessionIdentityUpdateHandler = nil
     }
 
-    func onLogs(logJsonString: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+    func onLogs(
+        logJsonString: String,
+        completion: @escaping (Result<Void, any Error>) -> Void
+    ) {
         logHandler?.onLogs(logJsonString: logJsonString)
         completion(.success(()))
     }
-    
-    func createSession(appId: String, providerId: String, timestamp: String, signature: String, completion: @escaping (Result<String, any Error>) -> Void) {
-        sessionHandler?.createSession(appId: appId, providerId: providerId, timestamp: timestamp, signature: signature, completion: completion)
+
+    func createSession(
+        appId: String,
+        providerId: String,
+        timestamp: String,
+        signature: String,
+        providerVersion: String,
+        completion: @escaping (Result<SessionInitResponseApi, any Error>) ->
+            Void
+    ) {
+        sessionHandler?.createSession(
+            appId: appId,
+            providerId: providerId,
+            timestamp: timestamp,
+            signature: signature,
+            completion: { e in
+                return switch e {
+                case .success(let data):
+                    completion(
+                        .success(
+                            SessionInitResponseApi(
+                                sessionId: data.sessionId,
+                                resolvedProviderVersion: data
+                                    .resolvedProviderVersion
+                            )
+                        )
+                    )
+                case .failure(let error): completion(.failure(error))
+                }
+            }
+        )
     }
-    
-    func updateSession(sessionId: String, status: ReclaimSessionStatus, completion: @escaping (Result<Bool, any Error>) -> Void) {
-        let mappedStatus: ReclaimOverrides.SessionManagement.SessionStatus = switch (status) {
-        case .pROOFGENERATIONFAILED: .PROOF_GENERATION_FAILED
-        case .pROOFGENERATIONRETRY: .PROOF_GENERATION_RETRY
-        case .pROOFGENERATIONSTARTED: .PROOF_GENERATION_STARTED
-        case .pROOFGENERATIONSUCCESS: .PROOF_GENERATION_SUCCESS
-        case .pROOFMANUALVERIFICATIONSUBMITTED: .PROOF_MANUAL_VERIFICATION_SUBMITTED
-        case .uSERSTARTEDVERIFICATION: .USER_STARTED_VERIFICATION
-        case .uSERINITVERIFICATION: .USER_INIT_VERIFICATION
-        case .pROOFSUBMITTED: .PROOF_SUBMITTED
-        case .pROOFSUBMISSIONFAILED: .PROOF_SUBMISSION_FAILED
-        }
+
+    func updateSession(
+        sessionId: String,
+        status: ReclaimSessionStatus,
+        completion: @escaping (Result<Bool, any Error>) -> Void
+    ) {
+        let mappedStatus: ReclaimOverrides.SessionManagement.SessionStatus =
+            switch status {
+            case .pROOFGENERATIONFAILED: .PROOF_GENERATION_FAILED
+            case .pROOFGENERATIONRETRY: .PROOF_GENERATION_RETRY
+            case .pROOFGENERATIONSTARTED: .PROOF_GENERATION_STARTED
+            case .pROOFGENERATIONSUCCESS: .PROOF_GENERATION_SUCCESS
+            case .pROOFMANUALVERIFICATIONSUBMITTED:
+                .PROOF_MANUAL_VERIFICATION_SUBMITTED
+            case .uSERSTARTEDVERIFICATION: .USER_STARTED_VERIFICATION
+            case .uSERINITVERIFICATION: .USER_INIT_VERIFICATION
+            case .pROOFSUBMITTED: .PROOF_SUBMITTED
+            case .pROOFSUBMISSIONFAILED: .PROOF_SUBMISSION_FAILED
+            }
         sessionHandler?.updateSession(
             sessionId: sessionId,
             status: mappedStatus,
             completion: completion
         )
     }
-    
-    func logSession(appId: String, providerId: String, sessionId: String, logType: String, metadata: [String : (any Sendable)?]?, completion: @escaping (Result<Void, any Error>) -> Void) {
-        sessionHandler?.logSession(appId: appId, providerId: providerId, sessionId: sessionId, logType: logType, metadata: metadata)
+
+    func logSession(
+        appId: String,
+        providerId: String,
+        sessionId: String,
+        logType: String,
+        metadata: [String: (any Sendable)?]?,
+        completion: @escaping (Result<Void, any Error>) -> Void
+    ) {
+        sessionHandler?.logSession(
+            appId: appId,
+            providerId: providerId,
+            sessionId: sessionId,
+            logType: logType,
+            metadata: metadata
+        )
         completion(.success(()))
     }
-    
-    func onSessionIdentityUpdate(update: ReclaimSessionIdentityUpdate?, completion: @escaping (Result<Void, any Error>) -> Void) {
-        let identity: ReclaimVerification.ReclaimSessionIdentity? = if let update {
-            .init(sessionId: update.sessionId, providerId: update.providerId, appId: update.appId)
-        } else {
-            nil
-        }
-        
+
+    func onSessionIdentityUpdate(
+        update: ReclaimSessionIdentityUpdate?,
+        completion: @escaping (Result<Void, any Error>) -> Void
+    ) {
+        let identity: ReclaimVerification.ReclaimSessionIdentity? =
+            if let update {
+                .init(
+                    sessionId: update.sessionId,
+                    providerId: update.providerId,
+                    appId: update.appId
+                )
+            } else {
+                nil
+            }
+
         Task { @MainActor in
             ReclaimVerification.ReclaimSessionIdentity.shared = identity
         }
-        
-        sessionIdentityUpdateHandler?.onSessionIdentityUpdate(identity: identity)
+
+        sessionIdentityUpdateHandler?.onSessionIdentityUpdate(
+            identity: identity
+        )
     }
-    
-    func fetchProviderInformation(appId: String, providerId: String, sessionId: String, signature: String, timestamp: String, completion: @escaping (Result<String, any Error>) -> Void) {
+
+    func fetchProviderInformation(
+        appId: String,
+        providerId: String,
+        sessionId: String,
+        signature: String,
+        timestamp: String,
+        completion: @escaping (Result<String, any Error>) -> Void
+    ) {
         providerInformationCallbackHandler?.fetchProviderInformation(
             appId: appId,
             providerId: providerId,
@@ -643,24 +825,40 @@ fileprivate class ReclaimHostOverridesApiImpl: ReclaimHostOverridesApi {
     }
 }
 
-
-fileprivate class ReclaimHostVerificationApiImpl: ReclaimHostVerificationApi {
+private class ReclaimHostVerificationApiImpl: ReclaimHostVerificationApi {
     private static var instance = ReclaimHostVerificationApiImpl()
-    
+
     static func getInstance(
         binaryMessenger: MessagesBinaryMessenger
     ) -> ReclaimHostVerificationApiImpl {
-        ReclaimHostVerificationApiSetup.setUp(binaryMessenger: binaryMessenger, api: instance)
+        ReclaimHostVerificationApiSetup.setUp(
+            binaryMessenger: binaryMessenger,
+            api: instance
+        )
         return instance
     }
-    
-    var attestorAuthRequestProvider: ReclaimVerification.VerificationOptions.AttestorAuthRequestProvider? = nil
-    
-    func fetchAttestorAuthenticationRequest(reclaimHttpProvider: [AnyHashable? : (any Sendable)?], completion: @escaping (Result<String, any Error>) -> Void) {
+
+    var attestorAuthRequestProvider:
+        ReclaimVerification.VerificationOptions.AttestorAuthRequestProvider? =
+            nil
+
+    func fetchAttestorAuthenticationRequest(
+        reclaimHttpProvider: [AnyHashable?: (any Sendable)?],
+        completion: @escaping (Result<String, any Error>) -> Void
+    ) {
         if let attestorAuthRequestProvider {
-            attestorAuthRequestProvider.fetchAttestorAuthenticationRequest(reclaimHttpProvider: reclaimHttpProvider, completion: completion)
+            attestorAuthRequestProvider.fetchAttestorAuthenticationRequest(
+                reclaimHttpProvider: reclaimHttpProvider,
+                completion: completion
+            )
         } else {
-            completion(.failure(ErrorWithMessage.message(message: "No attestorAuthRequestProvider was provided")))
+            completion(
+                .failure(
+                    ErrorWithMessage.message(
+                        message: "No attestorAuthRequestProvider was provided"
+                    )
+                )
+            )
         }
     }
 }

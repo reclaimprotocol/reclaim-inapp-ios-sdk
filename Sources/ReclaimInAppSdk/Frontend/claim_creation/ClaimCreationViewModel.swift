@@ -1,19 +1,19 @@
-import Foundation
 import Combine
+import Foundation
 
 class ClaimCreationViewModel: ObservableObject {
     let request: ReclaimVerification.Request
-    
+
     init(_ request: ReclaimVerification.Request) {
         self.request = request
     }
-    
+
     enum InitializationState {
         case uninitialized
         case loading
         case ready
         case failed(Error)
-        
+
         func isLoading() -> Bool {
             switch self {
             case .loading, .uninitialized: return true
@@ -21,21 +21,29 @@ class ClaimCreationViewModel: ObservableObject {
             }
         }
     }
-    
+
     @Published var initializationState: InitializationState = .uninitialized
-    
-    var onCompletion: ((Result<ReclaimVerification.Response, ReclaimVerificationError>) -> Void)?
-    
-    func complete(with result: Result<ReclaimVerification.Response, ReclaimVerificationError>) {
+
+    var onCompletion:
+        (
+            (Result<ReclaimVerification.Response, ReclaimVerificationError>) ->
+                Void
+        )?
+
+    func complete(
+        with result: Result<
+            ReclaimVerification.Response, ReclaimVerificationError
+        >
+    ) {
         onCompletion?(result)
     }
-    
+
     private var moduleApi: ReclaimModuleApi?
-    
+
     @MainActor func initialize() async {
-        switch (initializationState) {
+        switch initializationState {
         case .uninitialized:
-            break;
+            break
         default:
             return
         }
@@ -48,64 +56,85 @@ class ClaimCreationViewModel: ObservableObject {
         DispatchQueue.main.async {
             logger.log("starting main async")
         }
-        let binaryMessenger = ReclaimFlutterViewService.flutterEngine.binaryMessenger
+        let binaryMessenger = ReclaimFlutterViewService.flutterEngine
+            .binaryMessenger
         let api = ReclaimModuleApi.init(binaryMessenger: binaryMessenger)
         moduleApi = api
         initializationState = .ready
     }
-    
-    @MainActor func onResponse(result: Result<ReclaimApiVerificationResponse, PigeonError>) {
+
+    @MainActor func onResponse(
+        result: Result<ReclaimApiVerificationResponse, PigeonError>
+    ) {
         let logger = Logging.get("ReclaimVerification.startVerification.Task")
-        switch (result) {
+        switch result {
         case .success(let response):
             if let exception = response.exception {
-                logger.log("Exception: \(exception.type)\n\(exception.message)\n\(exception.stackTraceAsString)")
+                logger.log(
+                    "Exception: \(exception.type)\n\(exception.message)\n\(exception.stackTraceAsString)"
+                )
 
-                let returnedError: ReclaimVerificationError = switch (exception.type) {
-                    case .verificationCancelled: .cancelled(
-                        sessionId: response.sessionId,
-                        didSubmitManualVerification: response.didSubmitManualVerification
-                    )
-                    case .verificationDismissed: .dismissed(
-                        sessionId: response.sessionId,
-                        didSubmitManualVerification: response.didSubmitManualVerification
-                    )
-                    case .sessionExpired: .sessionExpired(
-                        sessionId: response.sessionId,
-                        didSubmitManualVerification: response.didSubmitManualVerification
-                    )
-                    default: .failed(
-                        sessionId: response.sessionId,
-                        didSubmitManualVerification: response.didSubmitManualVerification,
-                        reason: exception.message
-                    )
-                }
+                let returnedError: ReclaimVerificationError =
+                    switch exception.type {
+                    case .verificationCancelled:
+                        .cancelled(
+                            sessionId: response.sessionId,
+                            didSubmitManualVerification: response
+                                .didSubmitManualVerification
+                        )
+                    case .verificationDismissed:
+                        .dismissed(
+                            sessionId: response.sessionId,
+                            didSubmitManualVerification: response
+                                .didSubmitManualVerification
+                        )
+                    case .sessionExpired:
+                        .sessionExpired(
+                            sessionId: response.sessionId,
+                            didSubmitManualVerification: response
+                                .didSubmitManualVerification
+                        )
+                    default:
+                        .failed(
+                            sessionId: response.sessionId,
+                            didSubmitManualVerification: response
+                                .didSubmitManualVerification,
+                            reason: exception.message
+                        )
+                    }
                 self.complete(with: .failure(returnedError))
             } else {
                 self.complete(
                     with: .success(
                         .init(
                             sessionId: response.sessionId,
-                            didSubmitManualVerification: response.didSubmitManualVerification,
+                            didSubmitManualVerification: response
+                                .didSubmitManualVerification,
                             proofs: response.proofs
                         )
                     )
                 )
             }
         case .failure(let error):
-            let logger = Logging.get("ReclaimVerification.startVerification.Task")
+            let logger = Logging.get(
+                "ReclaimVerification.startVerification.Task"
+            )
             logger.log("Failure: \(error)")
-            self.complete(with: .failure(.failed(
-                sessionId: request.maybeSessionId ?? "",
-                didSubmitManualVerification: false,
-                reason: error.message ?? "Unknown error"
-            )))
+            self.complete(
+                with: .failure(
+                    .failed(
+                        sessionId: request.maybeSessionId ?? "",
+                        didSubmitManualVerification: false,
+                        reason: error.message ?? "Unknown error"
+                    )
+                )
+            )
         }
     }
-    
+
     @MainActor
     func sendRequest() async {
-        switch (request) {
+        switch request {
         case .params(let request):
             moduleApi!.startVerification(
                 request: .init(
@@ -117,13 +146,24 @@ class ClaimCreationViewModel: ObservableObject {
                     context: request.context,
                     sessionId: request.session?.sessionId ?? "",
                     parameters: request.parameters,
-                    acceptAiProviders: request.acceptAiProviders,
-                    webhookUrl: request.webhookUrl
+                    providerVersion: ProviderVersionApi(
+                        versionExpression: request.providerVersion
+                            .versionExpression,
+                        resolvedVersion: request.providerVersion.resolvedVersion
+                    )
                 ),
                 completion: onResponse
             )
         case .url(let url):
-            moduleApi!.startVerificationFromUrl(url: url, completion: onResponse)
+            moduleApi!.startVerificationFromUrl(
+                url: url,
+                completion: onResponse
+            )
+        case .json(let template):
+            moduleApi!.startVerificationFromJson(
+                template: template,
+                completion: onResponse
+            )
         }
     }
 }

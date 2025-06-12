@@ -20,7 +20,7 @@ let package = Package(
         .library(
             name: "ReclaimInAppSdk",
             targets: [
-                "ReclaimInAppSdk",
+                "ReclaimInAppSdk"
             ] + sdkTargetNames
         )
     ],
@@ -36,7 +36,7 @@ let package = Package(
         .testTarget(
             name: "ReclaimInAppSdkTests",
             dependencies: ["ReclaimInAppSdk"]
-        ),
+        )
     ] + sdkTargets
 )
 
@@ -105,6 +105,10 @@ func getSdkTargets() -> [Target] {
         .binaryTarget(
             name: "sqflite_darwin",
             path: "Build/Cache/ReclaimXCFrameworks/sqflite_darwin.xcframework"
+        ),
+        .binaryTarget(
+            name: "url_launcher_ios",
+            path: "Build/Cache/ReclaimXCFrameworks/url_launcher_ios.xcframework"
         ),
     ]
 }

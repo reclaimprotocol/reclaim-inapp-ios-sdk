@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION_FILE="Sources/ReclaimInAppSdk/Resources/ReclaimInAppSdk.version"
+VERSION_FILE="Sources/ReclaimInAppSdk/Resources/InAppSdk.version"
 PODSPEC_FILE="ReclaimInAppSdk.podspec"
 
 # Read current version

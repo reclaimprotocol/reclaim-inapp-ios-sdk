@@ -1,10 +1,12 @@
 import SwiftUI
 
-fileprivate struct LegacyCircularProgressView: View {
+private struct LegacyCircularProgressView: View {
     @State private var strokeEnd: Double = 0.0
     @State private var strokeStart: Double = 0.0
-    private let animation = Animation.easeOut(duration: 1).repeatForever(autoreverses: false)
-    
+    private let animation = Animation.easeOut(duration: 1).repeatForever(
+        autoreverses: false
+    )
+
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -32,7 +34,7 @@ fileprivate struct LegacyCircularProgressView: View {
 }
 
 struct CircularProgressView: View {
-    
+
     var body: some View {
         if #available(iOS 14.0, *) {
             ProgressView()

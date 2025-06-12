@@ -1,7 +1,7 @@
 import Flutter
-import SwiftUI
 // The following library connects plugins with iOS platform code to this app.
 import FlutterPluginRegistrant
+import SwiftUI
 
 @MainActor
 public class ReclaimFlutterViewService {
@@ -10,12 +10,13 @@ public class ReclaimFlutterViewService {
         // Runs the default Dart entrypoint with a default Flutter route.
         flutterEngine.run()
         // Connects plugins with iOS platform code to this app.
-        GeneratedPluginRegistrant.register(with: flutterEngine);
+        GeneratedPluginRegistrant.register(with: flutterEngine)
         return flutterEngine
     }
-    
-    public static let flutterEngine = ReclaimFlutterViewService.createFlutterEngine()
-    
+
+    public static let flutterEngine =
+        ReclaimFlutterViewService.createFlutterEngine()
+
     public static func buildUIViewController() -> FlutterViewController {
         let flutterEngine = ReclaimFlutterViewService.flutterEngine
         flutterEngine.viewController = nil
@@ -25,16 +26,23 @@ public class ReclaimFlutterViewService {
             bundle: nil
         )
     }
-    
-    public static let uiViewController = ReclaimFlutterViewService.buildUIViewController()
+
+    public static let uiViewController =
+        ReclaimFlutterViewService.buildUIViewController()
 }
 
-public struct ReclaimFlutterViewControllerRepresentable: UIViewControllerRepresentable {
+public struct ReclaimFlutterViewControllerRepresentable:
+    UIViewControllerRepresentable
+{
     public init() {}
 
-    public func makeUIViewController(context: Context) -> some UIViewController {
+    public func makeUIViewController(context: Context) -> some UIViewController
+    {
         return ReclaimFlutterViewService.buildUIViewController()
     }
-    
-    public func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
+
+    public func updateUIViewController(
+        _ uiViewController: UIViewControllerType,
+        context: Context
+    ) {}
 }
