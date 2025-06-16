@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		79228AFF2DBDB09000CEDC5F /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 79228AFE2DBDB09000CEDC5F /* ReclaimInAppSdk */; };
 		793EB3082D60C713009AF5A8 /* BaseConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 793EB3072D60C713009AF5A8 /* BaseConfig.xcconfig */; };
+		79A392192DFB99A8008FEDE5 /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 79A98DB52D9FC97200F41A2B /* ReclaimInAppSdk */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79A392192DFB99A8008FEDE5 /* ReclaimInAppSdk in Frameworks */,
 				79228AFF2DBDB09000CEDC5F /* ReclaimInAppSdk in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

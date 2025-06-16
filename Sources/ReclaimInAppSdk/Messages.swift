@@ -1069,7 +1069,7 @@ protocol ReclaimHostOverridesApi {
     update: ReclaimSessionIdentityUpdate?, completion: @escaping (Result<Void, Error>) -> Void)
   func fetchProviderInformation(
     appId: String, providerId: String, sessionId: String, signature: String, timestamp: String,
-    completion: @escaping (Result<String, Error>) -> Void)
+    resolvedVersion: String, completion: @escaping (Result<String, Error>) -> Void)
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -1208,9 +1208,10 @@ class ReclaimHostOverridesApiSetup {
         let sessionIdArg = args[2] as! String
         let signatureArg = args[3] as! String
         let timestampArg = args[4] as! String
+        let resolvedVersionArg = args[5] as! String
         api.fetchProviderInformation(
           appId: appIdArg, providerId: providerIdArg, sessionId: sessionIdArg,
-          signature: signatureArg, timestamp: timestampArg
+          signature: signatureArg, timestamp: timestampArg, resolvedVersion: resolvedVersionArg
         ) { result in
           switch result {
           case .success(let res):

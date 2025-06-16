@@ -174,7 +174,9 @@ public class ReclaimVerification {
         /// Additional data that can be associated with a verification attempt and returned in proofs. Defaults to an empty [String].
         context: String = "",
         /// Prefill variables that can be used during the claim creation process.
-        parameters: [String: String] = [String: String]()
+        parameters: [String: String] = [String: String](),
+        /// The provider version expression for resolving the provider
+        providerVersion: ProviderVersion = .init(versionExpression: "")
       ) throws {
         let sdkParam =
           Bundle.main.infoDictionary?["ReclaimInAppSDKParam"]
@@ -197,7 +199,8 @@ public class ReclaimVerification {
           providerId: providerId,
           session: session,
           context: context,
-          parameters: parameters
+          parameters: parameters,
+          providerVersion: providerVersion
         )
       }
 
@@ -812,12 +815,8 @@ private class ReclaimHostOverridesApiImpl: ReclaimHostOverridesApi {
   }
 
   func fetchProviderInformation(
-    appId: String,
-    providerId: String,
-    sessionId: String,
-    signature: String,
-    timestamp: String,
-    completion: @escaping (Result<String, any Error>) -> Void
+    appId: String, providerId: String, sessionId: String, signature: String, timestamp: String,
+    resolvedVersion: String, completion: @escaping (Result<String, any Error>) -> Void
   ) {
     providerInformationCallbackHandler?.fetchProviderInformation(
       appId: appId,
@@ -825,6 +824,7 @@ private class ReclaimHostOverridesApiImpl: ReclaimHostOverridesApi {
       sessionId: sessionId,
       signature: signature,
       timestamp: timestamp,
+      resolvedVersion: resolvedVersion,
       completion: completion
     )
   }

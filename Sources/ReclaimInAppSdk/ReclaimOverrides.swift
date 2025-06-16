@@ -21,6 +21,7 @@ final public class ReclaimOverrides {
         sessionId: String,
         signature: String,
         timestamp: String,
+        resolvedVersion: String,
         completion: @escaping (Result<String, any Error>) -> Void
       )
     }
