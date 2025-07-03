@@ -57,8 +57,8 @@ public class ReclaimVerification {
     ) {
       shared = .init(
         sessionId: request.maybeSessionId ?? "",
-        providerId: "",
-        appId: ""
+        providerId: request.maybeProviderId ?? "",
+        appId: request.maybeAppId ?? ""
       )
     }
   }
@@ -183,7 +183,9 @@ public class ReclaimVerification {
           as? [String: Any]
         guard
           let appId = sdkParam?["ReclaimAppId"] as? String,
-          let secret = sdkParam?["ReclaimAppSecret"] as? String
+          let secret = sdkParam?["ReclaimAppSecret"] as? String,
+          !appId.isEmpty,
+          !secret.isEmpty
         else {
           throw ReclaimVerificationError.failed(
             sessionId: session?.sessionId ?? "",
@@ -244,9 +246,53 @@ public class ReclaimVerification {
               of: "/template",
               with: "/?template"
             )
-          )?.queryItems?.first(where: { $0.name == "template" })?.value
+          )?.queryItems?.first(where: { $0.name == "template" })?
+          .value
           ?? ""
-      case .json(let template): id = (template["sessionId"] as? String) ?? ""
+      case .json(let template):
+        id = (template["sessionId"] as? String) ?? ""
+      }
+      return id
+    }
+
+    public var maybeProviderId: String? {
+      var id: String? = nil
+      switch self {
+      case .params(let request): id = request.providerId
+      case .url(let url):
+        id =
+          URLComponents(
+            string: url.replacingOccurrences(
+              of: "/template",
+              with: "/?template"
+            )
+          )?.queryItems?.first(where: { $0.name == "template" })?
+          .value
+          ?? ""
+      case .json(let template):
+        id = (template["providerId"] as? String) ?? ""
+      }
+      return id
+    }
+
+    public var maybeAppId: String? {
+      var id: String? = nil
+      switch self {
+      case .params(let request): id = request.appId
+      case .url(let url):
+        id =
+          URLComponents(
+            string: url.replacingOccurrences(
+              of: "/template",
+              with: "/?template"
+            )
+          )?.queryItems?.first(where: { $0.name == "template" })?
+          .value
+          ?? ""
+      case .json(let template):
+        id =
+          (template["appId"] as? String)
+          ?? (template["applicationId"] as? String) ?? ""
       }
       return id
     }
@@ -752,7 +798,8 @@ private class ReclaimHostOverridesApiImpl: ReclaimHostOverridesApi {
     status: ReclaimSessionStatus,
     completion: @escaping (Result<Bool, any Error>) -> Void
   ) {
-    var mappedStatus: ReclaimOverrides.SessionManagement.SessionStatus? = nil
+    var mappedStatus: ReclaimOverrides.SessionManagement.SessionStatus? =
+      nil
     switch status {
     case .pROOFGENERATIONFAILED: mappedStatus = .PROOF_GENERATION_FAILED
     case .pROOFGENERATIONRETRY: mappedStatus = .PROOF_GENERATION_RETRY
@@ -815,8 +862,13 @@ private class ReclaimHostOverridesApiImpl: ReclaimHostOverridesApi {
   }
 
   func fetchProviderInformation(
-    appId: String, providerId: String, sessionId: String, signature: String, timestamp: String,
-    resolvedVersion: String, completion: @escaping (Result<String, any Error>) -> Void
+    appId: String,
+    providerId: String,
+    sessionId: String,
+    signature: String,
+    timestamp: String,
+    resolvedVersion: String,
+    completion: @escaping (Result<String, any Error>) -> Void
   ) {
     providerInformationCallbackHandler?.fetchProviderInformation(
       appId: appId,
