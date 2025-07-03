@@ -8,12 +8,19 @@
 import SwiftUI
 import ReclaimInAppSdk
 
+enum ConfigurationOption: String, CaseIterable {
+    case providerId = "Provider Id"
+    case jsonConfig = "JSON config"
+    case url = "URL"
+}
+
 struct ContentView: View {
     @State private var result: ReclaimVerification.Response?
     @State private var showingAlert = false
     @State private var alertMessage = ""
     // Provider id in this example is fetched from the app's Info.plist file.
-    @State private var providerId: String = (Bundle.main.infoDictionary?["ReclaimProviderId"] as? String) ?? ""
+    @State private var inputText: String = (Bundle.main.infoDictionary?["ReclaimProviderId"] as? String) ?? ""
+    @State private var selectedOption: ConfigurationOption = .providerId
     
     func setOverrides() {
         Task { @MainActor in
@@ -39,8 +46,16 @@ struct ContentView: View {
             
             Spacer()
             
+            // Dropdown picker for configuration options
+            Picker("Verification Mode", selection: $selectedOption) {
+                ForEach(ConfigurationOption.allCases, id: \.self) { option in
+                    Text(option.rawValue).tag(option)
+                }
+            }
+            .pickerStyle(MenuPickerStyle())
+            
             // A text field to let you use a different reclaim provider id.
-            TextField("Provider Id", text: $providerId)
+            TextField(selectedOption.rawValue, text: $inputText)
                 .multilineTextAlignment(.center)
                 .padding()
             
@@ -73,23 +88,34 @@ struct ContentView: View {
                 canAutoSubmit: false,
                 isCloseButtonVisible: true
             ))
-            let request = ReclaimVerification.Request.params(
-                try .init(
-                    /// You can use the appId and secret from Reclaim Devtools to create a request.
-                    /// Providing appId and secret here in this initializer is optional.
-                    /// If you don't provide it, the SDK will use the appId and secret from the Info.plist file.
-                    /// This example uses the appId and secret from the Info.plist file.
-                    // appId: "YOUR_APP_ID_FROM_RECLAIM_DEVTOOLS",
-                    // secret: "YOUR_APP_SECRET_FROM_RECLAIM_DEVTOOLS",
-                    /// This is the provider id that you've added to your app in Reclaim Devtools.
-                    /// The verification flow will use the provider information fetch by this provider id.
-                    providerId: providerId
-                )
-            )
+            let request: ReclaimVerification.Request
+            switch (selectedOption) {
+            case .providerId:
+                request = ReclaimVerification.Request.params(
+                   try .init(
+                       /// You can use the appId and secret from Reclaim Devtools to create a request.
+                       /// Providing appId and secret here in this initializer is optional.
+                       /// If you don't provide it, the SDK will use the appId and secret from the Info.plist file.
+                       /// This example uses the appId and secret from the Info.plist file.
+                       // appId: "YOUR_APP_ID_FROM_RECLAIM_DEVTOOLS",
+                       // secret: "YOUR_APP_SECRET_FROM_RECLAIM_DEVTOOLS",
+                       /// This is the provider id that you've added to your app in Reclaim Devtools.
+                       /// The verification flow will use the provider information fetch by this provider id.
+                       providerId: inputText
+                   )
+               )
+            case .jsonConfig:
+                request = ReclaimVerification.Request.json(JSONUtility.fromString(inputText) as! [AnyHashable?: Sendable?])
+            case .url:
+                request = ReclaimVerification.Request.url(inputText)
+            }
             switch (request) {
             case .params(let request):
                 print("your request preview: \(request)")
-            default: break
+            case .json(let request):
+                print("your request preview: \(request)")
+            case .url(let request):
+                print("your request preview: \(request)")
             }
             // This is the function that starts the verification flow.
             // This may fail if device screen is getting shared.
@@ -99,6 +125,9 @@ struct ContentView: View {
             showAlert(message: "Cancelled")
         } catch ReclaimVerificationError.dismissed {
             showAlert(message: "Cancelled by user")
+        } catch ReclaimVerificationError.sessionExpired {
+            // Expired or invalid session
+            showAlert(message: "Session Expired")
         } catch ReclaimVerificationError.failed(let sessionId, _, let message) {
             print("failure error details (session \(sessionId): \(message)")
             Task { @MainActor in
