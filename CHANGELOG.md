@@ -1,3 +1,7 @@
+## 0.10.4-alpha.1
+
+* Updates inapp module dependency to 0.10.4-alpha.1
+
 ## 0.10.3
 
 * Fix param key text overflow verification review
