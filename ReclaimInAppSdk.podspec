@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
     s.name              = 'ReclaimInAppSdk'
     s.module_name       = 'ReclaimInAppSdk'
-    s.version           = '0.10.4'
+    s.version           = '0.10.5'
 
     s.summary           = 'The official Reclaim InApp SDK for iOS.'
 
@@ -40,24 +40,24 @@ Pod::Spec.new do |s|
     }
 
     xcframework_urls = [
-        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.4/BinaryTargets/App.zip',
-        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.4/BinaryTargets/cupertino_http.zip',
-        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.4/BinaryTargets/device_info_plus.zip',
-        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.4/BinaryTargets/flutter_inappwebview_ios.zip',
-        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.4/BinaryTargets/flutter_secure_storage.zip',
-        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.4/BinaryTargets/Flutter.zip',
-        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.4/BinaryTargets/FlutterPluginRegistrant.zip',
-        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.4/BinaryTargets/fluttertoast.zip',
-        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.4/BinaryTargets/objective_c.zip',
-        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.4/BinaryTargets/OrderedSet.zip',
-        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.4/BinaryTargets/package_info_plus.zip',
-        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.4/BinaryTargets/path_provider_foundation.zip',
-        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.4/BinaryTargets/permission_handler_apple.zip',
-        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.4/BinaryTargets/reclaim_gnark_zkoperator.zip',
-        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.4/BinaryTargets/shared_preferences_foundation.zip',
-        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.4/BinaryTargets/sqflite_darwin.zip',
-        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.4/BinaryTargets/url_launcher_ios.zip',
-        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.4/BinaryTargets/webview_flutter_wkwebview.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.5/BinaryTargets/App.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.5/BinaryTargets/cupertino_http.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.5/BinaryTargets/device_info_plus.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.5/BinaryTargets/flutter_inappwebview_ios.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.5/BinaryTargets/flutter_secure_storage.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.5/BinaryTargets/Flutter.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.5/BinaryTargets/FlutterPluginRegistrant.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.5/BinaryTargets/fluttertoast.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.5/BinaryTargets/objective_c.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.5/BinaryTargets/OrderedSet.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.5/BinaryTargets/package_info_plus.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.5/BinaryTargets/path_provider_foundation.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.5/BinaryTargets/permission_handler_apple.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.5/BinaryTargets/reclaim_gnark_zkoperator.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.5/BinaryTargets/shared_preferences_foundation.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.5/BinaryTargets/sqflite_darwin.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.5/BinaryTargets/url_launcher_ios.zip',
+        'https://reclaim-inapp-sdk.s3.ap-south-1.amazonaws.com/ios/0.10.5/BinaryTargets/webview_flutter_wkwebview.zip',
     ]
 
     # Prepare command to download and unzip XCFrameworks
