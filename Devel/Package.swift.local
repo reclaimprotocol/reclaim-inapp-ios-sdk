@@ -110,10 +110,6 @@ func getSdkTargets() -> [Target] {
             name: "url_launcher_ios",
             path: "Build/Cache/ReclaimXCFrameworks/url_launcher_ios.xcframework"
         ),
-        .binaryTarget(
-            name: "webview_flutter_wkwebview",
-            path: "Build/Cache/ReclaimXCFrameworks/webview_flutter_wkwebview.xcframework"
-        ),
     ]
 }
 
