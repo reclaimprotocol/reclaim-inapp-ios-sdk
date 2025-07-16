@@ -1,3 +1,7 @@
+## 0.10.7-dev.1
+
+* Updates inapp module dependency to 0.10.7-dev.1
+
 ## 0.10.7
 
 * Update retries during message handling for attestor browser rpc
