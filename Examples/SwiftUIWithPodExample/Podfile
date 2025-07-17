@@ -5,9 +5,9 @@ target 'SwiftUIWithPodExample' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-  # pod 'ReclaimInAppSdk', '~> 0.10.7'
+  # pod 'ReclaimInAppSdk', '~> 0.10.8'
   pod 'ReclaimInAppSdk', :path => '../../'
-  # pod 'ReclaimInAppSdk', :git => 'https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git', :tag => '0.10.7'
+  # pod 'ReclaimInAppSdk', :git => 'https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git', :tag => '0.10.8'
 
   # Pods for SwiftUIWithPodExample
 
