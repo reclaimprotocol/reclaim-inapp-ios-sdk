@@ -7,9 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		79228AFF2DBDB09000CEDC5F /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 79228AFE2DBDB09000CEDC5F /* ReclaimInAppSdk */; };
 		793EB3082D60C713009AF5A8 /* BaseConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 793EB3072D60C713009AF5A8 /* BaseConfig.xcconfig */; };
-		79A392192DFB99A8008FEDE5 /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 79A98DB52D9FC97200F41A2B /* ReclaimInAppSdk */; };
+		798D78EE2E3592F2003D7870 /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 798D78ED2E3592F2003D7870 /* ReclaimInAppSdk */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,8 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79A392192DFB99A8008FEDE5 /* ReclaimInAppSdk in Frameworks */,
-				79228AFF2DBDB09000CEDC5F /* ReclaimInAppSdk in Frameworks */,
+				798D78EE2E3592F2003D7870 /* ReclaimInAppSdk in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,7 +134,7 @@
 			name = SwiftUIExample;
 			packageProductDependencies = (
 				79A98DB52D9FC97200F41A2B /* ReclaimInAppSdk */,
-				79228AFE2DBDB09000CEDC5F /* ReclaimInAppSdk */,
+				798D78ED2E3592F2003D7870 /* ReclaimInAppSdk */,
 			);
 			productName = example;
 			productReference = 793EB2C02D60C02B009AF5A8 /* SwiftUIExample.app */;
@@ -221,7 +219,7 @@
 			mainGroup = 793EB2B72D60C02B009AF5A8;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				79228AFD2DBDB09000CEDC5F /* XCRemoteSwiftPackageReference "reclaim-inapp-ios-sdk" */,
+				798D78EC2E3592F2003D7870 /* XCLocalSwiftPackageReference "../../../ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 793EB2C12D60C02B009AF5A8 /* Products */;
@@ -598,22 +596,16 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		79228AFD2DBDB09000CEDC5F /* XCRemoteSwiftPackageReference "reclaim-inapp-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk";
-			requirement = {
-				kind = versionRange;
-				maximumVersion = 1.0.0;
-				minimumVersion = 0.9.2;
-			};
+/* Begin XCLocalSwiftPackageReference section */
+		798D78EC2E3592F2003D7870 /* XCLocalSwiftPackageReference "../../../ios-sdk" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../../ios-sdk";
 		};
-/* End XCRemoteSwiftPackageReference section */
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		79228AFE2DBDB09000CEDC5F /* ReclaimInAppSdk */ = {
+		798D78ED2E3592F2003D7870 /* ReclaimInAppSdk */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 79228AFD2DBDB09000CEDC5F /* XCRemoteSwiftPackageReference "reclaim-inapp-ios-sdk" */;
 			productName = ReclaimInAppSdk;
 		};
 		79A98DB52D9FC97200F41A2B /* ReclaimInAppSdk */ = {

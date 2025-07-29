@@ -63,7 +63,7 @@ platform :ios, '13.0'
 - From a specific tag (recommended):
 
 ```ruby
-pod 'ReclaimInAppSdk', :git => 'https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git', :tag => '0.10.11'
+pod 'ReclaimInAppSdk', :git => 'https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git', :tag => '0.10.13'
 ```
 
 - or from git HEAD (Alternative):
@@ -127,7 +127,7 @@ For more info, check the [Reclaim Example - SwiftUI with CocoaPods](https://gith
 Either select a package version:
 
 ```
-.package(url: "https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git", from: "0.10.11")
+.package(url: "https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git", from: "0.10.13")
 ```
 
 Or select the main branch:
@@ -347,7 +347,7 @@ func setOverrides() {
 
 To upgrade to a new version of the Reclaim InApp SDK, follow these steps:
 
-1. Make sure you have the latest version of the Reclaim InApp SDK. Currently the latest version is `0.10.11`. 
+1. Make sure you have the latest version of the Reclaim InApp SDK. Currently the latest version is `0.10.13`. 
 1. Incase of any problems: remove package, clear build, restart Xcode, and add package again.
 
 Migration guides will be available when a new version with API changes is released. 
