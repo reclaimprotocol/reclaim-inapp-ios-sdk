@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		793EB3082D60C713009AF5A8 /* BaseConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 793EB3072D60C713009AF5A8 /* BaseConfig.xcconfig */; };
-		798D78EE2E3592F2003D7870 /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 798D78ED2E3592F2003D7870 /* ReclaimInAppSdk */; };
+		79E7E9E02E38AC990082163C /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 79E7E9DF2E38AC990082163C /* ReclaimInAppSdk */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,7 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				798D78EE2E3592F2003D7870 /* ReclaimInAppSdk in Frameworks */,
+				79E7E9E02E38AC990082163C /* ReclaimInAppSdk in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +135,7 @@
 			packageProductDependencies = (
 				79A98DB52D9FC97200F41A2B /* ReclaimInAppSdk */,
 				798D78ED2E3592F2003D7870 /* ReclaimInAppSdk */,
+				79E7E9DF2E38AC990082163C /* ReclaimInAppSdk */,
 			);
 			productName = example;
 			productReference = 793EB2C02D60C02B009AF5A8 /* SwiftUIExample.app */;
@@ -219,7 +220,7 @@
 			mainGroup = 793EB2B72D60C02B009AF5A8;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				798D78EC2E3592F2003D7870 /* XCLocalSwiftPackageReference "../../../ios-sdk" */,
+				79E7E9DE2E38AC990082163C /* XCLocalSwiftPackageReference "../../../reclaim_inapp_sdk_ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 793EB2C12D60C02B009AF5A8 /* Products */;
@@ -597,9 +598,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		798D78EC2E3592F2003D7870 /* XCLocalSwiftPackageReference "../../../ios-sdk" */ = {
+		79E7E9DE2E38AC990082163C /* XCLocalSwiftPackageReference "../../../reclaim_inapp_sdk_ios" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../../ios-sdk";
+			relativePath = ../../../reclaim_inapp_sdk_ios;
 		};
 /* End XCLocalSwiftPackageReference section */
 
@@ -609,6 +610,10 @@
 			productName = ReclaimInAppSdk;
 		};
 		79A98DB52D9FC97200F41A2B /* ReclaimInAppSdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ReclaimInAppSdk;
+		};
+		79E7E9DF2E38AC990082163C /* ReclaimInAppSdk */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ReclaimInAppSdk;
 		};

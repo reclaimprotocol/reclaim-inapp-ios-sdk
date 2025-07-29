@@ -1,3 +1,7 @@
+## 0.10.14
+
+* Fix blocked Reclaim view controller presentation
+
 ## 0.10.13
 
 * Fix webview re-initialization when initial attempt fails
