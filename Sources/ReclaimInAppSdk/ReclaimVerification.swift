@@ -376,6 +376,38 @@ public class ReclaimVerification {
     let _ = ReclaimFlutterViewService.flutterEngine
   }
 
+  private static func getTopMostViewController() -> UIViewController? {
+    // Get the active window scene
+    guard
+      let windowScene = UIApplication.shared.connectedScenes.first
+        as? UIWindowScene,
+      let keyWindow = windowScene.windows.first(where: { $0.isKeyWindow })
+    else {
+      return nil
+    }
+
+    var topController = keyWindow.rootViewController
+
+    // Traverse up the hierarchy to find the visible view controller
+    while let presentedViewController = topController?
+      .presentedViewController
+    {
+      topController = presentedViewController
+    }
+
+    // Handle UINavigationController
+    if let navigationController = topController as? UINavigationController {
+      topController = navigationController.visibleViewController
+    }
+
+    // Handle UITabBarController
+    if let tabBarController = topController as? UITabBarController {
+      topController = tabBarController.selectedViewController
+    }
+
+    return topController
+  }
+
   /// Initiates the verification process by presenting a full-screen interface.
   ///
   /// This method handles the entire verification flow, including:
@@ -472,11 +504,25 @@ public class ReclaimVerification {
 
       // Present the verification UI
       logger.log("presenting reclaim view")
-      window.rootViewController?.present(
+
+      let topViewController = getTopMostViewController()
+      topViewController?.present(
         hostingController,
         animated: true
       )
-      logger.log("presented reclaim view")
+      logger.log([
+        "message": "presenting reclaim view.",
+        "isBeingPresented": hostingController.isBeingPresented,
+        "isMovingToParent": hostingController.isMovingToParent,
+      ])
+      if !hostingController.isBeingPresented
+        && !hostingController.isMovingToParent
+      {
+        logger.log(
+          "[WARNING] ReclaimInAppSDK UI not presented correctly."
+        )
+      }
+
       logger.log("started client webview")
 
       Task { @MainActor in
