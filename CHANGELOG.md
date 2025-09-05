@@ -1,3 +1,7 @@
+## 0.15.0
+
+* Updates inapp module dependency to 0.15.0
+
 ## 0.12.0
 
 * Add support to follow links when starting a session with startVerificationFromUrl
