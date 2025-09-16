@@ -4,6 +4,8 @@
 <dict>
 	<key>ReclaimProviderId</key>
 	<string>$(RECLAIM_PROVIDER_ID)</string>
+	<key>CFBundleIconName</key>
+	<string>AppIcon</string>
 	<key>ReclaimInAppSDKParam</key>
 	<dict>
 		<key>ReclaimAppId</key>
@@ -11,5 +13,41 @@
 		<key>ReclaimAppSecret</key>
 		<string>$(RECLAIM_APP_SECRET)</string>
 	</dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoadsForMedia</key>
+		<true/>
+		<key>NSAllowsArbitraryLoadsInWebContent</key>
+		<true/>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
+	<!-- Permission options for the `location` group -->
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>App requires your location when in use to generate secure proofs</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>App may need your location always and when in use to generate secure proofs</string>
+    <key>NSLocationUsageDescription</key>
+    <string>App requires your location to generate secure proofs</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>App may need your location always to generate secure proofs</string>
+	<!-- Permission options for the `microphone` group -->
+    <key>NSMicrophoneUsageDescription</key>
+    <string>App requires microphone access to generate secure proofs</string>
+	<!-- Permission options for the `camera` group -->
+    <key>NSCameraUsageDescription</key>
+    <string>App requires camera access to generate secure proofs</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>processing</string>
+		<string>remote-notification</string>
+	</array>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>

@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		790A4C252E7A17E60067409E /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 79A98DB52D9FC97200F41A2B /* ReclaimInAppSdk */; };
+		790A4C262E7A17E60067409E /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 798D78ED2E3592F2003D7870 /* ReclaimInAppSdk */; };
+		790A4C272E7A17E60067409E /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 79E7E9DF2E38AC990082163C /* ReclaimInAppSdk */; };
+		7931E62E2E7A1638000C6093 /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 7931E62D2E7A1638000C6093 /* ReclaimInAppSdk */; };
 		793EB3082D60C713009AF5A8 /* BaseConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 793EB3072D60C713009AF5A8 /* BaseConfig.xcconfig */; };
-		79E7E9E02E38AC990082163C /* ReclaimInAppSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 79E7E9DF2E38AC990082163C /* ReclaimInAppSdk */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,7 +74,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79E7E9E02E38AC990082163C /* ReclaimInAppSdk in Frameworks */,
+				790A4C272E7A17E60067409E /* ReclaimInAppSdk in Frameworks */,
+				790A4C262E7A17E60067409E /* ReclaimInAppSdk in Frameworks */,
+				790A4C252E7A17E60067409E /* ReclaimInAppSdk in Frameworks */,
+				7931E62E2E7A1638000C6093 /* ReclaimInAppSdk in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,6 +142,7 @@
 				79A98DB52D9FC97200F41A2B /* ReclaimInAppSdk */,
 				798D78ED2E3592F2003D7870 /* ReclaimInAppSdk */,
 				79E7E9DF2E38AC990082163C /* ReclaimInAppSdk */,
+				7931E62D2E7A1638000C6093 /* ReclaimInAppSdk */,
 			);
 			productName = example;
 			productReference = 793EB2C02D60C02B009AF5A8 /* SwiftUIExample.app */;
@@ -220,7 +227,7 @@
 			mainGroup = 793EB2B72D60C02B009AF5A8;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				79E7E9DE2E38AC990082163C /* XCLocalSwiftPackageReference "../../../reclaim_inapp_sdk_ios" */,
+				7931E62C2E7A1638000C6093 /* XCRemoteSwiftPackageReference "reclaim-inapp-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 793EB2C12D60C02B009AF5A8 /* Products */;
@@ -425,7 +432,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftUIExample/Preview Content\"";
 				DEVELOPMENT_TEAM = 69T6V5YN8P;
 				ENABLE_PREVIEWS = YES;
@@ -456,7 +463,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftUIExample/Preview Content\"";
 				DEVELOPMENT_TEAM = 69T6V5YN8P;
 				ENABLE_PREVIEWS = YES;
@@ -597,14 +604,23 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		79E7E9DE2E38AC990082163C /* XCLocalSwiftPackageReference "../../../reclaim_inapp_sdk_ios" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../../../reclaim_inapp_sdk_ios;
+/* Begin XCRemoteSwiftPackageReference section */
+		7931E62C2E7A1638000C6093 /* XCRemoteSwiftPackageReference "reclaim-inapp-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk";
+			requirement = {
+				branch = "patch-privacy";
+				kind = branch;
+			};
 		};
-/* End XCLocalSwiftPackageReference section */
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		7931E62D2E7A1638000C6093 /* ReclaimInAppSdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7931E62C2E7A1638000C6093 /* XCRemoteSwiftPackageReference "reclaim-inapp-ios-sdk" */;
+			productName = ReclaimInAppSdk;
+		};
 		798D78ED2E3592F2003D7870 /* ReclaimInAppSdk */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ReclaimInAppSdk;
