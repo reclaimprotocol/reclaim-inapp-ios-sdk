@@ -1,3 +1,7 @@
+## 0.17.3
+
+* Updates inapp module dependency to 0.17.3
+
 ## 0.17.0
 
 * Add [WIP] dark theme support for app
