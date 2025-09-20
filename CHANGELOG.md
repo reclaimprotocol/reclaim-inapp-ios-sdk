@@ -1,3 +1,7 @@
+## 0.17.3
+
+* Fix the iOS frameworks signature mismatch error
+
 ## 0.17.0
 
 * Add [WIP] dark theme support for app
