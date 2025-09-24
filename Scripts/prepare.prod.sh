@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e;
+
 RECLAIM_SDK_VERSION=$(cat Sources/ReclaimInAppSdk/Resources/InAppSdk.version)
 
 DIST_DIR="Build/${RECLAIM_SDK_VERSION}/BinaryTargets"
@@ -38,6 +40,15 @@ for framework_path in $FRAMEWORK_PATTERN; do
             target_name="${framework_name}"
         fi
         echo "Target name: $target_name"
+
+        APPLE_DEVELOPMENT_SIGNING_IDENTITY="$(security find-identity -v -p codesigning | grep "Apple Development:" | head -n 1 | awk '{print $2}')"
+        if [ -z "$APPLE_DEVELOPMENT_SIGNING_IDENTITY" ]; then
+            echo "Error: No Apple Development signing identity found in the keychain. To check available, try running: security find-identity -v -p codesigning | grep \"Apple Development:\""
+            exit 1
+        fi
+        codesign --timestamp -v -f --sign "$APPLE_DEVELOPMENT_SIGNING_IDENTITY" "$framework_path"
+        echo $(codesign -dv "$framework_path")
+        echo $(codesign -vv "$framework_path")
 
         framework_zip_path="$(realpath $DIST_DIR)/${framework_name}.zip"
 
