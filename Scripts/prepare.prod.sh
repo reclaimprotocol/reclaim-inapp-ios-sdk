@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e;
+
 RECLAIM_SDK_VERSION=$(cat Sources/ReclaimInAppSdk/Resources/InAppSdk.version)
 
 DIST_DIR="Build/${RECLAIM_SDK_VERSION}/BinaryTargets"

@@ -1,3 +1,7 @@
+## 0.18.0
+
+* Add log level to Log entry that's sent to logging service
+
 ## 0.17.3
 
 * Fix the iOS frameworks signature mismatch error
