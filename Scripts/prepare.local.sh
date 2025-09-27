@@ -24,15 +24,6 @@ for framework_path in $FRAMEWORK_PATTERN; do
         echo "Framework path: $framework_path"
         echo "Build type: $build_type"
 
-        APPLE_DEVELOPMENT_SIGNING_IDENTITY="$(security find-identity -v -p codesigning | grep "Apple Development:" | head -n 1 | awk '{print $2}')"
-        if [ -z "$APPLE_DEVELOPMENT_SIGNING_IDENTITY" ]; then
-            echo "Error: No Apple Development signing identity found in the keychain. To check available, try running: security find-identity -v -p codesigning | grep \"Apple Development:\""
-            exit 1
-        fi
-        codesign --timestamp -v -f --sign "$APPLE_DEVELOPMENT_SIGNING_IDENTITY" "$framework_path"
-        echo $(codesign -dv "$framework_path")
-        echo $(codesign -vv "$framework_path")
-
         target_name=""
         if [[ -e "$build_type" && "$ONLY_RELEASE_TARGETS" != "true" ]]; then
             target_name="${framework_name}-${build_type}"
