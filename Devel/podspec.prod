@@ -71,4 +71,3 @@ Pod::Spec.new do |s|
     # Specify the paths to the unzipped XCFramework directories
     s.vendored_frameworks = ['Build/PodCache/*.xcframework']
 end
-
