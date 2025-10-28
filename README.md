@@ -52,10 +52,10 @@ This should complete the installation of the Reclaim InApp SDK. Now follow the [
 
 #### Method 2: When working with an Xcode Workspace project with CocoaPods:
 
-1. Make sure to define a global platform for your project in your `Podfile` with version 13.0 or higher.
+1. Make sure to define a global platform for your project in your `Podfile` with version 14.0 or higher.
 
 ```
-platform :ios, '13.0'
+platform :ios, '14.0'
 ```
 
 2. Add the following to your `Podfile` to override the default version of the ReclaimInAppSdk (optional):
@@ -63,7 +63,7 @@ platform :ios, '13.0'
 - From a specific tag (recommended):
 
 ```ruby
-pod 'ReclaimInAppSdk', :git => 'https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git', :tag => '0.18.0'
+pod 'ReclaimInAppSdk', :git => 'https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git', :tag => '0.21.1'
 ```
 
 - or from git HEAD (Alternative):
@@ -87,7 +87,7 @@ pod 'ReclaimInAppSdk', :git => 'https://github.com/reclaimprotocol/reclaim-inapp
 2. After adding the dependency, your podfile may look like this:
 
 ```ruby
-platform :ios, '13.0'
+platform :ios, '14.0'
 
 target 'GitPodSwiftUIExample' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -127,7 +127,7 @@ For more info, check the [Reclaim Example - SwiftUI with CocoaPods](https://gith
 Either select a package version:
 
 ```
-.package(url: "https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git", from: "0.18.0")
+.package(url: "https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git", from: "0.21.1")
 ```
 
 Or select the main branch:
@@ -347,7 +347,7 @@ func setOverrides() {
 
 To upgrade to a new version of the Reclaim InApp SDK, follow these steps:
 
-1. Make sure you have the latest version of the Reclaim InApp SDK. Currently the latest version is `0.18.0`. 
+1. Make sure you have the latest version of the Reclaim InApp SDK. Currently the latest version is `0.21.1`. 
 1. Incase of any problems: remove package, clear build, restart Xcode, and add package again.
 
 Migration guides will be available when a new version with API changes is released. 

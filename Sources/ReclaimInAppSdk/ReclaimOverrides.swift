@@ -110,6 +110,7 @@ final public class ReclaimOverrides {
       func updateSession(
         sessionId: String,
         status: SessionStatus,
+        metadata: [String: Sendable?]?,
         completion: @escaping (Result<Bool, Error>) -> Void
       )
 
@@ -142,6 +143,7 @@ final public class ReclaimOverrides {
       case PROOF_SUBMITTED = 6
       case PROOF_SUBMISSION_FAILED = 7
       case PROOF_MANUAL_VERIFICATION_SUBMITTED = 8
+      case AI_PROOF_SUBMITTED = 9
 
       public static func fromInt(_ valueArg: Int) -> SessionStatus? {
         var value: SessionStatus? = nil
@@ -164,6 +166,8 @@ final public class ReclaimOverrides {
           value = .PROOF_SUBMISSION_FAILED
         case 8:
           value = .PROOF_MANUAL_VERIFICATION_SUBMITTED
+        case 9:
+          value = .AI_PROOF_SUBMITTED
         default:
           value = nil
         }
