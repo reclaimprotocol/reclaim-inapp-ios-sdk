@@ -52,10 +52,10 @@ This should complete the installation of the Reclaim InApp SDK. Now follow the [
 
 #### Method 2: When working with an Xcode Workspace project with CocoaPods:
 
-1. Make sure to define a global platform for your project in your `Podfile` with version 13.0 or higher.
+1. Make sure to define a global platform for your project in your `Podfile` with version 14.0 or higher.
 
 ```
-platform :ios, '13.0'
+platform :ios, '14.0'
 ```
 
 2. Add the following to your `Podfile` to override the default version of the ReclaimInAppSdk (optional):
@@ -87,7 +87,7 @@ pod 'ReclaimInAppSdk', :git => 'https://github.com/reclaimprotocol/reclaim-inapp
 2. After adding the dependency, your podfile may look like this:
 
 ```ruby
-platform :ios, '13.0'
+platform :ios, '14.0'
 
 target 'GitPodSwiftUIExample' do
   # Comment the next line if you don't want to use dynamic frameworks

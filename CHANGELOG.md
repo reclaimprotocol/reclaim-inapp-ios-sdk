@@ -1,3 +1,7 @@
+## 0.21.1
+
+* Update min ios version to 14
+ 
 ## 0.21.0
 
 * Add version update notification

@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
     s.author            = 'Reclaim Protocol'
     s.source            = { :git => 'https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git', :tag => s.version }
 
-    s.platform          = :ios, '13.0'
+    s.platform          = :ios, '14.0'
     s.swift_version     = '5.8'
 
     # Ensure developers won't hit CocoaPods/CocoaPods#11402 with the resource
