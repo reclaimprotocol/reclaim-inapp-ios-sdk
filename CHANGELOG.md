@@ -1,3 +1,16 @@
+## 0.21.0
+
+* Add version update notification
+* Update settings UI in verifications web page
+* Update cronet play services api version
+* Fix claim indicator UI update after state changes from error
+* Update the request that's sent when disableRequestReplay is true (when document request replay is disabled)
+* Fix [internal] [severe] claim creation on retries by clearing error on retry
+* Update [internal] gnark circuits and library
+* Add events to critical log for better logs summary on devtools
+* Update themeing to support blurred background, terms notice color and parameters display style, verifying icon, provider to app loading icon
+* Add method to enable console logging
+
 ## 0.18.0
 
 * Add log level to Log entry that's sent to logging service

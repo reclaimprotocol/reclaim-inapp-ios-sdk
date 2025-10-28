@@ -708,6 +708,19 @@ public class ReclaimVerification {
       }
     }
   }
+
+  @MainActor
+  public static func setConsoleLogging(enabled: Bool) async throws {
+    let binaryMessenger = ReclaimFlutterViewService.flutterEngine
+      .binaryMessenger
+    let api = ReclaimModuleApi.init(binaryMessenger: binaryMessenger)
+
+    return try await withCheckedThrowingContinuation { continuation in
+      api.setConsoleLogging(enabled: enabled) { result in
+        continuation.resume(with: result)
+      }
+    }
+  }
 }
 
 /// Errors that can occur during the Reclaim verification process
@@ -842,6 +855,7 @@ private class ReclaimHostOverridesApiImpl: ReclaimHostOverridesApi {
   func updateSession(
     sessionId: String,
     status: ReclaimSessionStatus,
+    metadata: [String: Sendable?]?,
     completion: @escaping (Result<Bool, any Error>) -> Void
   ) {
     var mappedStatus: ReclaimOverrides.SessionManagement.SessionStatus? =
@@ -857,10 +871,12 @@ private class ReclaimHostOverridesApiImpl: ReclaimHostOverridesApi {
     case .uSERINITVERIFICATION: mappedStatus = .USER_INIT_VERIFICATION
     case .pROOFSUBMITTED: mappedStatus = .PROOF_SUBMITTED
     case .pROOFSUBMISSIONFAILED: mappedStatus = .PROOF_SUBMISSION_FAILED
+    case .aIPROOFSUBMITTED: mappedStatus = .AI_PROOF_SUBMITTED
     }
     sessionHandler?.updateSession(
       sessionId: sessionId,
       status: mappedStatus!,
+      metadata: metadata,
       completion: completion
     )
   }
