@@ -99,6 +99,10 @@ func getSdkTargets() -> [Target] {
             path: "Build/Cache/ReclaimXCFrameworks/reclaim_gnark_zkoperator.xcframework"
         ),
         .binaryTarget(
+            name: "rive_native",
+            path: "Build/Cache/ReclaimXCFrameworks/rive_native.xcframework"
+        ),
+        .binaryTarget(
             name: "shared_preferences_foundation",
             path: "Build/Cache/ReclaimXCFrameworks/shared_preferences_foundation.xcframework"
         ),
