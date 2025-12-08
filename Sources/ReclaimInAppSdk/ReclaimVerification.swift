@@ -328,20 +328,40 @@ public class ReclaimVerification {
   }
 
   public struct VerificationOptions {
+    /// Whether to delete cookies before user journey starts in the client web view.
+    /// Defaults to true.
     public let canDeleteCookiesBeforeVerificationStarts: Bool
+    /// Use a callback to host that returns an authentication request when a Reclaim HTTP provider is provided.
     public let attestorAuthRequestProvider: AttestorAuthRequestProvider?
     public let claimCreationType: ClaimCreationType
     /// If true, automatically submits proof after proof is generated from the claim creation process. Otherwise, lets the user submit proof by pressing a submit button when proof is generated.
+    /// Defaults to true.
     public let canAutoSubmit: Bool
     /// Whether the close button is visible
+    /// Defaults to true.
     public let isCloseButtonVisible: Bool
+    /// A language code & Country code for localization that should be enforced in the verification flow.
+    public let locale: String?
+    /// Enables use of Reclaim's TEE+MPC protocol for HTTP Request claim verification and
+    /// attestation.
+    ///
+    /// When set to `true`, the verification will use Trusted Execution Environment
+    /// (TEE) with Multi-Party Computation (MPC) for enhanced security.
+    ///
+    /// When set to `false`, the standard Reclaim's proxy attestor verification flow is used.
+    ///
+    /// When `null` (default), the backend decides whether to use TEE based on
+    /// a feature flag (currently in staged rollout).
+    public let useTeeOperator: Bool?
 
     public init(
       canDeleteCookiesBeforeVerificationStarts: Bool = true,
       attestorAuthRequestProvider: AttestorAuthRequestProvider? = nil,
       claimCreationType: ClaimCreationType = .standalone,
       canAutoSubmit: Bool = true,
-      isCloseButtonVisible: Bool = true
+      isCloseButtonVisible: Bool = true,
+      locale: String? = nil,
+      useTeeOperator: Bool? = nil
     ) {
       self.canDeleteCookiesBeforeVerificationStarts =
         canDeleteCookiesBeforeVerificationStarts
@@ -349,6 +369,8 @@ public class ReclaimVerification {
       self.claimCreationType = claimCreationType
       self.canAutoSubmit = canAutoSubmit
       self.isCloseButtonVisible = isCloseButtonVisible
+      self.locale = locale
+      self.useTeeOperator = useTeeOperator
     }
 
     public protocol AttestorAuthRequestProvider {
@@ -611,18 +633,27 @@ public class ReclaimVerification {
             cookiePersist: featureOptions?.cookiePersist,
             singleReclaimRequest: featureOptions?
               .singleReclaimRequest,
+            attestorBrowserRpcUrl: featureOptions?
+              .attestorBrowserRpcUrl,
             idleTimeThresholdForManualVerificationTrigger:
               featureOptions?
               .idleTimeThresholdForManualVerificationTrigger,
             sessionTimeoutForManualVerificationTrigger:
               featureOptions?
               .sessionTimeoutForManualVerificationTrigger,
-            attestorBrowserRpcUrl: featureOptions?
-              .attestorBrowserRpcUrl,
             isAIFlowEnabled: featureOptions?.isAIFlowEnabled,
             manualReviewMessage: featureOptions?
               .manualReviewMessage,
-            loginPromptMessage: featureOptions?.loginPromptMessage
+            loginPromptMessage: featureOptions?.loginPromptMessage,
+            useTEE: featureOptions?.useTEE,
+            interceptorOptions: featureOptions?.interceptorOptions,
+            claimCreationTimeoutDurationInMins: featureOptions?.claimCreationTimeoutDurationInMins,
+            sessionNoActivityTimeoutDurationInMins: featureOptions?.sessionNoActivityTimeoutDurationInMins,
+            aiProviderNoActivityTimeoutDurationInSecs: featureOptions?.aiProviderNoActivityTimeoutDurationInSecs,
+            pageLoadedCompletedDebounceTimeoutMs: featureOptions?.pageLoadedCompletedDebounceTimeoutMs,
+            potentialLoginTimeoutS: featureOptions?.potentialLoginTimeoutS,
+            screenshotCaptureIntervalSeconds: featureOptions?.screenshotCaptureIntervalSeconds,
+            teeUrls: featureOptions?.teeUrls
           ),
         logConsumer: (logConsumer == nil)
           ? nil
@@ -696,7 +727,9 @@ public class ReclaimVerification {
             canUseAttestorAuthenticationRequest: provider != nil,
             claimCreationType: options.claimCreationType.toApi(),
             canAutoSubmit: options.canAutoSubmit,
-            isCloseButtonVisible: options.isCloseButtonVisible
+            isCloseButtonVisible: options.isCloseButtonVisible,
+            locale: options.locale,
+            useTeeOperator: options.useTeeOperator
           )
         ) { result in
           continuation.resume(with: result)

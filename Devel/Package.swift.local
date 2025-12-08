@@ -95,8 +95,8 @@ func getSdkTargets() -> [Target] {
             path: "Build/Cache/ReclaimXCFrameworks/permission_handler_apple.xcframework"
         ),
         .binaryTarget(
-            name: "reclaim_gnark_zkoperator",
-            path: "Build/Cache/ReclaimXCFrameworks/reclaim_gnark_zkoperator.xcframework"
+            name: "reclaim_tee_operator_flutter",
+            path: "Build/Cache/ReclaimXCFrameworks/reclaim_tee_operator_flutter.xcframework"
         ),
         .binaryTarget(
             name: "rive_native",
