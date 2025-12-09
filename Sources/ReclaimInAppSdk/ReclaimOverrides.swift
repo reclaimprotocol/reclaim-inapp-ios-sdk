@@ -36,6 +36,15 @@ final public class ReclaimOverrides {
     public let isAIFlowEnabled: Bool?
     public let manualReviewMessage: String?
     public let loginPromptMessage: String?
+    public let useTEE: Bool?
+    public let interceptorOptions: String?
+    public let claimCreationTimeoutDurationInMins: Int64?
+    public let sessionNoActivityTimeoutDurationInMins: Int64?
+    public let aiProviderNoActivityTimeoutDurationInSecs: Int64?
+    public let pageLoadedCompletedDebounceTimeoutMs: Int64?
+    public let potentialLoginTimeoutS: Int64?
+    public let screenshotCaptureIntervalSeconds: Int64?
+    public let teeUrls: String?
 
     public init(
       cookiePersist: Bool? = nil,
@@ -45,7 +54,16 @@ final public class ReclaimOverrides {
       attestorBrowserRpcUrl: String? = nil,
       isAIFlowEnabled: Bool? = nil,
       manualReviewMessage: String? = nil,
-      loginPromptMessage: String? = nil
+      loginPromptMessage: String? = nil,
+      useTEE: Bool? = nil,
+      interceptorOptions: String? = nil,
+      claimCreationTimeoutDurationInMins: Int64? = nil,
+      sessionNoActivityTimeoutDurationInMins: Int64? = nil,
+      aiProviderNoActivityTimeoutDurationInSecs: Int64? = nil,
+      pageLoadedCompletedDebounceTimeoutMs: Int64? = nil,
+      potentialLoginTimeoutS: Int64? = nil,
+      screenshotCaptureIntervalSeconds: Int64? = nil,
+      teeUrls: String? = nil
     ) {
       self.cookiePersist = cookiePersist
       self.singleReclaimRequest = singleReclaimRequest
@@ -57,6 +75,15 @@ final public class ReclaimOverrides {
       self.isAIFlowEnabled = isAIFlowEnabled
       self.manualReviewMessage = manualReviewMessage
       self.loginPromptMessage = loginPromptMessage
+      self.useTEE = useTEE
+      self.interceptorOptions = interceptorOptions
+      self.claimCreationTimeoutDurationInMins = claimCreationTimeoutDurationInMins
+      self.sessionNoActivityTimeoutDurationInMins = sessionNoActivityTimeoutDurationInMins
+      self.aiProviderNoActivityTimeoutDurationInSecs = aiProviderNoActivityTimeoutDurationInSecs
+      self.pageLoadedCompletedDebounceTimeoutMs = pageLoadedCompletedDebounceTimeoutMs
+      self.potentialLoginTimeoutS = potentialLoginTimeoutS
+      self.screenshotCaptureIntervalSeconds = screenshotCaptureIntervalSeconds
+      self.teeUrls = teeUrls
     }
   }
 

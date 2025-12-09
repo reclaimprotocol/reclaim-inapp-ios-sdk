@@ -63,7 +63,7 @@ platform :ios, '14.0'
 - From a specific tag (recommended):
 
 ```ruby
-pod 'ReclaimInAppSdk', :git => 'https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git', :tag => '0.24.0'
+pod 'ReclaimInAppSdk', :git => 'https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git', :tag => '0.25.0'
 ```
 
 - or from git HEAD (Alternative):
@@ -127,7 +127,7 @@ For more info, check the [Reclaim Example - SwiftUI with CocoaPods](https://gith
 Either select a package version:
 
 ```
-.package(url: "https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git", from: "0.24.0")
+.package(url: "https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git", from: "0.25.0")
 ```
 
 Or select the main branch:
@@ -207,11 +207,25 @@ To embed your dynamic frameworks, complete the following procedure.
 1. If you have a `*.xcworkspace` then open `YourApp.xcworkspace` in Xcode. Verify that you're opening MyApp.xcworkspace and not opening MyApp.xcodeproj. The .xcworkspace file has the CocoaPod dependencies, the .xcodeproj doesn't. If you don't have a `*.xcworkspace` then open `YourApp.xcodeproj` in Xcode.
 2. Select **Product** > **Build** or press `Cmd + B`.
 
-### 2. Fixing performance issues
+### 2. Updating iOS xcscheme
 
 Your app performance will be severely impacted when you run debug executable on a physical device. Fixing this requires a simple change in your Xcode project xcscheme.
 
-#### Method 1: Update Environment Variables for XCScheme (Recommended) 
+#### Method 1: Disable "Debug executable" (For Xcode 26 and above)
+
+1. Open your project in Xcode.
+2. Click on the project target.
+3. Click on the **Scheme** dropdown.
+
+<img src="https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/raw/53a19f88c8d90df485a60dc20190f740cd9fd108/Screenshots/Install/10.png" alt="Edit current xcscheme in Xcode" width="500">
+
+4. Click on the **Edit Scheme** button.
+5. Click on the **Run** tab.
+6. Uncheck the **Debug executable** checkbox.
+
+<img src="https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/raw/53a19f88c8d90df485a60dc20190f740cd9fd108/Screenshots/Install/11.png" alt="Enable Debug executable in Xcode" width="500">
+
+#### Method 2: Update Environment Variables for XCScheme (For Xcode < 26) 
 1. Open your project in Xcode.
 2. Click on the project target.
 3. Click on the **Scheme** dropdown.
@@ -229,22 +243,6 @@ Your app performance will be severely impacted when you run debug executable on 
     - Value: `asyncpreemptoff=1`
 8. Click on the **Close** button in the dialog and build the project.
 9. Run the app on a physical device.
-
-#### Method 2: Disable "Debug executable"
-
-This method is **not recommended** but could be useful if you don't want to add environment variables to the xcscheme.
-
-1. Open your project in Xcode.
-2. Click on the project target.
-3. Click on the **Scheme** dropdown.
-
-<img src="https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/raw/53a19f88c8d90df485a60dc20190f740cd9fd108/Screenshots/Install/10.png" alt="Edit current xcscheme in Xcode" width="500">
-
-4. Click on the **Edit Scheme** button.
-5. Click on the **Run** tab.
-6. Uncheck the **Debug executable** checkbox.
-
-<img src="https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/raw/53a19f88c8d90df485a60dc20190f740cd9fd108/Screenshots/Install/11.png" alt="Enable Debug executable in Xcode" width="500">
 
 ### 4. Use ReclaimInAppSdk in your project
 
@@ -347,7 +345,7 @@ func setOverrides() {
 
 To upgrade to a new version of the Reclaim InApp SDK, follow these steps:
 
-1. Make sure you have the latest version of the Reclaim InApp SDK. Currently the latest version is `0.24.0`. 
+1. Make sure you have the latest version of the Reclaim InApp SDK. Currently the latest version is `0.25.0`. 
 1. Incase of any problems: remove package, clear build, restart Xcode, and add package again.
 
 Migration guides will be available when a new version with API changes is released. 

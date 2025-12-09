@@ -15,9 +15,18 @@ struct ContentView: View {
     // Provider id in this example is fetched from the app's Info.plist file.
     @State private var providerId: String = (Bundle.main.infoDictionary?["ReclaimProviderId"] as? String) ?? ""
     
-    func setOverrides() {
+    func prepare() {
         Task { @MainActor in
             do {
+                #if DEBUG
+                try await ReclaimVerification.setConsoleLogging(enabled: true)
+                #endif
+                try await ReclaimVerification.setVerificationOptions(
+                    options: .init(
+                        canAutoSubmit: false,
+                        useTeeOperator: false,
+                    )
+                )
                 try await ReclaimVerification.setOverrides(
                     appInfo: ReclaimOverrides.ReclaimAppInfo(
                         appName: "Overriden Example",
@@ -59,7 +68,7 @@ struct ContentView: View {
             Spacer()
         }
         .onAppear {
-            setOverrides()
+            prepare()
         }
         .alert(isPresented: $showingAlert) {
             Alert(title: Text("Claim Creation"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
@@ -99,22 +108,23 @@ struct ContentView: View {
             showAlert(message: "Cancelled")
         } catch ReclaimVerificationError.dismissed {
             showAlert(message: "Cancelled by user")
+        } catch ReclaimVerificationError.sessionExpired(let sessionId, _) {
+            print("session expired (session \(sessionId)")
+            showAlert(message: "Session expired")
         } catch ReclaimVerificationError.failed(let sessionId, _, let message) {
             print("failure error details (session \(sessionId): \(message)")
-            Task { @MainActor in
-                showAlert(message: "Something went wrong")
-            }
+            showAlert(message: "Something went wrong")
         } catch {
             print("unexpected failure error details: \(error)")
-            Task { @MainActor in
-                showAlert(message: "An unexpected error occurred")
-            }
+            showAlert(message: "An unexpected error occurred")
         }
     }
     
     private func showAlert(message: LocalizedStringResource) {
-        alertMessage = String(localized: message)
-        showingAlert = true
+        Task { @MainActor in
+            alertMessage = String(localized: message)
+            showingAlert = true
+        }
     }
 }
 
