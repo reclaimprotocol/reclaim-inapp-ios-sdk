@@ -21,6 +21,12 @@ struct ContentView: View {
                 #if DEBUG
                 try await ReclaimVerification.setConsoleLogging(enabled: true)
                 #endif
+                try await ReclaimVerification.setVerificationOptions(
+                    options: .init(
+                        canAutoSubmit: false,
+                        useTeeOperator: false,
+                    )
+                )
                 try await ReclaimVerification.setOverrides(
                     appInfo: ReclaimOverrides.ReclaimAppInfo(
                         appName: "Overriden Example",
