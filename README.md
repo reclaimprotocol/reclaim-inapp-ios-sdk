@@ -213,8 +213,6 @@ Your app performance will be severely impacted when you run debug executable on 
 
 #### Method 1: Disable "Debug executable" (For Xcode 26 and above)
 
-Warning: Use this method only when running on a physical device. It will not work when running on a simulator.
-
 1. Open your project in Xcode.
 2. Click on the project target.
 3. Click on the **Scheme** dropdown.
