@@ -213,7 +213,7 @@ final public class ReclaimOverrides {
       appName: String,
       appImageUrl: String,
       isRecurring: Bool = false,
-      theme: String = nil
+      theme: String? = nil
     ) {
       self.appName = appName
       self.appImageUrl = appImageUrl
