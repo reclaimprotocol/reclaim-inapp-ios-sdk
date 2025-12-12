@@ -480,17 +480,20 @@ struct ClientReclaimAppInfoOverride: Hashable {
   var appName: String
   var appImageUrl: String
   var isRecurring: Bool
+  var theme: String? = nil
 
   // swift-format-ignore: AlwaysUseLowerCamelCase
   static func fromList(_ pigeonVar_list: [Any?]) -> ClientReclaimAppInfoOverride? {
     let appName = pigeonVar_list[0] as! String
     let appImageUrl = pigeonVar_list[1] as! String
     let isRecurring = pigeonVar_list[2] as! Bool
+    let theme: String? = nilOrValue(pigeonVar_list[3])
 
     return ClientReclaimAppInfoOverride(
       appName: appName,
       appImageUrl: appImageUrl,
-      isRecurring: isRecurring
+      isRecurring: isRecurring,
+      theme: theme
     )
   }
   func toList() -> [Any?] {
@@ -498,6 +501,7 @@ struct ClientReclaimAppInfoOverride: Hashable {
       appName,
       appImageUrl,
       isRecurring,
+      theme,
     ]
   }
   static func == (lhs: ClientReclaimAppInfoOverride, rhs: ClientReclaimAppInfoOverride) -> Bool {

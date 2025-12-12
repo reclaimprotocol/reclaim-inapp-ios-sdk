@@ -1,3 +1,10 @@
+## 0.27.0
+
+* Fix feature flag overrides causing interruption with some login pages and returning incorrect values for fields not overriden
+* Update default feature flag values
+* Add potentialFailureReasonsLink in themes
+* Add support for app theme override
+
 ## 0.25.0
 
 * Add options locale, and useTeeOperator when using `setVerificationOptions` method.
