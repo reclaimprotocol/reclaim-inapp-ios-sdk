@@ -59,8 +59,8 @@ func getSdkTargets() -> [Target] {
             path: "Build/Cache/ReclaimXCFrameworks/flutter_inappwebview_ios.xcframework"
         ),
         .binaryTarget(
-            name: "flutter_secure_storage",
-            path: "Build/Cache/ReclaimXCFrameworks/flutter_secure_storage.xcframework"
+            name: "flutter_secure_storage_darwin",
+            path: "Build/Cache/ReclaimXCFrameworks/flutter_secure_storage_darwin.xcframework"
         ),
         .binaryTarget(
             name: "Flutter",

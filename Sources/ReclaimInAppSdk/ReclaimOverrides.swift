@@ -207,15 +207,18 @@ final public class ReclaimOverrides {
     public let appName: String
     public let appImageUrl: String
     public let isRecurring: Bool
+    public let theme: String?
 
     public init(
       appName: String,
       appImageUrl: String,
-      isRecurring: Bool = false
+      isRecurring: Bool = false,
+      theme: String? = nil
     ) {
       self.appName = appName
       self.appImageUrl = appImageUrl
       self.isRecurring = isRecurring
+      self.theme = theme
     }
   }
 
