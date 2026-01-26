@@ -675,7 +675,8 @@ public class ReclaimVerification {
           : ClientReclaimAppInfoOverride(
             appName: appInfo?.appName ?? "",
             appImageUrl: appInfo?.appImageUrl ?? "",
-            isRecurring: appInfo?.isRecurring ?? false
+            isRecurring: appInfo?.isRecurring ?? false,
+            theme: appInfo?.theme
           ),
         capabilityAccessToken: capabilityAccessToken
       ) { result in
