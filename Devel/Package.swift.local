@@ -87,10 +87,6 @@ func getSdkTargets() -> [Target] {
             path: "Build/Cache/ReclaimXCFrameworks/package_info_plus.xcframework"
         ),
         .binaryTarget(
-            name: "path_provider_foundation",
-            path: "Build/Cache/ReclaimXCFrameworks/path_provider_foundation.xcframework"
-        ),
-        .binaryTarget(
             name: "permission_handler_apple",
             path: "Build/Cache/ReclaimXCFrameworks/permission_handler_apple.xcframework"
         ),

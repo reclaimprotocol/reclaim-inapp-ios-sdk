@@ -14,6 +14,12 @@ enum ConfigurationOption: String, CaseIterable {
     case url = "URL"
 }
 
+enum TEEModePreference: String, CaseIterable {
+    case auto = "Auto"
+    case enabled = "Enabled"
+    case disabled = "Disabled"
+}
+
 struct ContentView: View {
     @State private var result: ReclaimVerification.Response?
     @State private var showingAlert = false
@@ -21,6 +27,7 @@ struct ContentView: View {
     // Provider id in this example is fetched from the app's Info.plist file.
     @State private var inputText: String = (Bundle.main.infoDictionary?["ReclaimProviderId"] as? String) ?? ""
     @State private var selectedOption: ConfigurationOption = .providerId
+    @State private var selectedTeeOption: TEEModePreference = .auto
     
     func setOverrides() {
         Task { @MainActor in
@@ -59,6 +66,14 @@ struct ContentView: View {
                 .multilineTextAlignment(.center)
                 .padding()
             
+            // Dropdown picker for configuration options
+            Picker("TEE preference", selection: $selectedTeeOption) {
+                ForEach(TEEModePreference.allCases, id: \.self) { option in
+                    Text(option.rawValue).tag(option)
+                }
+            }
+            .pickerStyle(MenuPickerStyle())
+            
             Button("Start Claim") {
                 Task {
                     await startClaimCreation()
@@ -83,10 +98,16 @@ struct ContentView: View {
     
     func startClaimCreation() async {
         do {
+            let useTeeOperator: Bool? = switch (selectedTeeOption) {
+                case .auto: nil
+                case .disabled:  false
+                case .enabled:  true
+            }
             /// Optionally, you can set the verification options to customize the verification flow.
             try await ReclaimVerification.setVerificationOptions(options: .init(
                 canAutoSubmit: false,
-                isCloseButtonVisible: true
+                isCloseButtonVisible: true,
+                useTeeOperator: useTeeOperator
             ))
             let request: ReclaimVerification.Request
             switch (selectedOption) {
