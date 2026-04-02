@@ -45,6 +45,9 @@ final public class ReclaimOverrides {
     public let potentialLoginTimeoutS: Int64?
     public let screenshotCaptureIntervalSeconds: Int64?
     public let teeUrls: String?
+    public let privacyPolicyUrl: String?
+    public let termsOfServiceUrl: String?
+    public let potentialFailureReasonsUrl: String?
 
     public init(
       cookiePersist: Bool? = nil,
@@ -63,7 +66,10 @@ final public class ReclaimOverrides {
       pageLoadedCompletedDebounceTimeoutMs: Int64? = nil,
       potentialLoginTimeoutS: Int64? = nil,
       screenshotCaptureIntervalSeconds: Int64? = nil,
-      teeUrls: String? = nil
+      teeUrls: String? = nil,
+      privacyPolicyUrl: String? = nil,
+      termsOfServiceUrl: String? = nil,
+      potentialFailureReasonsUrl: String? = nil
     ) {
       self.cookiePersist = cookiePersist
       self.singleReclaimRequest = singleReclaimRequest
@@ -84,6 +90,9 @@ final public class ReclaimOverrides {
       self.potentialLoginTimeoutS = potentialLoginTimeoutS
       self.screenshotCaptureIntervalSeconds = screenshotCaptureIntervalSeconds
       self.teeUrls = teeUrls
+      self.privacyPolicyUrl = privacyPolicyUrl
+      self.termsOfServiceUrl = termsOfServiceUrl
+      self.potentialFailureReasonsUrl = potentialFailureReasonsUrl
     }
   }
 

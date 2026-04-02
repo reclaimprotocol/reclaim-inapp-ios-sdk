@@ -230,7 +230,7 @@
 			mainGroup = 793EB2B72D60C02B009AF5A8;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				7935DDD12EB08DD800B13587 /* XCLocalSwiftPackageReference "../.." */,
+				8035A16B2F7E7A600000C300 /* XCLocalSwiftPackageReference "../.." */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 793EB2C12D60C02B009AF5A8 /* Products */;
@@ -608,9 +608,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		7935DDD12EB08DD800B13587 /* XCLocalSwiftPackageReference "../.." */ = {
+		8035A16B2F7E7A600000C300 /* XCLocalSwiftPackageReference "../../../ios-sdk" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = "../..";
+			relativePath = "../../../ios-sdk";
 		};
 /* End XCLocalSwiftPackageReference section */
 
