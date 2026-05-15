@@ -47,6 +47,10 @@ func getSdkTargets() -> [Target] {
             path: "Build/Cache/ReclaimXCFrameworks/App.xcframework"
         ),
         .binaryTarget(
+            name: "Collections",
+            path: "Build/Cache/ReclaimXCFrameworks/Collections.xcframework"
+        ),
+        .binaryTarget(
             name: "cupertino_http",
             path: "Build/Cache/ReclaimXCFrameworks/cupertino_http.xcframework"
         ),
@@ -75,16 +79,20 @@ func getSdkTargets() -> [Target] {
             path: "Build/Cache/ReclaimXCFrameworks/fluttertoast.xcframework"
         ),
         .binaryTarget(
+            name: "InternalCollectionsUtilities",
+            path: "Build/Cache/ReclaimXCFrameworks/InternalCollectionsUtilities.xcframework"
+        ),
+        .binaryTarget(
             name: "objective_c",
             path: "Build/Cache/ReclaimXCFrameworks/objective_c.xcframework"
         ),
         .binaryTarget(
-            name: "OrderedSet",
-            path: "Build/Cache/ReclaimXCFrameworks/OrderedSet.xcframework"
-        ),
-        .binaryTarget(
             name: "package_info_plus",
             path: "Build/Cache/ReclaimXCFrameworks/package_info_plus.xcframework"
+        ),
+        .binaryTarget(
+            name: "path_provider_foundation",
+            path: "Build/Cache/ReclaimXCFrameworks/path_provider_foundation.xcframework"
         ),
         .binaryTarget(
             name: "permission_handler_apple",
