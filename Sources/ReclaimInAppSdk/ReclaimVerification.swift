@@ -909,6 +909,8 @@ private class ReclaimHostOverridesApiImpl: ReclaimHostOverridesApi {
     case .pROOFSUBMITTED: mappedStatus = .PROOF_SUBMITTED
     case .pROOFSUBMISSIONFAILED: mappedStatus = .PROOF_SUBMISSION_FAILED
     case .aIPROOFSUBMITTED: mappedStatus = .AI_PROOF_SUBMITTED
+    case .uSERINTERACTED: mappedStatus = .USER_INTERACTED
+    case .uSERTYPED: mappedStatus = .USER_TYPED
     }
     sessionHandler?.updateSession(
       sessionId: sessionId,

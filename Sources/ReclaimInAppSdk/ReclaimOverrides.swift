@@ -180,6 +180,8 @@ final public class ReclaimOverrides {
       case PROOF_SUBMISSION_FAILED = 7
       case PROOF_MANUAL_VERIFICATION_SUBMITTED = 8
       case AI_PROOF_SUBMITTED = 9
+      case USER_INTERACTED = 10
+      case USER_TYPED = 11
 
       public static func fromInt(_ valueArg: Int) -> SessionStatus? {
         var value: SessionStatus? = nil
@@ -203,7 +205,11 @@ final public class ReclaimOverrides {
         case 8:
           value = .PROOF_MANUAL_VERIFICATION_SUBMITTED
         case 9:
+          value = .USER_INTERACTED
+        case 10:
           value = .AI_PROOF_SUBMITTED
+        case 11:
+          value = .USER_TYPED
         default:
           value = nil
         }

@@ -83,6 +83,10 @@ func getSdkTargets() -> [Target] {
             path: "Build/Cache/ReclaimXCFrameworks/InternalCollectionsUtilities.xcframework"
         ),
         .binaryTarget(
+            name: "libreclaim",
+            path: "Build/Cache/ReclaimXCFrameworks/libreclaim.xcframework"
+        ),
+        .binaryTarget(
             name: "objective_c",
             path: "Build/Cache/ReclaimXCFrameworks/objective_c.xcframework"
         ),
@@ -101,6 +105,10 @@ func getSdkTargets() -> [Target] {
         .binaryTarget(
             name: "reclaim_tee_operator_flutter",
             path: "Build/Cache/ReclaimXCFrameworks/reclaim_tee_operator_flutter.xcframework"
+        ),
+        .binaryTarget(
+            name: "reclaim",
+            path: "Build/Cache/ReclaimXCFrameworks/reclaim.xcframework"
         ),
         .binaryTarget(
             name: "rive_native",
