@@ -9,6 +9,10 @@
 * iOS no longer requires consumers to set `STRIP_STYLE=non-global` on their Xcode targets — the native library is now stripped and codesigned independently of the consuming app's build settings
 * Removed the iOS force-link shim (`reclaim_binding`/`EnforceBinding.swift`), no longer needed now that the native library isn't statically merged into the app
 
+## 0.37.0
+
+* Add new option `canAutoCloseOnError` to `ReclaimVerificationOptions` to control auto-close on error
+
 ## 0.36.0
 
 * Add witnesses list with tee attestation (alpha) for tee mode proofs
