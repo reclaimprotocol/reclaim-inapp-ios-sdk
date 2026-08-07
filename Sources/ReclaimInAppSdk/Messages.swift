@@ -539,6 +539,8 @@ struct ClientLogConsumerOverride: Hashable {
   var enableLogHandler: Bool
   var canSdkCollectTelemetry: Bool
   var canSdkPrintLogs: Bool? = nil
+  var logLevel: String? = nil
+  var canLogMetadata: Bool? = nil
 
 
   // swift-format-ignore: AlwaysUseLowerCamelCase
@@ -546,11 +548,15 @@ struct ClientLogConsumerOverride: Hashable {
     let enableLogHandler = pigeonVar_list[0] as! Bool
     let canSdkCollectTelemetry = pigeonVar_list[1] as! Bool
     let canSdkPrintLogs: Bool? = nilOrValue(pigeonVar_list[2])
+    let logLevel: String? = nilOrValue(pigeonVar_list[3])
+    let canLogMetadata: Bool? = nilOrValue(pigeonVar_list[4])
 
     return ClientLogConsumerOverride(
       enableLogHandler: enableLogHandler,
       canSdkCollectTelemetry: canSdkCollectTelemetry,
-      canSdkPrintLogs: canSdkPrintLogs
+      canSdkPrintLogs: canSdkPrintLogs,
+      logLevel: logLevel,
+      canLogMetadata: canLogMetadata
     )
   }
   func toList() -> [Any?] {
@@ -558,13 +564,15 @@ struct ClientLogConsumerOverride: Hashable {
       enableLogHandler,
       canSdkCollectTelemetry,
       canSdkPrintLogs,
+      logLevel,
+      canLogMetadata,
     ]
   }
   static func == (lhs: ClientLogConsumerOverride, rhs: ClientLogConsumerOverride) -> Bool {
     if Swift.type(of: lhs) != Swift.type(of: rhs) {
       return false
     }
-    return deepEqualsMessages(lhs.enableLogHandler, rhs.enableLogHandler) && deepEqualsMessages(lhs.canSdkCollectTelemetry, rhs.canSdkCollectTelemetry) && deepEqualsMessages(lhs.canSdkPrintLogs, rhs.canSdkPrintLogs)
+    return deepEqualsMessages(lhs.enableLogHandler, rhs.enableLogHandler) && deepEqualsMessages(lhs.canSdkCollectTelemetry, rhs.canSdkCollectTelemetry) && deepEqualsMessages(lhs.canSdkPrintLogs, rhs.canSdkPrintLogs) && deepEqualsMessages(lhs.logLevel, rhs.logLevel) && deepEqualsMessages(lhs.canLogMetadata, rhs.canLogMetadata)
   }
 
   func hash(into hasher: inout Hasher) {
@@ -572,6 +580,8 @@ struct ClientLogConsumerOverride: Hashable {
     deepHashMessages(value: enableLogHandler, hasher: &hasher)
     deepHashMessages(value: canSdkCollectTelemetry, hasher: &hasher)
     deepHashMessages(value: canSdkPrintLogs, hasher: &hasher)
+    deepHashMessages(value: logLevel, hasher: &hasher)
+    deepHashMessages(value: canLogMetadata, hasher: &hasher)
   }
 }
 

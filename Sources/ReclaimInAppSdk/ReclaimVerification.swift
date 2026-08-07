@@ -664,7 +664,9 @@ public class ReclaimVerification {
             enableLogHandler: logConsumer?.logHandler != nil,
             canSdkCollectTelemetry: logConsumer?
               .canSdkCollectTelemetry ?? true,
-            canSdkPrintLogs: logConsumer?.canSdkPrintLogs
+            canSdkPrintLogs: logConsumer?.canSdkPrintLogs,
+            logLevel: logConsumer?.logLevel,
+            canLogMetadata: logConsumer?.canLogMetadata
           ),
         sessionManagement: (sessionManagement == nil)
           ? nil

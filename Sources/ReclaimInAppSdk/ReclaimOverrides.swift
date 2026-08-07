@@ -98,27 +98,41 @@ final public class ReclaimOverrides {
 
   public struct LogConsumer {
     /**
-         * Handler for consuming logs exported from the SDK.
-         */
+      * Handler for consuming logs exported from the SDK.
+      */
     public let logHandler: LogHandler?
     /**
-         * When enabled, logs are sent to reclaim that can be used to help you.
-         * Defaults to true.
-         */
+      * When enabled, logs are sent to reclaim that can be used to help you.
+      * Defaults to true.
+      */
     public let canSdkCollectTelemetry: Bool
     /**
-         * Defaults to enabled when not in release mode.
-         */
+      * Defaults to enabled when not in release mode.
+      */
     public let canSdkPrintLogs: Bool?
+    /**
+      * When provided, can be used to change logLevel.
+      * Available levels are: ALL, FINEST, FINER, FINE,
+      * CONFIG, INFO, WARNING, SEVERE, SHOUT, OFF
+      */
+    public let logLevel: String?
+    /**
+      *  Whether metadata should also be logged along with logs
+      */
+    public let canLogMetadata: Bool?
 
     public init(
       logHandler: LogHandler? = nil,
       canSdkCollectTelemetry: Bool = true,
-      canSdkPrintLogs: Bool? = nil
+      canSdkPrintLogs: Bool? = nil,
+      logLevel: String? = nil,
+      canLogMetadata: Bool? = nil
     ) {
       self.logHandler = logHandler
       self.canSdkCollectTelemetry = canSdkCollectTelemetry
       self.canSdkPrintLogs = canSdkPrintLogs
+      self.logLevel = logLevel
+      self.canLogMetadata = canLogMetadata
     }
 
     public protocol LogHandler {
