@@ -98,27 +98,41 @@ final public class ReclaimOverrides {
 
   public struct LogConsumer {
     /**
-         * Handler for consuming logs exported from the SDK.
-         */
+      * Handler for consuming logs exported from the SDK.
+      */
     public let logHandler: LogHandler?
     /**
-         * When enabled, logs are sent to reclaim that can be used to help you.
-         * Defaults to true.
-         */
+      * When enabled, logs are sent to reclaim that can be used to help you.
+      * Defaults to true.
+      */
     public let canSdkCollectTelemetry: Bool
     /**
-         * Defaults to enabled when not in release mode.
-         */
+      * Defaults to enabled when not in release mode.
+      */
     public let canSdkPrintLogs: Bool?
+    /**
+      * When provided, can be used to change logLevel.
+      * Available levels are: ALL, FINEST, FINER, FINE,
+      * CONFIG, INFO, WARNING, SEVERE, SHOUT, OFF
+      */
+    public let logLevel: String?
+    /**
+      *  Whether metadata should also be logged along with logs
+      */
+    public let canLogMetadata: Bool?
 
     public init(
       logHandler: LogHandler? = nil,
       canSdkCollectTelemetry: Bool = true,
-      canSdkPrintLogs: Bool? = nil
+      canSdkPrintLogs: Bool? = nil,
+      logLevel: String? = nil,
+      canLogMetadata: Bool? = nil
     ) {
       self.logHandler = logHandler
       self.canSdkCollectTelemetry = canSdkCollectTelemetry
       self.canSdkPrintLogs = canSdkPrintLogs
+      self.logLevel = logLevel
+      self.canLogMetadata = canLogMetadata
     }
 
     public protocol LogHandler {
@@ -180,6 +194,8 @@ final public class ReclaimOverrides {
       case PROOF_SUBMISSION_FAILED = 7
       case PROOF_MANUAL_VERIFICATION_SUBMITTED = 8
       case AI_PROOF_SUBMITTED = 9
+      case USER_INTERACTED = 10
+      case USER_TYPED = 11
 
       public static func fromInt(_ valueArg: Int) -> SessionStatus? {
         var value: SessionStatus? = nil
@@ -203,7 +219,11 @@ final public class ReclaimOverrides {
         case 8:
           value = .PROOF_MANUAL_VERIFICATION_SUBMITTED
         case 9:
+          value = .USER_INTERACTED
+        case 10:
           value = .AI_PROOF_SUBMITTED
+        case 11:
+          value = .USER_TYPED
         default:
           value = nil
         }
