@@ -12,7 +12,7 @@ let package = Package(
     name: "ReclaimInAppSdk",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v13),
+        .iOS(.v15),
         .macOS(.v10_15)
     ],
     products: [
