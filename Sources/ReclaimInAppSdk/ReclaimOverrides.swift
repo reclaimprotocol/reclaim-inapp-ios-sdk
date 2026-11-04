@@ -251,6 +251,24 @@ final public class ReclaimOverrides {
     }
   }
 
+  /// Builder transport for `api=2` verification links.
+  ///
+  /// Optional: without it, Builder links use `https://build.reclaimprotocol.org`
+  /// and the SDK's in-app Verification Client. Set it only for another Builder
+  /// deployment or a Verification Client registered for your app.
+  public struct BuilderMode {
+    /// HTTPS origin of Builder.
+    public let baseUrl: String
+    /// UUID of the registered Verification Client, sent as `x-reclaim-vc-id`.
+    /// It is a public identifier, not a secret.
+    public let verificationClientId: String
+
+    public init(baseUrl: String, verificationClientId: String) {
+      self.baseUrl = baseUrl
+      self.verificationClientId = verificationClientId
+    }
+  }
+
   public protocol SessionIdentityUpdateHandler {
     func onSessionIdentityUpdate(
       identity: ReclaimVerification.ReclaimSessionIdentity?
