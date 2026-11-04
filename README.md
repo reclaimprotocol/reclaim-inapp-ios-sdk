@@ -63,7 +63,7 @@ platform :ios, '14.0'
 - From a specific tag (recommended):
 
 ```ruby
-pod 'ReclaimInAppSdk', :git => 'https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git', :tag => '0.43.0'
+pod 'ReclaimInAppSdk', :git => 'https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git', :tag => '0.45.0'
 ```
 
 - or from git HEAD (Alternative):
@@ -127,7 +127,7 @@ For more info, check the [Reclaim Example - SwiftUI with CocoaPods](https://gith
 Either select a package version:
 
 ```
-.package(url: "https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git", from: "0.43.0")
+.package(url: "https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk.git", from: "0.45.0")
 ```
 
 Or select the main branch:
@@ -318,6 +318,110 @@ do {
 
 For a complete example, see the [Reclaim Example - SwiftUI](https://github.com/reclaimprotocol/reclaim-inapp-ios-sdk/blob/53a19f88c8d90df485a60dc20190f740cd9fd108/Examples/SwiftUIExample/SwiftUIExample/ContentView.swift).
 
+## Builder mode
+
+With Builder, your backend creates a verification session and your app opens
+it. The app needs no app secret and no configuration.
+
+### 1. Create the session on your backend
+
+Create one session per verification, with `verificationClientUrl` set to the
+in-app SDK's client, `https://build.reclaimprotocol.org/share/inapp-sdk`. Keep
+your organization secret (`RECLAIM_ORG_SECRET`) on the backend; never ship it
+in the app.
+
+With `curl`:
+
+```bash
+curl -X POST https://build.reclaimprotocol.org/verifications/sessions \
+  -H "authorization: Bearer $RECLAIM_ORG_SECRET" \
+  -H "content-type: application/json" \
+  -d '{
+    "providers": [{ "providerId": "<your-provider-id>" }],
+    "context": { "userId": "abc" },
+    "verificationClientUrl": "https://build.reclaimprotocol.org/share/inapp-sdk"
+  }'
+# → 201 { "id": "<sessionId>", "verificationUrl": "https://…?sessionId=<sessionId>&api=2", "status": "pending", … }
+```
+
+With the [`@reclaimprotocol/client`](https://www.npmjs.com/package/@reclaimprotocol/client)
+package (Node.js):
+
+```js
+import { ReclaimVerification, VerificationClient } from '@reclaimprotocol/client'
+
+const reclaim = ReclaimVerification.create({
+  orgSecret: process.env.RECLAIM_ORG_SECRET,
+})
+
+const session = await reclaim.sessions.create({
+  providers: [{ providerId: '<your-provider-id>' }],
+  context: { userId: 'abc' },
+  verificationClientUrl: VerificationClient.inAppSdk,
+})
+// Store session.id, then send session.verificationUrl (or session.id) to the app.
+```
+
+The session is bound to the Verification Client it was created for. If you
+omit `verificationClientUrl`, Builder creates a Portal session, and the app's
+requests fail with `403 x-reclaim-vc-id does not match this session`.
+
+The verified result is delivered to your backend's callback subscription, not
+returned by the app. Receive it with `reclaim.results.receive(...)` from the
+same package.
+
+### 2. Open it in the app
+
+Pass the returned `verificationUrl` as a `.url` request:
+
+```swift
+do {
+    let response = try await ReclaimVerification.startVerification(
+        .url(verificationUrl)
+    )
+    // The claimant finished. Your backend receives the verified result.
+} catch {
+    print("Builder verification failed: \(error)")
+}
+```
+
+Or, if your backend returns the session id instead of a link, pass it with
+`api` set to `"2"` as a `.json` request:
+
+```swift
+let response = try await ReclaimVerification.startVerification(
+    .json(["api": "2", "sessionId": sessionId])
+)
+```
+
+- `sessionId` is the `id` from the session-creation response.
+- Add `"diag": "1"` only if the session's `verificationUrl` contains `diag=1`.
+- Only `api`, `sessionId`, and `diag` are read; other keys are ignored. The
+  Builder URL comes from the SDK's configuration, never from the link or JSON.
+- A Builder link or JSON without a `sessionId`, or a Builder request that
+  fails, throws a `ReclaimVerificationError`. It never falls back to the legacy
+  flow.
+
+### Optional: another Builder deployment or Verification Client
+
+To use another Builder deployment or a Verification Client registered for your
+app, configure it once before opening a Builder link:
+
+```swift
+do {
+    try await ReclaimVerification.setBuilderModeOverrides(
+        ReclaimOverrides.BuilderMode(
+            baseUrl: "https://build.reclaimprotocol.org",
+            verificationClientId: "01234567-89ab-4def-8123-456789abcdef"
+        )
+    )
+} catch {
+    print("Builder config failed: \(error)")
+}
+```
+
+`ReclaimVerification.clearAllOverrides()` restores the defaults.
+
 ## Overrides | Advanced Usage
 
 You can use the `ReclaimOverrides` to customize the verification flow with `ReclaimVerification.setOverrides`.
@@ -345,7 +449,7 @@ func setOverrides() {
 
 To upgrade to a new version of the Reclaim InApp SDK, follow these steps:
 
-1. Make sure you have the latest version of the Reclaim InApp SDK. Currently the latest version is `0.43.0`. 
+1. Make sure you have the latest version of the Reclaim InApp SDK. Currently the latest version is `0.45.0`. 
 1. Incase of any problems: remove package, clear build, restart Xcode, and add package again.
 
 Migration guides will be available when a new version with API changes is released. 

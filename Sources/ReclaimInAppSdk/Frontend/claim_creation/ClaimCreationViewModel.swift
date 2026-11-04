@@ -134,36 +134,55 @@ class ClaimCreationViewModel: ObservableObject {
 
   @MainActor
   func sendRequest() async {
-    switch request {
-    case .params(let request):
-      moduleApi!.startVerification(
-        request: .init(
-          appId: request.appId,
-          providerId: request.providerId,
-          secret: request.secret,
-          signature: request.session?.signature ?? "",
-          timestamp: request.session?.timestamp ?? "",
-          context: request.context,
-          sessionId: request.session?.sessionId ?? "",
-          parameters: request.parameters,
-          providerVersion: ProviderVersionApi(
-            versionExpression: request.providerVersion
-              .versionExpression,
-            resolvedVersion: request.providerVersion.resolvedVersion
+    guard let moduleApi else {
+      onResponse(
+        result: .failure(
+          PigeonError(
+            code: "not-initialized",
+            message: "Verification module is not initialized",
+            details: nil
           )
-        ),
-        completion: onResponse
+        )
       )
-    case .url(let url):
-      moduleApi!.startVerificationFromUrl(
-        url: url,
-        completion: onResponse
-      )
-    case .json(let template):
-      moduleApi!.startVerificationFromJson(
-        template: template,
-        completion: onResponse
+      return
+    }
+    let result: Result<ReclaimApiVerificationResponse, PigeonError>
+    do {
+      switch request {
+      case .params(let request):
+        result = .success(
+          try await moduleApi.startVerification(
+            request: .init(
+              appId: request.appId,
+              providerId: request.providerId,
+              secret: request.secret,
+              signature: request.session?.signature ?? "",
+              timestamp: request.session?.timestamp ?? "",
+              context: request.context,
+              sessionId: request.session?.sessionId ?? "",
+              parameters: request.parameters,
+              providerVersion: ProviderVersionApi(
+                versionExpression: request.providerVersion
+                  .versionExpression,
+                resolvedVersion: request.providerVersion.resolvedVersion
+              )
+            )
+          )
+        )
+      case .url(let url):
+        result = .success(try await moduleApi.startVerificationFromUrl(url: url))
+      case .json(let template):
+        result = .success(
+          try await moduleApi.startVerificationFromJson(template: template)
+        )
+      }
+    } catch let error as PigeonError {
+      result = .failure(error)
+    } catch {
+      result = .failure(
+        PigeonError(code: "unknown", message: "\(error)", details: nil)
       )
     }
+    onResponse(result: result)
   }
 }

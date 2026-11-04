@@ -597,8 +597,6 @@ public class ReclaimVerification {
       hostApi.sessionIdentityUpdateHandler = sessionIdentityUpdateHandler
     }
 
-    // Use continuation to handle the asynchronous UI flow
-    return try await withCheckedThrowingContinuation { continuation in
       var overrideProvider: ClientProviderInformationOverride? = nil
       if let provider {
         switch provider {
@@ -625,7 +623,8 @@ public class ReclaimVerification {
         overrideProvider = nil
       }
 
-      api.setOverrides(
+      do {
+        try await api.setOverrides(
         provider: overrideProvider,
         feature: (featureOptions == nil)
           ? nil
@@ -684,15 +683,46 @@ public class ReclaimVerification {
             theme: appInfo?.theme
           ),
         capabilityAccessToken: capabilityAccessToken
-      ) { result in
-        switch result {
-        case .success(): continuation.resume(returning: ())
-        case .failure(let error):
-          continuation.resume(
-            throwing: ReclaimPlatformException(pigeonError: error)
-          )
-        }
+        )
+      } catch let error as PigeonError {
+        throw ReclaimPlatformException(pigeonError: error)
       }
+  }
+
+  /// Configures Builder transport for `api=2` verification links.
+  ///
+  /// Optional: without it, Builder links use `https://build.reclaimprotocol.org`
+  /// and the SDK's in-app Verification Client. ``clearAllOverrides()`` restores
+  /// those defaults. Builder links never fall back to the legacy flow.
+  ///
+  /// - Parameter overrides: The Builder base URL (HTTPS) and Verification Client UUID.
+  /// - Throws: ``ReclaimPlatformException`` when the module rejects the
+  ///   configuration, for example a base URL that is not HTTPS.
+  ///
+  /// ```swift
+  /// try await ReclaimVerification.setBuilderModeOverrides(
+  ///   ReclaimOverrides.BuilderMode(
+  ///     baseUrl: "https://build.reclaimprotocol.org",
+  ///     verificationClientId: "01234567-89ab-4def-8123-456789abcdef"
+  ///   )
+  /// )
+  /// ```
+  @MainActor
+  public static func setBuilderModeOverrides(
+    _ overrides: ReclaimOverrides.BuilderMode
+  ) async throws {
+    let binaryMessenger = ReclaimFlutterViewService.flutterEngine
+      .binaryMessenger
+    let api = ReclaimModuleApi.init(binaryMessenger: binaryMessenger)
+    do {
+      try await api.setBuilderModeOverrides(
+        overrides: ClientBuilderModeOverrides(
+          baseUrl: overrides.baseUrl,
+          verificationClientId: overrides.verificationClientId
+        )
+      )
+    } catch let error as PigeonError {
+      throw ReclaimPlatformException(pigeonError: error)
     }
   }
 
@@ -704,12 +734,9 @@ public class ReclaimVerification {
     let hostApi = ReclaimHostOverridesApiImpl.getInstance(
       binaryMessenger: binaryMessenger
     )
-    return try await withCheckedThrowingContinuation { continuation in
-      api.clearAllOverrides { result in
-        hostApi.clearOverrides()
-        continuation.resume(with: result)
-      }
-    }
+    // As before, host-side overrides are cleared whatever the module returns.
+    defer { hostApi.clearOverrides() }
+    try await api.clearAllOverrides()
   }
 
   @MainActor
@@ -722,11 +749,10 @@ public class ReclaimVerification {
     let hostApi = ReclaimHostVerificationApiImpl.getInstance(
       binaryMessenger: binaryMessenger
     )
-    return try await withCheckedThrowingContinuation { continuation in
-      if let options {
+    if let options {
         let provider = options.attestorAuthRequestProvider
         hostApi.attestorAuthRequestProvider = provider
-        api.setVerificationOptions(
+        try await api.setVerificationOptions(
           options: .init(
             canDeleteCookiesBeforeVerificationStarts: options
               .canDeleteCookiesBeforeVerificationStarts,
@@ -737,14 +763,9 @@ public class ReclaimVerification {
             locale: options.locale,
             useTeeOperator: options.useTeeOperator
           )
-        ) { result in
-          continuation.resume(with: result)
-        }
-      } else {
-        api.setVerificationOptions(options: nil) { result in
-          continuation.resume(with: result)
-        }
-      }
+        )
+    } else {
+      try await api.setVerificationOptions(options: nil)
     }
   }
 
@@ -754,11 +775,7 @@ public class ReclaimVerification {
       .binaryMessenger
     let api = ReclaimModuleApi.init(binaryMessenger: binaryMessenger)
 
-    return try await withCheckedThrowingContinuation { continuation in
-      api.setConsoleLogging(enabled: enabled) { result in
-        continuation.resume(with: result)
-      }
-    }
+    try await api.setConsoleLogging(enabled: enabled)
   }
 }
 
@@ -849,12 +866,8 @@ private class ReclaimHostOverridesApiImpl: ReclaimHostOverridesApi {
     sessionIdentityUpdateHandler = nil
   }
 
-  func onLogs(
-    logJsonString: String,
-    completion: @escaping (Result<Void, any Error>) -> Void
-  ) {
+  func onLogs(logJsonString: String) async throws {
     logHandler?.onLogs(logJsonString: logJsonString)
-    completion(.success(()))
   }
 
   func createSession(
@@ -862,43 +875,37 @@ private class ReclaimHostOverridesApiImpl: ReclaimHostOverridesApi {
     providerId: String,
     timestamp: String,
     signature: String,
-    providerVersion: String,
-    completion: @escaping (Result<SessionInitResponseApi, any Error>) ->
-      Void
-  ) {
-    sessionHandler?.createSession(
-      appId: appId,
-      providerId: providerId,
-      timestamp: timestamp,
-      signature: signature,
-      providerVersion: providerVersion,
-      completion: { e in
-        var result: Result<SessionInitResponseApi, any Error>? = nil
-        switch e {
-        case .success(let data):
-          result = .success(
-            SessionInitResponseApi(
-              sessionId: data.sessionId,
-              resolvedProviderVersion: data
-                .resolvedProviderVersion
-            )
-          )
-        case .failure(let error):
-          result = .failure(error)
-        }
-        return completion(result!)
+    providerVersion: String
+  ) async throws -> SessionInitResponseApi {
+    guard let sessionHandler else {
+      throw ErrorWithMessage.message(message: "No session handler was provided")
+    }
+    let response: ReclaimOverrides.SessionManagement.InitResponse =
+      try await awaitHostResult { completion in
+        sessionHandler.createSession(
+          appId: appId,
+          providerId: providerId,
+          timestamp: timestamp,
+          signature: signature,
+          providerVersion: providerVersion,
+          completion: completion
+        )
       }
+    return SessionInitResponseApi(
+      sessionId: response.sessionId,
+      resolvedProviderVersion: response.resolvedProviderVersion
     )
   }
 
   func updateSession(
     sessionId: String,
     status: ReclaimSessionStatus,
-    metadata: [String: Sendable?]?,
-    completion: @escaping (Result<Bool, any Error>) -> Void
-  ) {
-    var mappedStatus: ReclaimOverrides.SessionManagement.SessionStatus? =
-      nil
+    metadata: [String: Sendable?]?
+  ) async throws -> Bool {
+    guard let sessionHandler else {
+      throw ErrorWithMessage.message(message: "No session handler was provided")
+    }
+    let mappedStatus: ReclaimOverrides.SessionManagement.SessionStatus
     switch status {
     case .pROOFGENERATIONFAILED: mappedStatus = .PROOF_GENERATION_FAILED
     case .pROOFGENERATIONRETRY: mappedStatus = .PROOF_GENERATION_RETRY
@@ -914,12 +921,14 @@ private class ReclaimHostOverridesApiImpl: ReclaimHostOverridesApi {
     case .uSERINTERACTED: mappedStatus = .USER_INTERACTED
     case .uSERTYPED: mappedStatus = .USER_TYPED
     }
-    sessionHandler?.updateSession(
-      sessionId: sessionId,
-      status: mappedStatus!,
-      metadata: metadata,
-      completion: completion
-    )
+    return try await awaitHostResult { completion in
+      sessionHandler.updateSession(
+        sessionId: sessionId,
+        status: mappedStatus,
+        metadata: metadata,
+        completion: completion
+      )
+    }
   }
 
   func logSession(
@@ -927,9 +936,8 @@ private class ReclaimHostOverridesApiImpl: ReclaimHostOverridesApi {
     providerId: String,
     sessionId: String,
     logType: String,
-    metadata: [String: (any Sendable)?]?,
-    completion: @escaping (Result<Void, any Error>) -> Void
-  ) {
+    metadata: [String: Sendable?]?
+  ) async throws {
     sessionHandler?.logSession(
       appId: appId,
       providerId: providerId,
@@ -937,25 +945,18 @@ private class ReclaimHostOverridesApiImpl: ReclaimHostOverridesApi {
       logType: logType,
       metadata: metadata
     )
-    completion(.success(()))
   }
 
-  func onSessionIdentityUpdate(
-    update: ReclaimSessionIdentityUpdate?,
-    completion: @escaping (Result<Void, any Error>) -> Void
-  ) {
-    var identity: ReclaimVerification.ReclaimSessionIdentity? = nil
-    if let update {
-      identity = .init(
-        sessionId: update.sessionId,
-        providerId: update.providerId,
-        appId: update.appId
+  func onSessionIdentityUpdate(update: ReclaimSessionIdentityUpdate?) async throws {
+    let identity = update.map {
+      ReclaimVerification.ReclaimSessionIdentity(
+        sessionId: $0.sessionId,
+        providerId: $0.providerId,
+        appId: $0.appId
       )
-    } else {
-      identity = nil
     }
 
-    Task { @MainActor in
+    await MainActor.run {
       ReclaimVerification.ReclaimSessionIdentity.shared = identity
     }
 
@@ -970,18 +971,24 @@ private class ReclaimHostOverridesApiImpl: ReclaimHostOverridesApi {
     sessionId: String,
     signature: String,
     timestamp: String,
-    resolvedVersion: String,
-    completion: @escaping (Result<String, any Error>) -> Void
-  ) {
-    providerInformationCallbackHandler?.fetchProviderInformation(
-      appId: appId,
-      providerId: providerId,
-      sessionId: sessionId,
-      signature: signature,
-      timestamp: timestamp,
-      resolvedVersion: resolvedVersion,
-      completion: completion
-    )
+    resolvedVersion: String
+  ) async throws -> String {
+    guard let providerInformationCallbackHandler else {
+      throw ErrorWithMessage.message(
+        message: "No provider information callback handler was provided"
+      )
+    }
+    return try await awaitHostResult { completion in
+      providerInformationCallbackHandler.fetchProviderInformation(
+        appId: appId,
+        providerId: providerId,
+        sessionId: sessionId,
+        signature: signature,
+        timestamp: timestamp,
+        resolvedVersion: resolvedVersion,
+        completion: completion
+      )
+    }
   }
 }
 
@@ -1003,23 +1010,47 @@ private class ReclaimHostVerificationApiImpl: ReclaimHostVerificationApi {
       nil
 
   func fetchAttestorAuthenticationRequest(
-    reclaimHttpProvider: [AnyHashable?: (any Sendable)?],
-    completion: @escaping (Result<String, any Error>) -> Void
-  ) {
-    if let attestorAuthRequestProvider {
+    reclaimHttpProvider: [AnyHashable?: Sendable?]
+  ) async throws -> String {
+    guard let attestorAuthRequestProvider else {
+      throw ErrorWithMessage.message(
+        message: "No attestorAuthRequestProvider was provided"
+      )
+    }
+    return try await awaitHostResult { completion in
       attestorAuthRequestProvider.fetchAttestorAuthenticationRequest(
         reclaimHttpProvider: reclaimHttpProvider,
         completion: completion
       )
-    } else {
-      completion(
-        .failure(
-          ErrorWithMessage.message(
-            message: "No attestorAuthRequestProvider was provided"
-          )
-        )
-      )
     }
+  }
+}
+
+/// Bridges a completion-based host handler to Pigeon's `async throws` host API.
+///
+/// Resumes once with the handler's first result; a later call is ignored
+/// rather than crashing on a double resume.
+private func awaitHostResult<T>(
+  _ register: (@escaping (Result<T, any Error>) -> Void) -> Void
+) async throws -> T {
+  try await withCheckedThrowingContinuation { continuation in
+    let once = ResumeOnce()
+    register { result in
+      if once.claim() { continuation.resume(with: result) }
+    }
+  }
+}
+
+private final class ResumeOnce: @unchecked Sendable {
+  private let lock = NSLock()
+  private var claimed = false
+
+  func claim() -> Bool {
+    lock.lock()
+    defer { lock.unlock() }
+    if claimed { return false }
+    claimed = true
+    return true
   }
 }
 
